@@ -1,8 +1,7 @@
 require 'compass/import-once/activate'
 
 # 網域(domain)後面的目錄
-http_path = "/oaf2e"
-
+http_path = "/Ginkgo"
 
 # 字體目錄與網址下的字體目錄
 fonts_dir = "font"
@@ -21,11 +20,11 @@ add_import_path = "./imports"
 additional_import_paths = ["./imports"]
 
 # 選擇輸出的 css 類型，:expanded or :nested or :compact or :compressed
-  # nested     有縮排 沒壓縮
-  # expanded   沒縮排 沒壓縮
-  # compact    有換行 有壓縮(半壓縮)
+  # nested     有縮排 沒壓縮，會有 @charset "UTF-8";
+  # expanded   沒縮排 沒壓縮，會有 @charset "UTF-8";
+  # compact    有換行 有壓縮(半壓縮)，會有 @charset "UTF-8";
   # compressed 沒縮排 有壓縮(全壓縮)
-output_style = :expanded
+output_style = :compact
 
 # 在 css 中加入註解相對應於 scss 的第幾行，false、true
   # false     不需加入註解
