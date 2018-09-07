@@ -1,6 +1,6 @@
 {
   "name": "Ginkgo",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "這是一套 OA Wu 所製作的個人網頁前端框架！",
   "private": true,
   "scripts": {
