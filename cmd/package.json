@@ -4,7 +4,7 @@
   "description": "這是一套 OA Wu 所製作的個人網頁前端框架！",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "node watch"
   },
   "keywords": [
     "html",
@@ -23,7 +23,9 @@
   "dependencies": {
     "chokidar": "^2.0.4",
     "command-exists": "^1.2.7",
+    "html-minifier": "^3.5.20",
     "livereload": "^0.7.0",
-    "node-notifier": "^5.2.1"
+    "node-notifier": "^5.2.1",
+    "uglify-js": "^3.4.9"
   }
 }
