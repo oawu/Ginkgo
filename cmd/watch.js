@@ -73,7 +73,7 @@ function main(first) {
     server.sendAllClients = function(data) {
       sendAllClients.bind(server)(data);
       data = JSON.parse(data);
-      const name = data.path.replace(Path.resolve(__dirname, rootDiv + Path.sep) + Path.sep, '');
+      const name = data.path.replace(new RegExp('^' + rootDiv + Path.sep), '');
       chokidarIconFontReady && chokidarScssFileReady && Ginkgo.print(Ginkgo.cc('    ➤ ', 'c2') + Ginkgo.cc('[Livereload] ', 'y2') + Ginkgo.cc('刷新', 'w') + ' ' + Ginkgo.cc(name, 'w2') + Ginkgo.cc(' ─ ', 'w0') + Ginkgo.cc('成功', 'g') + '\n');
     };
 
@@ -288,4 +288,6 @@ Ginkgo.init(function(inited) {
   CmdExists = require('command-exists');
 
   return main(inited);
-});
+}, Ginkgo.cc(' 【Ginkgo 開發工具】', 'R') + '\n'
+ + Ginkgo.cc('    ➤ ', 'C')
+ + Ginkgo.ctrlC());

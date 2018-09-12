@@ -9,7 +9,7 @@ const Ginkgo = require('../Ginkgo');
 const Exec = require('child_process').exec;
 
 function checkoutBr(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '切換至 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '分支切換至 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
 
   Exec('git checkout ' + _v.cho.branchName() + ' --quiet', function(err, stdout, stderr) {
@@ -60,7 +60,7 @@ function deleteBr(_v, closure) {
 }
 
 module.exports.run = function(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '檢查本地端有無 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '檢查本地端 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
 
   Exec('git branch --list', function(err, stdout, stderr) {

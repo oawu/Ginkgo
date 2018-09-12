@@ -10,8 +10,8 @@ const Ginkgo = require('../Ginkgo');
 
 function minify(_v, closure) {
   Ginkgo.print('\n' + Ginkgo.cc(' 【是否壓縮】', 'y') + '\n');
-  Ginkgo.print(Ginkgo.cc(_v.cho.minify == '1' ? ' ➜' : '  ', 'g1') + Ginkgo.cc('  1. 要！我要將一切壓縮', _v.cho.minify == '1' ? 'g2' : undefined) + Ginkgo.cc(' - ' + 'Yes, compress them.',  _v.cho.minify == '1' ? 'g0' : 'w0') + "\n");
-  Ginkgo.print(Ginkgo.cc(_v.cho.minify == '2' ? ' ➜' : '  ', 'g1') + Ginkgo.cc('  2. 不要，我要保持原樣', _v.cho.minify == '2' ? 'g2' : undefined) + Ginkgo.cc(' - ' + 'No, keep them original.',  _v.cho.minify == '2' ? 'g0' : 'w0') + "\n");
+  Ginkgo.print(Ginkgo.cc(_v.cho.minify == '1' ? ' ➜' : '  ', 'g1') + Ginkgo.cc('  1. 要！我要將一切壓縮', _v.cho.minify == '1' ? 'g2' : undefined) + Ginkgo.cc(' - ' + 'Yes, compress them',  _v.cho.minify == '1' ? 'g0' : 'w0') + "\n");
+  Ginkgo.print(Ginkgo.cc(_v.cho.minify == '2' ? ' ➜' : '  ', 'g1') + Ginkgo.cc('  2. 不要，我要保持原樣', _v.cho.minify == '2' ? 'g2' : undefined) + Ginkgo.cc(' - ' + 'No, keep them original',  _v.cho.minify == '2' ? 'g0' : 'w0') + "\n");
 
   const switcher = function(c) {
     _v.cho.minify = c;

@@ -68,7 +68,7 @@ var ctrlC = function() {
   return '過程中若要關閉請直接按鍵盤上的 ' + cc('control', 'W') + cc(' + ', 'w0') + cc('c', 'W') + '\n' + '                                     ' + cc('^^^^^^^^^^^', 'c1');
 };
 
-var init = function(closure) {
+var init = function(closure, header) {
   try {
     require('livereload');
     require('node-notifier');
@@ -83,10 +83,7 @@ var init = function(closure) {
     process.stdout.write('\x1b[2J');
     process.stdout.write('\x1b[0f');
 
-    print('\n' + cc(' 【Ginkgo 上傳工具】', 'R') + '\n');
-    print(cc('    ➤ ', 'C') + '第一次使用，所以建立初始化環境' + '\n');
-    print(cc('    ➤ ', 'C') + ctrlC());
-
+    print('\n' + header);
     print('\n' + cc(' 【建立環境】', 'y') + '\n');
     
     const title = cc('    ➤ ', 'C') + '執行 ' + cc('npm install .', 'w2') + ' 指令';
@@ -155,7 +152,6 @@ var question = function(items, closure) {
     closure(cho);
   });
 };
-
 
 var mapDir = function(dir, filelist) {
   const cmd = Path.resolve(__dirname, '..' + Path.sep + '..' + Path.sep + '..' + Path.sep + 'cmd');

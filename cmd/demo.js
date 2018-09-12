@@ -42,7 +42,7 @@ function main(first) {
   if (first) {
     process.stdout.write('\x1b[2J');
     process.stdout.write('\x1b[0f');
-    Ginkgo.print('\n' + Ginkgo.cc(' 【Ginkgo 上傳工具】', 'R') + '\n');
+    Ginkgo.print('\n' + Ginkgo.cc(' 【OA\'s 上傳工具】', 'R') + '\n');
     Ginkgo.print(Ginkgo.cc('    ➤ ', 'C') + '注意喔，過程中請勿隨意結束！' + '\n');
     Ginkgo.print(Ginkgo.cc('    ➤ ', 'C') + Ginkgo.ctrlC());
   } else {
@@ -99,5 +99,8 @@ function main(first) {
 Ginkgo.init(function(inited) {
   require('./libs/node/demo/argvs').run(process.argv, _v);
   require('command-exists');
+
   return main(inited);
-});
+}, Ginkgo.cc(' 【OA\'s 上傳工具】', 'R') + '\n'
+ + Ginkgo.cc('    ➤ ', 'C') + '第一次使用，所以建立初始化環境' + '\n'
+ + Ginkgo.cc('    ➤ ', 'C') + Ginkgo.ctrlC());

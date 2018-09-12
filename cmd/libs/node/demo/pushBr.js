@@ -10,7 +10,7 @@ const Exec = require('child_process').exec;
 
 
 function checkoutBr(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '切換至 ' + Ginkgo.cc(_v.gitOri.branch, 'w2') + ' 分支';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '分支切換回 ' + Ginkgo.cc(_v.gitOri.branch, 'w2') + ' 分支';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
 
   Exec('git checkout ' + _v.gitOri.branch + ' --quiet', function(err, stdout, stderr) {
@@ -27,7 +27,7 @@ function checkoutBr(_v, closure) {
 }
 
 function pushBr(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '推送 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支至 ' + Ginkgo.cc('origin', 'w2') + ' remote';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '推送分支 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 至 ' + Ginkgo.cc('origin remote', 'w2') + '';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
   
   Exec('git push origin ' + _v.cho.branchName() + ' --force', function(err, stdout, stderr) {
@@ -44,7 +44,7 @@ function pushBr(_v, closure) {
 }
 
 function commitBr(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '變更提交 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '變更紀錄提交 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
   
   Exec('git commit --message "上傳前壓縮紀錄。" --quiet', function(err, stdout, stderr) {
@@ -61,7 +61,7 @@ function commitBr(_v, closure) {
 }
 
 function addAllBr(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '紀錄變更 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '添加變更檔案 ' + Ginkgo.cc(_v.cho.branchName(), 'w2') + ' 分支';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
   
   Exec('git add --all', function(err, stdout, stderr) {
@@ -78,7 +78,7 @@ function addAllBr(_v, closure) {
 }
 
 module.exports.run = function(_v, closure) {
-  const title = Ginkgo.cc('    ➤ ', 'C') + '檢查是否有變更';
+  const title = Ginkgo.cc('    ➤ ', 'C') + '檢查是否變更';
   Ginkgo.print(title + Ginkgo.cc('… ', 'w0'));
 
   Exec('git status --porcelain', function(err, stdout, stderr) {
