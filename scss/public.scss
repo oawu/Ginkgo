@@ -24,5 +24,73 @@ html {
     
     // 文字染色，背景色、文字色
     @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+    background-color: black;
   }
+}
+
+$w: 0 + 2500px / 2;
+$h: 0 + 843px / 2;
+#phone {
+    display: inline-block;
+    position: relative;
+    width: $w;
+    img {
+        width: 100%;
+    }
+    // @include scale(.3);
+}
+
+#box {
+    position: absolute;
+    bottom: 7.5%;
+    left: 0;
+
+    display: inline-block;
+    width: $w;
+    height: $h;
+    background-color: rgba(61, 99, 108, 1.00);
+    margin-top: 16px;
+    @include clearfix();
+    
+    > * {
+        float: left;
+        width: calc(100% / 3);
+        height: 100%;
+        position: relative;
+        line-height: $h + 100px + 36px + 55px;
+        font-size: 30px;
+        font-weight: 300;
+        color: adjust-lightness(rgba(95, 120, 132, 1.00), 15%);
+
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            line-height: $h - 100px + 55px;
+            font-size: $h / 6 * 2;
+        }
+        &:nth-child(1):before {
+            color: rgba(238, 213, 163, 1.00);
+        }
+        &:nth-child(2):before {
+            color: rgba(238, 213, 163, 1.00);
+        }
+        &:nth-child(3):before {
+            color: rgba(238, 213, 163, 1.00);
+        }
+
+        + *:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            display: inline-block;
+            width: 1px;
+            height: calc(100% - 20% * 2);
+            background-color: rgba(95, 120, 132, 1.00);
+        }
+    }
 }

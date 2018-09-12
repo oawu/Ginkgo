@@ -6,3 +6,22 @@
 //
 
 @import "compass/css3/font-face";
+
+@include font-face("icon", font-files(
+  "icomoon/fonts/icomoon.eot",
+  "icomoon/fonts/icomoon.woff",
+  "icomoon/fonts/icomoon.ttf",
+  "icomoon/fonts/icomoon.svg"));
+
+*[class^="icon-"]:before, *[class*=" icon-"]:before {
+  font-family: "icon";
+
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+.icon-calculator:before { content: "\e900"; }
+.icon-coin-dollar:before { content: "\e93b"; }
+.icon-history:before { content: "\e94d"; }

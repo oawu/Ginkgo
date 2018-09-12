@@ -1,0 +1,8 @@
+@font-face { font-family: "icon"; src: url('../font/icomoon/fonts/icomoon.eot?1536738990') format('embedded-opentype'), url('../font/icomoon/fonts/icomoon.woff?1536738990') format('woff'), url('../font/icomoon/fonts/icomoon.ttf?1536738990') format('truetype'), url('../font/icomoon/fonts/icomoon.svg?1536738990') format('svg'); }
+*[class^="icon-"]:before, *[class*=" icon-"]:before { font-family: "icon"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+.icon-calculator:before { content: "\e900"; }
+
+.icon-coin-dollar:before { content: "\e93b"; }
+
+.icon-history:before { content: "\e94d"; }
