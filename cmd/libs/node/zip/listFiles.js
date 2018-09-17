@@ -55,7 +55,6 @@ var localFilesFunc = function(dirs, closure) {
       name: dir.replace(rootDiv, ''),
       buffer: FileSystem.readFileSync(dir)
     };
-    // return FileSystem.readFileSync(dir);
   });
 
   return pr('') && closure(tmps);

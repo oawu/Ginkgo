@@ -10,12 +10,11 @@ const rq = require;
 const Path = rq('path');
 const Exec = rq('child_process').exec;
 const FileSystem  = rq('fs');
-const Notifier  = rq('node-notifier').NotificationCenter;
-const sprintf = rq("sprintf-js").sprintf;
 
 const ln = '\n';
 
 let notifierEnable = true;
+let sprintf = null;
 
 const cc = function(str, fontColor, backgroundColor, options) {
   if (str === '')
@@ -73,9 +72,9 @@ const er = function(title, details) {
     for (var i in details) {
       if (Array.isArray(details[i]))
         for (var j in details[i])
-          str += cc('        ➜ ', 'g2') + details[i][j] + ln;
+          str += cc('        ➜ ', 'g2') + details[i][j].replace(/\n.*$/, '') + ln;
       else if (typeof details[i] === 'string')
-        str += cc('      ◎ ', 'p2') + details[i] + ln;
+        str += cc('      ◎ ', 'p2') + details[i].replace(/\n.*$/, '') + ln;
       else;
     }
 
@@ -109,6 +108,7 @@ const init = function(header, closure) {
     rq('js-yaml');
     rq('md5-file');
     rq('sprintf-js');
+    sprintf = rq("sprintf-js").sprintf;
     return true;
   };
 
@@ -170,6 +170,8 @@ const qu = function(items, closure) {
 
 
 const nt = function(title, subtitle, message) {
+  let Notifier = rq('node-notifier').NotificationCenter;
+
   notifierEnable && new Notifier().notify({
     title: title,
     subtitle: subtitle,

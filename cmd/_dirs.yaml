@@ -8,7 +8,7 @@
 - path: ''
   formats: ['.html', '.txt']
   hidden: No
-  recursive: NO
+  recursive: No
 
 - path: "js"
   formats: [".js"]

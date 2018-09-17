@@ -11,6 +11,7 @@ const cc = Ginkgo.cc;
 const ln = Ginkgo.ln;
 const pp = Ginkgo.pp;
 
+
 const _v = {
   cho: {
     goal: null,
@@ -27,7 +28,10 @@ const _v = {
     url: [],
     branch: null,
   },
-  dirs: []
+  dirs: [],
+  plugins: [
+    // {title: '轉換1', cmd: 'php', file: 'cover.php', argv: ''},
+  ]
 };
 
 Ginkgo.init('Ginkgo 上傳工具', function() {
@@ -67,11 +71,17 @@ Ginkgo.init('Ginkgo 上傳工具', function() {
       tmp();
   }
 
-  function newBranch() {
-    return rq('./libs/node/demo/newBr').run(_v, function(cho) {
-      return cho.minify ?
+  function plugin() {
+    rq('./libs/node/demo/plugin').run(_v, function() {
+      return _v.cho.minify ?
         pp(ln + cc(' 【壓縮檔案】', 'y') + ln) && minifyFiles() :
         upload();
+    });
+  }
+
+  function newBranch() {
+    return rq('./libs/node/demo/newBr').run(_v, function(cho) {
+      return pp(ln + cc(' 【執行外掛】', 'y') + ln) && plugin();
     });
   }
 

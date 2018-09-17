@@ -76,7 +76,7 @@ module.exports.run = function(_v, closure) {
       const token = path.replace(_v.divs.font, '').split(Path.sep).map(Function.prototype.call, String.prototype.trim).filter(function(v) { return v.length; });
       return token.length == 2 && token[1] == 'style.css' && build(_v, '新增', path, token[0]);
     })
-    .on('unlink', function(p) {
+    .on('unlink', function(path) {
       const token = path.replace(_v.divs.font, '').split(Path.sep).map(Function.prototype.call, String.prototype.trim).filter(function(v) { return v.length; });
       return token.length == 2 && token[1] == 'style.css' && build(_v, '刪除', path, token[0]);
     })

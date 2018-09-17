@@ -94,7 +94,7 @@ function minifyHTML(_v, closure) {
 function uglifyJS(_v, closure) {
   pp((title = cc('    ➤ ', 'C') + '壓縮 ' + cc('.js', 'w2') + '   檔案') + cc('… ', 'w0'));
 
-  const files = mapDir(Path.resolve(__dirname, root + 'js') + Path.sep).filter(function(file) { return file.split(/\.js$/g); });
+  const files = mapDir(Path.resolve(__dirname, root + 'js') + Path.sep).filter(function(file) { return file.match(/\.js$/g); });
   
   if (!files.length)
     return su(title) && minifyHTML(_v, closure);

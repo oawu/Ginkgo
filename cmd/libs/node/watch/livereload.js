@@ -19,7 +19,10 @@ const port = 35729;
 function openLivereload(_v, closure) {
   pp((title = cc('    ➤ ', 'C') + '開啟 LiveReload') + cc('… ', 'w0'));
 
-  const server = rq('livereload').createServer();
+  const server = rq('livereload').createServer({
+    applyCSSLive: false,
+    applyImgLive: false,
+  });
   const sendAllClients = server.sendAllClients;
   const pattern = new RegExp('^' + _v.divs._);
 

@@ -28,19 +28,22 @@ var mapDir = function(dir, filelist, options) {
 
   filelist = filelist || [];
   files.forEach(function(file) {
-    if ([cmdDiv, gitDiv].indexOf(dir + file + Path.sep) !== -1)
+    const path = dir + file;
+    if ([cmdDiv, gitDiv].indexOf(path + Path.sep) !== -1)
       return;
 
-    if (!FileSystem.statSync(dir + file).isDirectory())
+    if (!FileSystem.statSync(path).isDirectory())
+      
       if (
-        (!options.includes.length || options.includes.indexOf((dir + file).replace(rootDiv, '')) !== -1) &&
+        (options.hidden || file[0] !== '.') &&
+        (!options.includes.length || options.includes.indexOf((path).replace(rootDiv, '')) !== -1) &&
         (!options.formats.length  || options.formats.indexOf('.' + file.split('.').pop().toLowerCase()) !== -1)
       )
-        if ((stats = FileSystem.statSync(dir + file)) && (stats.size > 0))
-          return filelist.push(dir + file);
+        if ((stats = FileSystem.statSync(path)) && (stats.size > 0))
+          return filelist.push(path);
 
-    if (FileSystem.statSync(dir + file).isDirectory() && options.recursive)
-      filelist = mapDir(dir + file + Path.sep, filelist, options);
+    if (FileSystem.statSync(path).isDirectory() && options.recursive)
+      filelist = mapDir(path + Path.sep, filelist, options);
   });
 
   return filelist;
