@@ -21,6 +21,7 @@
   "author": "OA Wu",
   "license": "MIT",
   "dependencies": {
+    "adm-zip": "^0.4.11",
     "aws-sdk": "^2.315.0",
     "chokidar": "^2.0.4",
     "command-exists": "^1.2.7",

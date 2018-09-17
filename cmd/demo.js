@@ -39,6 +39,9 @@ Ginkgo.init('Ginkgo 上傳工具', function() {
       if (_v.cho.goal == 'gh-pages' && _v.gitOri.url.length == 2)
         pp(cc('    ➤ ', 'C') + '因為快取問題，請稍待 ' + cc('1 分鐘', 'w2') + ' 後再重新整理頁面。' + ln +
            cc('    ➤ ', 'C') + '網址：' + cc('https://' + _v.gitOri.url[0] + '.github.io/' + _v.gitOri.url[1] + '/', 'b2', undefined, 'underline') + ln);
+      if (_v.cho.goal == 'aws-s3')
+        pp(cc('    ➤ ', 'C') + '若有設定 CDN 快取的話，請等 Timeout 後再重新整理頁面。' + ln +
+           cc('    ➤ ', 'C') + '網址：' + cc('https://' + _v.s3Info.domain.replace(new RegExp('^\/*|\/*$', 'g'), '') + '/' + (_v.s3Info.folder.length ? _v.s3Info.folder + '/' : ''), 'b2', undefined, 'underline') + ln);
 
       pp(ln + ln);
     });

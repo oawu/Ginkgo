@@ -5,56 +5,6 @@
  * @link        https://www.ioa.tw/
  */
 
-// const rq = require;
-// const Ginkgo = rq('../Ginkgo');
-// const cc = Ginkgo.cc;
-// const ln = Ginkgo.ln;
-// const pp = Ginkgo.pp;
-// const er = Ginkgo.er;
-// const su = Ginkgo.su;
-
-// const Exec = rq('child_process').exec;
-// const Path = rq('path');
-// const root = '..' + Path.sep + '..' + Path.sep + '..' + Path.sep + '..' + Path.sep;
-// const cmdDiv = Path.resolve(__dirname, root + 'cmd') + Path.sep;
-
-// function isJson(str) {
-//   try {
-//     return JSON.parse(str);
-//   } catch (e) {
-//     return false;
-//   }
-// }
-
-// module.exports.run = function(_v, closure) {
-//   pp((title = cc('    ➤ ', 'C') + '依據 ' + cc('_dirs.yaml', 'w2') + ' 設定，使用 ' + cc('PHP', 'w2') + ' 上傳至 S3') + cc('… ', 'w0'));
-
-//   const path = Path.resolve(__dirname, cmdDiv + 'libs' + Path.sep + 'php' + Path.sep + 'put.php');
-//   const argv = ' --bucket ' + _v.s3Info.bucket + ' --access ' + _v.s3Info.access + ' --secret ' + _v.s3Info.secret + ' --folder ' + _v.s3Info.folder;
-
-//   Exec('php ' + path + argv, function(err, stdout, stderr) {
-//     if (err)
-//       return (er(title, ['錯誤原因：' + cc(err, 'w2')]) && false) || rq('./rollback').run(_v);
-
-//     if (!stdout.length)
-//       return (er(title, ['執行指令 ' + cc('php ' + path + argv, 'w2') + ' 失敗！']) && false) || rq('./rollback').run(_v);
-
-//     stdout = isJson(stdout);
-
-//     if (stdout === false)
-//       return (er(title, ['回傳結果 ' + cc('非 Json 格式', 'w2') + '！']) && false) || rq('./rollback').run(_v);
-
-//     if (!stdout.status)
-//       return (er(title, ['錯誤原因：' + cc(stdout.message, 'w2')]) && false) || rq('./rollback').run(_v);
-
-//     return su(title) && closure();
-//   });
-// };
-
-
-
-// ==================================================
-
 const rq = require;
 const Ginkgo = rq('../Ginkgo');
 const Path = rq('path');
@@ -70,17 +20,8 @@ const exts = { jpg: ['image/jpeg', 'image/pjpeg'], gif: ['image/gif'], png: ['im
 const pp = Ginkgo.pp;
 const cc = Ginkgo.cc;
 const ln = Ginkgo.ln;
-const sprintf = rq("sprintf-js").sprintf;
-
-// let progressTitle = null;
-// let progressTotal = null;
-// let progressindex = null;
-const progressInfo = {
-  title: null,
-  total: 0,
-  index: 0,
-  present: 0,
-};
+const pr = Ginkgo.pr;
+let s3 = null;
 
 var mapDir = function(dir, filelist, options) {
   const files = FileSystem.readdirSync(dir);
@@ -106,37 +47,14 @@ var mapDir = function(dir, filelist, options) {
 };
 
 
-var progress = function(total, err) {
-  if (typeof total === 'string') {
-    if (total === '')
-      return pp(progressInfo.title + cc('(' + progressInfo.total + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + '100%' + cc(' ─ ', 'w0') + cc("完成", 'g') + ln);
-    else if (total === '_')
-      return pp(progressInfo.title + cc('(' + progressInfo.index + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + sprintf('%3d%%', progressInfo.present) + cc(' ─ ', 'w0') + cc("失敗", 'r') + ln + (err ? err.map(function(t) {
-        return cc('      ◎ ', 'p2') + t + ln;
-      }).join('') : '') + ln);
-    else
-      return pp((progressInfo.title = total) + cc('… ', 'w0'));
-  }
-
-  if (!isNaN(total)) {
-    progressInfo.total = total;
-    progressInfo.index = -1;
-  }
-
-  progressInfo.present = progressInfo.total ? Math.ceil((progressInfo.index + 1) * 100) / progressInfo.total : 100;
-  progressInfo.present = progressInfo.present <= 100 ? progressInfo.present >= 0 ? progressInfo.present : 0 : 100;
-
-  return pp(progressInfo.title + cc('(' + (++progressInfo.index) + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + sprintf('%3d%%', progressInfo.present));
-};
-
 var localFilesFunc = function(_v, closure) {
 
   let tmps = _v.dirs.map(function(dir) { return mapDir(dir.path, [], dir); }).reduce(function(a, b) { return a.concat(b); });
 
-  progress(tmps.length);
+  pr(tmps.length);
 
   tmps = tmps.map(function(dir) {
-    progress();
+    pr();
 
     return {
       name: (_v.s3Info.folder.length ? _v.s3Info.folder + '/' : '') + dir.replace(rootDiv, ''),
@@ -145,26 +63,27 @@ var localFilesFunc = function(_v, closure) {
     };
   });
 
-  return progress('') && closure(tmps);
+  return pr('') && closure(tmps);
 };
 
 var s3FilesFunc = function(_v, closure) {
-  s3 = new S3({
-    accessKeyId: _v.s3Info.access,
-    secretAccessKey: _v.s3Info.secret,
-  });
+  if (!s3)
+    s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
+
+  if (!s3)
+    return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
 
   s3.listObjectsV2({
     Bucket: _v.s3Info.bucket,
     Prefix: _v.s3Info.folder
   }, function(err, data) {
     if (err)
-      return progress('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
+      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
     
-    progress(data.Contents.length);
+    pr(data.Contents.length);
 
     data.Contents = data.Contents.map(function(t) {
-      progress();
+      pr();
 
       return {
         name: t.Key,
@@ -172,15 +91,15 @@ var s3FilesFunc = function(_v, closure) {
       };
     });
 
-    return progress('') && closure(data.Contents);
+    return pr('') && closure(data.Contents);
   });
 };
 
 var filterLocalFilesFunc = function(localFiles, s3Files, closure) {
-  progress(localFiles.length);
+  pr(localFiles.length);
 
   const tmps = localFiles.filter(function(localFile) {
-    progress();
+    pr();
   
     for (let i = 0; i < s3Files.length; i++)
       if (s3Files[i].name == localFile.name && s3Files[i].hash == localFile.hash)
@@ -189,7 +108,7 @@ var filterLocalFilesFunc = function(localFiles, s3Files, closure) {
     return true;
   });
 
-  return progress('') && closure(tmps);
+  return pr('') && closure(tmps);
 };
 
 var uploadFilesFunc = function(_v, uploadFiles, closure, i) {
@@ -197,17 +116,16 @@ var uploadFilesFunc = function(_v, uploadFiles, closure, i) {
   i = typeof i === 'undefined' ? 0 : parseInt(i, 10);
 
   if (i === 0)
-    progress(uploadFiles.length);
+    pr(uploadFiles.length);
   
   if (typeof uploadFiles[i] === 'undefined')
-    return progress('') && closure(true);
+    return pr('') && closure(true);
 
-  progress();
+  if (!s3)
+    s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
 
-  s3 = new S3({
-    accessKeyId: _v.s3Info.access,
-    secretAccessKey: _v.s3Info.secret,
-  });
+  if (!s3)
+    return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
   
   s3.putObject({
     Bucket: _v.s3Info.bucket,
@@ -219,17 +137,17 @@ var uploadFilesFunc = function(_v, uploadFiles, closure, i) {
     // CacheControl: 'max-age=5'
   }, function(err, data) {
     if (err)
-      return progress('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
+      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
 
-    return uploadFilesFunc(_v, uploadFiles, closure, i + 1);
+    return pr() && uploadFilesFunc(_v, uploadFiles, closure, i + 1);
   });
 };
 
 var filterS3FilesFunc = function(s3Files, localFiles, closure) {
-  progress(s3Files.length);
+  pr(s3Files.length);
 
   const tmps = s3Files.filter(function(s3File) {
-    progress();
+    pr();
   
     for (let i = 0; i < localFiles.length; i++)
       if (localFiles[i].name == s3File.name)
@@ -237,33 +155,34 @@ var filterS3FilesFunc = function(s3Files, localFiles, closure) {
     
     return true;
   });
-  return progress('') && closure(tmps);
+
+  return pr('') && closure(tmps);
 };
 
 var deleteFilesFunc = function(_v, deleteFiles, closure, i) {
   i = typeof i === 'undefined' ? 0 : parseInt(i, 10);
   
   if (i === 0)
-    progress(deleteFiles.length);
+    pr(deleteFiles.length);
 
   if (typeof deleteFiles[i] === 'undefined')
-    return progress('') && closure(true);
+    return pr('') && closure(true);
   
-  progress();
 
-  s3 = new S3({
-    accessKeyId: _v.s3Info.access,
-    secretAccessKey: _v.s3Info.secret,
-  });
+  if (!s3)
+    s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
+
+  if (!s3)
+    return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
 
   s3.deleteObject({
     Bucket: _v.s3Info.bucket,
     Key: deleteFiles[i].name,
   }, function(err, data) {
     if (err)
-      return progress('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
-
-    return deleteFilesFunc(_v, deleteFiles, closure, i + 1);
+      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
+    
+    return pr() && deleteFilesFunc(_v, deleteFiles, closure, i + 1);
   });
 };
 
@@ -272,22 +191,22 @@ var extensions = function(name) {
 };
 
 var start = function(_v, closure) {
-  progress(cc('    ➤ ', 'C') + '整理本機內檔案');
+  pr(cc('    ➤ ', 'C') + '整理本機內檔案');
   localFilesFunc(_v, function(localFiles) {
     
-    progress(cc('    ➤ ', 'C') + '取得 S3 上檔案');
+    pr(cc('    ➤ ', 'C') + '取得 S3 上檔案');
     s3FilesFunc(_v, function(s3Files) {
       
-      progress(cc('    ➤ ', 'C') + '過濾上傳的檔案');
+      pr(cc('    ➤ ', 'C') + '過濾上傳的檔案');
       filterLocalFilesFunc(localFiles, s3Files, function(uploadFiles) {
         
-        progress(cc('    ➤ ', 'C') + '上傳檔案至 S3 ');
+        pr(cc('    ➤ ', 'C') + '上傳檔案至 S3 ');
         uploadFilesFunc(_v, uploadFiles, function(ok) {
           
-          progress(cc('    ➤ ', 'C') + '過濾刪除的檔案');
+          pr(cc('    ➤ ', 'C') + '過濾刪除的檔案');
           filterS3FilesFunc(s3Files, localFiles, function(deleteFiles) {
             
-            progress(cc('    ➤ ', 'C') + '刪除 S3 的檔案');
+            pr(cc('    ➤ ', 'C') + '刪除 S3 的檔案');
             deleteFilesFunc(_v, deleteFiles, closure);
           });
         });

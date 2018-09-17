@@ -11,6 +11,7 @@ const Path = rq('path');
 const Exec = rq('child_process').exec;
 const FileSystem  = rq('fs');
 const Notifier  = rq('node-notifier').NotificationCenter;
+const sprintf = rq("sprintf-js").sprintf;
 
 const ln = '\n';
 
@@ -187,6 +188,36 @@ const nt = function(title, subtitle, message) {
   return true;
 };
 
+const progressInfo = {
+  title: null,
+  total: 0,
+  index: 0,
+  present: 0,
+};
+
+var pr = function(total, err) {
+  if (typeof total === 'string') {
+    if (total === '')
+      return pp(progressInfo.title + cc('(' + progressInfo.total + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + '100%' + cc(' ─ ', 'w0') + cc("完成", 'g') + ln);
+    else if (total === '_')
+      return pp(progressInfo.title + cc('(' + progressInfo.index + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + sprintf('%3d%%', progressInfo.present) + cc(' ─ ', 'w0') + cc("失敗", 'r') + ln + (err ? err.map(function(t) {
+        return cc('      ◎ ', 'p2') + t + ln;
+      }).join('') : '') + ln);
+    else
+      return pp((progressInfo.title = total) + cc('… ', 'w0'));
+  }
+
+  if (!isNaN(total)) {
+    progressInfo.total = total;
+    progressInfo.index = -1;
+  }
+
+  progressInfo.present = progressInfo.total ? Math.ceil((progressInfo.index + 1) * 100) / progressInfo.total : 100;
+  progressInfo.present = progressInfo.present <= 100 ? progressInfo.present >= 0 ? progressInfo.present : 0 : 100;
+
+  return pp(progressInfo.title + cc('(' + (++progressInfo.index) + '/' + progressInfo.total + ')', 'w0') + cc(' ─ ', 'w0') + sprintf('%3d%%', progressInfo.present));
+};
+
 module.exports = {
   ln: ln,
   cc: cc,
@@ -195,6 +226,7 @@ module.exports = {
   qu: qu,
   nt: nt,
   su: su,
+  pr: pr,
   init: init,
   ctrlC: ctrlC,
 };
