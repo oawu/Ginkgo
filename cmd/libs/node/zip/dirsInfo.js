@@ -12,6 +12,7 @@ const ln = Ginkgo.ln;
 const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const su = Ginkgo.su;
+const qq = Ginkgo.qq;
 
 const jsYaml = rq('js-yaml');
 const FileSystem  = rq('fs');
@@ -19,7 +20,7 @@ const FileSystem  = rq('fs');
 const Path = rq('path');
 const root = '..' + Path.sep + '..' + Path.sep + '..' + Path.sep + '..' + Path.sep;
 const dirsFilePath = Path.resolve(__dirname, root + 'cmd' + Path.sep + '_dirs.yaml');
-const sepRegExp = new RegExp('^' + Path.sep.replace('/', '\/') + '*|' + Path.sep.replace('/', '\/') + '*$', 'g');
+const sepRegExp = new RegExp(qq('^' + Path.sep.replace('/', '\/') + '*|' + Path.sep.replace('/', '\/') + '*$'), 'g');
 const rootDiv = Path.resolve(__dirname, root) + Path.sep;
 
 var check = function(closure) {

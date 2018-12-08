@@ -13,6 +13,7 @@ const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const nt = Ginkgo.nt;
 const su = Ginkgo.su;
+const wp = Ginkgo.wp;
 
 const Chokidar  = rq('chokidar');
 const FileSystem  = rq('fs');
@@ -67,7 +68,7 @@ function build(_v, event, path, dir) {
 module.exports.run = function(_v, closure) {
   pp((title = cc('    ➤ ', 'C') + '監控 Font 目錄') + cc('… ', 'w0'));
 
-  Chokidar.watch(_v.divs.font)
+  Chokidar.watch(wp(_v.divs.font))
     .on('change', function(path) {
       const token = path.replace(_v.divs.font, '').split(Path.sep).map(Function.prototype.call, String.prototype.trim).filter(function(v) { return v.length; });
       return token.length == 2 && token[1] == 'style.css' && build(_v, '修改', path, token[0]);

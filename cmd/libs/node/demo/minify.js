@@ -13,6 +13,7 @@ const ln = Ginkgo.ln;
 const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const su = Ginkgo.su;
+const qq = Ginkgo.qq;
 
 const Exec = rq('child_process').exec;
 const FileSystem  = rq('fs');
@@ -28,7 +29,7 @@ var mapDir = function(dir, filelist) {
     if (!FileSystem.statSync(dir + file).isDirectory())
       return filelist.push(dir + file);
 
-    if (!(dir + file + Path.sep).match(cmdDiv))
+    if (!(dir + file + Path.sep).match(qq(cmdDiv)))
       filelist = mapDir(dir + file + Path.sep, filelist);
   });
   return filelist;

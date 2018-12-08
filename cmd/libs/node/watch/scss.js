@@ -13,6 +13,7 @@ const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const nt = Ginkgo.nt;
 const su = Ginkgo.su;
+const wp = Ginkgo.wp;
 
 const Exec = rq('child_process').exec;
 const CmdExists = rq('command-exists');;
@@ -53,12 +54,12 @@ function compileScss(_v, event, path) {
 
     if (action == 'write')
       return _v.scss.isReady &&
-        su(title + cc(file.replace(_v.divs.css, ''), 'w2'));
+        su(title + cc(file.replace(/\//g, Path.sep).replace(_v.divs.css, ''), 'w2'));
     
     if (action == 'error') {
 
       stdout = /\(Line\s*(\d+):\s*(.*)\)/g.exec(stdout.join(' '));
-      title = title + cc(file.replace(_v.divs.scss, ''), 'w2') + cc(' ─ ', 'w0') + cc('失敗', 'r');
+      title = title + cc(file.replace(/\//g, Path.sep).replace(_v.divs.scss, ''), 'w2') + cc(' ─ ', 'w0') + cc('失敗', 'r');
 
       if (!Array.isArray(stdout))
         return _v.scss.isReady &&
@@ -94,7 +95,7 @@ module.exports.run = function(_v, closure) {
 
     let timer = null;
 
-    Chokidar.watch(_v.divs.scss + '**' + Path.sep + '*.scss')
+    Chokidar.watch(wp(_v.divs.scss + '**' + Path.sep + '*.scss'))
       .on('change', function(path) { clearTimeout(timer); timer = setTimeout(compileScss.bind(null, _v, '修改', path), 250); })
       .on('add',    function(path) { clearTimeout(timer); timer = setTimeout(compileScss.bind(null, _v, '新增', path), 250); })
       .on('unlink', function(path) { setTimeout(compileScss.bind(null, _v, '刪除', path), 250); })

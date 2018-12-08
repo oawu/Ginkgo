@@ -13,6 +13,9 @@ const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const nt = Ginkgo.nt;
 const su = Ginkgo.su;
+const qq = Ginkgo.qq;
+const wp = Ginkgo.wp;
+const Path = rq('path');
 
 const port = 35729;
 
@@ -24,7 +27,7 @@ function openLivereload(_v, closure) {
     applyImgLive: false,
   });
   const sendAllClients = server.sendAllClients;
-  const pattern = new RegExp('^' + _v.divs._);
+  const pattern = new RegExp(qq(_v.divs._));
 
   server.sendAllClients = function(data) {
     sendAllClients.bind(server)(data);
@@ -32,10 +35,10 @@ function openLivereload(_v, closure) {
     return _v.font.isReady &&
       _v.scss.isReady &&
       _v.live.isReady &&
-      su(cc('    ➤ ', 'c2') + cc('[Livereload] ', 'y2') + cc('刷新', 'w') + ' ' + cc(JSON.parse(data).path.replace(pattern, ''), 'w2'));
+      su(cc('    ➤ ', 'c2') + cc('[Livereload] ', 'y2') + cc('刷新', 'w') + ' ' + cc(JSON.parse(data).path.replace(/\//g, Path.sep).replace(pattern, ''), 'w2'));
   };
 
-  server.watch(_v.live.divs);
+  server.watch(_v.live.divs.map(wp));
   
   _v.live.isReady = true;
   _v.live.isListen = true;

@@ -16,6 +16,14 @@ const ln = '\n';
 let notifierEnable = true;
 let sprintf = null;
 
+const wp = function(str) {
+  return str.replace(/\\/g, "/");
+};
+
+const qq = function(str) {
+  return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+};
+
 const cc = function(str, fontColor, backgroundColor, options) {
   if (str === '')
     return '';
@@ -229,6 +237,8 @@ module.exports = {
   nt: nt,
   su: su,
   pr: pr,
+  qq: qq,
+  wp: wp,
   init: init,
   ctrlC: ctrlC,
 };

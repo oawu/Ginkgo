@@ -85,7 +85,7 @@ function checkGitStatus(_v, closure) {
 
     return _v.cho.goal == 'gh-pages' ?
       checkRemoteOriginUrl(_v, closure) :
-      checkPhpCmd(_v, closure);
+      su(title) && closure(_v.cho);
   });
 }
 
