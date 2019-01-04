@@ -73,6 +73,26 @@ var localFilesFunc = function(_v, closure) {
   return pr('') && closure(tmps);
 };
 
+var listObjects = function(_v, closure, opts, items) {
+  s3.listObjectsV2(opts, function(err, data) {
+    if (err)
+      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
+    
+    items = items.concat(data.Contents.map(function(t) {
+      return {
+        name: t.Key,
+        hash: t.ETag.replace(/^('|")(.*)\1/g, '$2'),
+      };
+    }));
+
+    if (!data.IsTruncated)
+      return pr(items.length) && pr('') && closure(items);
+
+    opts.ContinuationToken = data.NextContinuationToken;
+    return listObjects(_v, closure, opts, items);
+  });
+};
+
 var s3FilesFunc = function(_v, closure) {
   if (!s3)
     s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
@@ -80,26 +100,10 @@ var s3FilesFunc = function(_v, closure) {
   if (!s3)
     return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
 
-  s3.listObjectsV2({
+  return listObjects(_v, closure, {
     Bucket: _v.s3Info.bucket,
-    Prefix: _v.s3Info.folder
-  }, function(err, data) {
-    if (err)
-      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
-    
-    pr(data.Contents.length);
-
-    data.Contents = data.Contents.map(function(t) {
-      pr();
-
-      return {
-        name: t.Key,
-        hash: t.ETag.replace(/^('|")(.*)\1/g, '$2'),
-      };
-    });
-
-    return pr('') && closure(data.Contents);
-  });
+    Prefix: _v.s3Info.folder,
+  }, []);
 };
 
 var filterLocalFilesFunc = function(localFiles, s3Files, closure) {
