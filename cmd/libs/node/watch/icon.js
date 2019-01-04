@@ -1,6 +1,6 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2015 - 2018, Ginkgo
+ * @copyright   Copyright (c) 2015 - 2019, Ginkgo
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
@@ -22,7 +22,7 @@ const Path = rq('path');
 function parseData(name, data) {
   data = data.match(/\.icon-[a-zA-Z_\-0-9]*:before\s?\{\s*content:\s*"[\\A-Za-z0-9]*";(\s*color:\s*#[A-Za-z0-9]*;)?\s*}/g);
   data = Array.isArray(data) ? data.map(function(v) { return v.replace(/^\.icon-/g, '.icon-' + (name ? name + '-' : '')).replace(/\n/g, ' ').replace(/\{\s*/g, '{ '); }) : [];
-  data = '//\n// @author      OA Wu <comdan66@gmail.com>\n// @copyright   Copyright (c) 2015 - 2018, Ginkgo\n// @license     http://opensource.org/licenses/MIT  MIT License\n// @link        https://www.ioa.tw/\n//\n\n' + (data.length ? '@import "compass/css3/font-face";\n\n@include font-face("icon' + (name ? '-' + name : '') + '", font-files(\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.eot",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.woff",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.ttf",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.svg"));\n\n*[class^="icon' + (name ? '-' + name : '') +'-"]:before, *[class*=" icon' + (name ? '-' + name : '') +'-"]:before {\n  font-family: "icon' + (name ? '-' + name : '') + '";\n\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n}\n\n' + data.join(ln) : '@import "compass/css3/font-face";');
+  data = '//\n// @author      OA Wu <comdan66@gmail.com>\n// @copyright   Copyright (c) 2015 - 2019, Ginkgo\n// @license     http://opensource.org/licenses/MIT  MIT License\n// @link        https://www.ioa.tw/\n//\n\n' + (data.length ? '@import "compass/css3/font-face";\n\n@include font-face("icon' + (name ? '-' + name : '') + '", font-files(\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.eot",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.woff",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.ttf",\n  "' + (name ? name : 'icomoon') + '/fonts/icomoon.svg"));\n\n*[class^="icon' + (name ? '-' + name : '') +'-"]:before, *[class*=" icon' + (name ? '-' + name : '') +'-"]:before {\n  font-family: "icon' + (name ? '-' + name : '') + '";\n\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n}\n\n' + data.join(ln) : '@import "compass/css3/font-face";');
   return data;
 }
 
