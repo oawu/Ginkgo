@@ -61,9 +61,7 @@ var localFilesFunc = function(_v, closure) {
   pr(tmps.length);
 
   tmps = tmps.map(function(dir) {
-    pr();
-
-    return {
+    return pr() && {
       name: (_v.s3Info.folder.length ? _v.s3Info.folder + '/' : '') + wp(dir.replace(rootDiv, '')),
       hash: md5File.sync(dir),
       path: dir,
@@ -122,35 +120,34 @@ var filterLocalFilesFunc = function(localFiles, s3Files, closure) {
   return pr('') && closure(tmps);
 };
 
-var uploadFilesFunc = function(_v, uploadFiles, closure, i) {
-
-  i = typeof i === 'undefined' ? 0 : parseInt(i, 10);
-
-  if (i === 0)
-    pr(uploadFiles.length);
+var uploadFilesFunc = function(_v, uploadFiles, closure) {
+  pr(uploadFiles.length);
   
-  if (typeof uploadFiles[i] === 'undefined')
-    return pr('') && closure(true);
-
   if (!s3)
     s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
 
   if (!s3)
     return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
   
-  s3.putObject({
-    Bucket: _v.s3Info.bucket,
-    Key: uploadFiles[i].name,
-    Body: FileSystem.readFileSync(uploadFiles[i].path),
-    ACL: 'public-read',
-    ContentType: extensions(uploadFiles[i].path),
-    // ContentMD5: Buffer.from(uploadFiles[i].hash).toString('base64'),
-    // CacheControl: 'max-age=5'
-  }, function(err, data) {
-    if (err)
-      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
-
-    return pr() && uploadFilesFunc(_v, uploadFiles, closure, i + 1);
+  Promise.all(uploadFiles.map(function(uploadFile) {
+    return new Promise(function(resolve, reject) {
+      s3.putObject({
+        Bucket: _v.s3Info.bucket,
+        Key: uploadFile.name,
+        Body: FileSystem.readFileSync(uploadFile.path),
+        ACL: 'public-read',
+        ContentType: extensions(uploadFile.path),
+        // ContentMD5: Buffer.from(uploadFile.hash).toString('base64'),
+        // CacheControl: 'max-age=5'
+      }, function(err, data) {
+        if (err) reject(err);
+        else pr() && resolve(data);
+      });
+    });
+  })).then(function() {
+    return pr('') && closure(true);
+  }).catch(function(err) {
+    return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
   });
 };
 
@@ -170,30 +167,29 @@ var filterS3FilesFunc = function(s3Files, localFiles, closure) {
   return pr('') && closure(tmps);
 };
 
-var deleteFilesFunc = function(_v, deleteFiles, closure, i) {
-  i = typeof i === 'undefined' ? 0 : parseInt(i, 10);
+var deleteFilesFunc = function(_v, deleteFiles, closure) {
+  pr(deleteFiles.length);
   
-  if (i === 0)
-    pr(deleteFiles.length);
-
-  if (typeof deleteFiles[i] === 'undefined')
-    return pr('') && closure(true);
-  
-
   if (!s3)
     s3 = new S3({ accessKeyId: _v.s3Info.access, secretAccessKey: _v.s3Info.secret });
 
   if (!s3)
     return pr('_', ['錯誤原因：' + cc('初始 S3 物件失敗！', 'w2')]) && rq('./rollback').run(_v);
 
-  s3.deleteObject({
-    Bucket: _v.s3Info.bucket,
-    Key: deleteFiles[i].name,
-  }, function(err, data) {
-    if (err)
-      return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
-    
-    return pr() && deleteFilesFunc(_v, deleteFiles, closure, i + 1);
+  Promise.all(deleteFiles.map(function(deleteFile) {
+    return new Promise(function(resolve, reject) {
+      s3.deleteObject({
+        Bucket: _v.s3Info.bucket,
+        Key: deleteFile.name,
+      }, function(err, data) {
+        if (err) reject(err);
+        else pr() && resolve(data);
+      });
+    });
+  })).then(function() {
+    return pr('') && closure(true);
+  }).catch(function(err) {
+    return pr('_', ['錯誤原因：' + cc(err.message, 'w2')]) && rq('./rollback').run(_v);
   });
 };
 
