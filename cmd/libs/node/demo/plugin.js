@@ -12,6 +12,7 @@ const ln = Ginkgo.ln;
 const pp = Ginkgo.pp;
 const er = Ginkgo.er;
 const su = Ginkgo.su;
+const ij = Ginkgo.ij;
 
 const FileSystem  = rq('fs');
 const Path = rq('path');
@@ -35,7 +36,7 @@ var exec = function(_v, i, closure) {
 
   Exec(_v.plugins[i].cmd + ' ' + _v.plugins[i].file + ' ' + _v.plugins[i].argv, function(err, stdout, stderr) {
     if (err)
-      return er(title, ['錯誤原因：' + cc(err, 'w2')]) && rq('./rollback').run(_v);
+      return er(title, ['錯誤原因：' + cc(err, 'w2'), ij(stdout) ? JSON.parse(stdout) : ('錯誤原因：' + cc(stdout, 'w2'))]) && rq('./rollback').run(_v);
 
     return su(title) && runPlugin(_v, i + 1, closure);
   });

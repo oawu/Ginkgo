@@ -16,6 +16,14 @@ const ln = '\n';
 let notifierEnable = true;
 let sprintf = null;
 
+const ij = function(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 const wp = function(str) {
   return str.replace(/\\/g, "/");
 };
@@ -76,15 +84,22 @@ const cc = function(str, fontColor, backgroundColor, options) {
 
 const er = function(title, details) {
   let str = title + cc(' ─ ', 'w0') + cc('失敗', 'r') + ln;
+  
+  details = details.filter(function(detail) {
+    return typeof detail === 'string' || Array.isArray(detail) ? detail.length : true;
+  });
 
-    for (var i in details) {
-      if (Array.isArray(details[i]))
-        for (var j in details[i])
-          str += cc('        ➜ ', 'g2') + details[i][j].replace(/\n.*$/, '') + ln;
-      else if (typeof details[i] === 'string')
-        str += cc('      ◎ ', 'p2') + details[i].replace(/\n.*$/, '') + ln;
-      else;
-    }
+  for (var i in details) {
+    if (Array.isArray(details[i]))
+      for (var j in details[i])
+        str += cc('        ➜ ', 'g2') + details[i][j].replace(/\n.*$/, '') + ln;
+    else if (typeof details[i] === 'object')
+      for (var k in details[i])
+        str += cc('        ➜ ', 'g2') + cc(k + '：', 'w2') + details[i][k].replace(/\n.*$/, '') + ln;
+    else if (typeof details[i] === 'string')
+      str += cc('      ◎ ', 'p2') + details[i].replace(/\n.*$/, '') + ln;
+    else;
+  }
 
   return pp(str + ln);
 };
@@ -239,6 +254,7 @@ module.exports = {
   pr: pr,
   qq: qq,
   wp: wp,
+  ij: ij,
   init: init,
   ctrlC: ctrlC,
 };
