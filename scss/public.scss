@@ -147,6 +147,13 @@ html {
         color: rgba(120, 120, 120, 1);
         @include transition(color .3s);
         @include overflow-docx3();
+        &[data-branch]:after {
+          content: '(分支：' attr(data-branch) ')';
+          display: inline-block;
+          margin-left: 2px;
+          font-size: 13px;
+          @include opacity(.5);
+        }
       }
       &:nth-child(3) {
         width: calc(100px);
@@ -254,6 +261,9 @@ body.block {
           height: 26px;
           line-height: 26px;
           text-align: center;
+          &[data-branch]:after {
+            display: none;
+          }
         }
         &:nth-child(3) {
           display: none;
