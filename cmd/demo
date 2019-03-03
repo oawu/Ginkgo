@@ -87,7 +87,7 @@ Ginkgo.init('Ginkgo 上傳工具', function() {
 
   function checkEnv() {
     rq('./libs/node/demo/check').run(_v, function(cho) {
-      return pp(ln + cc(' 【上傳 GitHub 頁面】', 'y') + ln) && newBranch();
+      return pp(ln + cc(' 【設定分支】', 'y') + ln) && newBranch();
     });
   }
 
