@@ -23,8 +23,48 @@ html {
     text-align: center;
     font-size: medium;
     font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     
     // 文字染色，背景色、文字色
     @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+  }
+}
+
+#icon {
+  position: relative;
+  display: inline-block;
+  width: 512px;
+  height: 512px;
+  background-color: rgba(156, 31, 16, 1.00);
+  color: white;
+  padding-top: 80px;
+  margin-top: 32px;
+  span {
+    position: relative;
+    font-size: 60px;
+    z-index: 2;
+    @include opacity(.85);
+  }
+  div {
+    position: relative;
+    font-weight: bold;
+    font-size: 80px;
+    z-index: 2;
+    @include text-shadow(0 0 1px rgba(0, 0, 0, .5));
+    margin-top: 32px;
+    + div {
+      font-size: 65px;
+      margin-top: 0;
+      @include opacity(.9);
+    }
+  }
+  img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 1;
+    // @include opacity(.4);
+    // @include filter(grayscale(100%));
   }
 }
