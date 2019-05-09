@@ -28,3 +28,52 @@ html {
     @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
   }
 }
+
+#map {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+
+}
+
+button {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+.aaa {
+  > div {
+    position: absolute;
+    left: -45px;
+    bottom: 0;
+
+    display: inline-block;
+    width: 100px;
+    height: 32px;
+
+    > div {
+      display: inline-block;
+      padding: 2px 8px;
+      background-color: rgba(149, 13, 18, 1.00);
+      color: white;
+      @include border-radius(3px);
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: calc(50% - #{10px / 2});
+        bottom: -5px;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: rgba(149, 13, 18, 1.00);
+        @include rotate(45deg);        
+      }
+    }
+  }
+}

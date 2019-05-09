@@ -1,6 +1,15 @@
 @charset "UTF-8";
 *, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
 
+html { position: relative; }
 html body { position: relative; display: inline-block; width: 100%; margin: 0; padding: 0; color: #5a5a5a; text-align: center; font-size: medium; font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; }
 html body::-moz-selection { color: white; background-color: #78baff; }
 html body::selection { color: white; background-color: #78baff; }
+
+#map { position: fixed !important; top: 0; left: 0; display: inline-block; width: 100%; height: 100%; }
+
+button { position: fixed; bottom: 16px; right: 16px; }
+
+.aaa > div { position: absolute; left: -45px; bottom: 0; display: inline-block; width: 100px; height: 32px; }
+.aaa > div > div { display: inline-block; padding: 2px 8px; background-color: #950d12; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; position: relative; }
+.aaa > div > div:before { content: ''; position: absolute; left: calc(50% - 10px/2); bottom: -5px; display: inline-block; width: 10px; height: 10px; background-color: #950d12; -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg); }
