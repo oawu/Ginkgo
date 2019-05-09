@@ -58,14 +58,14 @@ $(function() {
     
     _mPathA = new google.maps.Polyline({ map: _mMap, strokeWeight: 5, strokeColor: 'rgba(252, 108, 181, .75)' });
 
-    _mMap.addListener('idle', function(e) {
-      console.error(_mMap.center.lat());
-      console.error(_mMap.center.lng());
+    // _mMap.addListener('idle', function(e) {
+    //   console.error(_mMap.center.lat());
+    //   console.error(_mMap.center.lng());
       
-    //   newM([e.latLng.lat(), e.latLng.lng()]);
-    // console.error(e.latLng.lat(), e.latLng.lng());
+    // //   newM([e.latLng.lat(), e.latLng.lng()]);
+    // // console.error(e.latLng.lat(), e.latLng.lng());
     
-    });
+    // });
 
     var u = [{t: '出發', p: [23.563945984925816, 120.30398179936753]}, {t: '副爐家', p: [23.566041878704862, 120.30593175497711]}, {t: '正爐家', p: [23.573073525074694, 120.30147979971616]}, {t: '入廟', p: [23.56775224626597, 120.30464347984525]}];
     for (var i = 0; i < u.length; i++)
