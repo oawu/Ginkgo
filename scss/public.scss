@@ -63,7 +63,8 @@ button {
       @include border-radius(3px);
       position: relative;
 
-      &:before {
+      &:after {
+        z-index: -1;
         content: '';
         position: absolute;
         left: calc(50% - #{10px / 2});

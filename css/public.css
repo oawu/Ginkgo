@@ -12,4 +12,4 @@ button { position: fixed; bottom: 16px; right: 16px; }
 
 .aaa > div { position: absolute; left: -45px; bottom: 0; display: inline-block; width: 100px; height: 32px; }
 .aaa > div > div { display: inline-block; padding: 2px 8px; background-color: #950d12; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; position: relative; }
-.aaa > div > div:before { content: ''; position: absolute; left: calc(50% - 10px/2); bottom: -5px; display: inline-block; width: 10px; height: 10px; background-color: #950d12; -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+.aaa > div > div:after { z-index: -1; content: ''; position: absolute; left: calc(50% - 10px/2); bottom: -5px; display: inline-block; width: 10px; height: 10px; background-color: #950d12; -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg); }
