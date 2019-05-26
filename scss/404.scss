@@ -1,0 +1,70 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  background-color: rgba(255, 253, 253, 1.00);
+  font-family: "微軟正黑體", system, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+main {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+h1, h3, h5 {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  margin-top: 64px;
+}
+h1 {
+  color: rgba(247, 160, 139, 1.00);
+  font-size: 64px;
+}
+h3 {
+  margin-top: 16px;
+  color: rgba(173, 171, 171, 1.00);
+}
+h5 {
+  margin-top: 72px;
+  color: rgba(111, 111, 111, 1.00);
+  font-size: 16px;
+  line-height: 26px;
+}
+a {
+  color: rgba(47, 118, 230, 1.00);
+  margin: 0 2px;
+  @include transition(color .3s);
+  
+  &:hover{
+    color: rgba(89, 145, 235, 1.00);
+  }
+}
+footer {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  font-size: 16px;
+  color: rgba(172, 177, 149, 1.00);
+}
+@include range-width(450px) {
+  br {
+    display: none;
+  }
+};

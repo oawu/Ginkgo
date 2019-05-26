@@ -1,0 +1,97 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 16px 8px;
+  text-align: center;
+  background-color: rgba(235, 235, 235, 1.00);
+  font-family: "微軟正黑體", system, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+main {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  
+}
+article {
+  position: relative;
+  background-color: white;
+  text-align: left;
+  margin-top: 20px + 32px;
+  @include box-shadow(0 0 1px rgba(0, 0, 0, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.075));
+  
+  &:before {
+    content: attr(data-title);
+    position: absolute;
+    top: -32px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+  }
+}
+
+// h1 {
+//   display: inline-block;
+//   width: 100%;
+//   margin: 0;
+// }
+// h1 {
+//   color: rgba(90, 92, 95, 1.00);
+//   font-size: 20px;
+//   line-height: 64px;
+//   height: 64px;
+//   padding-left: 32px;
+//   border-bottom: 1px solid rgba(230, 230, 230, 1.00);
+
+//   &:before {
+//     content: '⚠';
+//     display: inline-block;
+//     font-size: 30px;
+//     margin-right: 8px;
+//     color: rgba(140, 140, 140, 1.00);
+//   }
+// }
+
+// blockquote{
+//   margin: 16px 0;
+//   padding-left: 32px;
+//   color: rgba(120, 120, 120, 1.00);
+  
+//   &:before {
+//     content: '訊息';
+//     font-size: 16px;
+//   }
+// }
+
+// pre{
+//   display: inline-block;
+//   width: 100%;
+//   overflow-x: auto;
+// }
+//       // blockquote+table{
+//       //   margin-top:20px
+//       // }
+//       // blockquote+blockquote{
+//       //   margin-top:16px
+//       // }
+
+// // i {
+// //   display: inline-block;
+// //   width: calc(100% + #{32px * 2});
+// //   margin-left: -32px;
+// //   border-bottom: 1px solid rgba(230, 230, 230, 1.00);
+// // }

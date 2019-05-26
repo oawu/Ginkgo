@@ -1,0 +1,23 @@
+@charset "UTF-8";
+*, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
+
+html, body { height: 100%; }
+
+body { margin: 0; text-align: center; background-color: #fffdfd; font-family: "微軟正黑體", system, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+main { position: relative; height: 100%; width: 100%; max-width: 540px; margin: 0 auto; }
+
+h1, h3, h5 { display: inline-block; width: 100%; margin: 0; margin-top: 64px; }
+
+h1 { color: #f7a08b; font-size: 64px; }
+
+h3 { margin-top: 16px; color: #adabab; }
+
+h5 { margin-top: 72px; color: #6f6f6f; font-size: 16px; line-height: 26px; }
+
+a { color: #2f76e6; margin: 0 2px; -moz-transition: color 0.3s; -o-transition: color 0.3s; -webkit-transition: color 0.3s; transition: color 0.3s; }
+a:hover { color: #5991eb; }
+
+footer { position: absolute; bottom: 32px; left: 0; display: inline-block; width: 100%; font-size: 16px; color: #acb195; }
+
+@media screen and (min-width: 450px) { br { display: none; } }
