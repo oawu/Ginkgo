@@ -1,6 +1,5 @@
 <?php
 
-
 class Str {
   static public function splitStr($str) {
     return array_filter(preg_split('//u', $str), function($t) { return $t !== ''; });
@@ -10,9 +9,6 @@ class Str {
   }
   static public function repeat($multiplier = 1, $input = ' ') {
     return str_repeat($input, $multiplier);
-  }
-  static public function infos($val) {
-    return [$val, array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, $tmp = Str::splitStr($val))), array_sum(array_map('strlen', $tmp))];
   }
 }
 
@@ -278,9 +274,113 @@ class Display {
   }
 }
 
-class Menu {
+abstract class Item {
+  protected $title, $subtitle;
+  protected $parent, $isHover = false;
 
-  private static function display(&$cho, $navs, $items) {
+  public function __construct($title, $subtitle) {
+    $this->setTitle($title)
+         ->setSubtitle($subtitle);
+  }
+  
+  public function title() { return $this->title; }
+  public function subtitle() { return $this->subtitle; }
+
+  public function titleWidth() { return array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, Str::splitStr($this->title))); }
+  public function subtitleWidth() { return array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, Str::splitStr($this->subtitle))); }
+
+  public function titleLen() { return array_sum(array_map('strlen', Str::splitStr($this->title))); }
+  public function subtitleLen() { return array_sum(array_map('strlen', Str::splitStr($this->subtitle))); }
+
+  public function setTitle(string $title) {
+    $this->title = $title;
+    return $this;
+  }
+
+  public function setSubtitle(string $subtitle) {
+    $this->subtitle = $subtitle;
+    return $this;
+  }
+
+  public function setParent(Menu $parent) {
+    $this->parent = $parent;
+    return $this;
+  }
+
+  public function isHover(bool $isHover) {
+    $this->isHover = $isHover;
+    return $this;
+  }
+
+  public function index() {
+    if (!$this->parent)
+      return 0;
+    return $this->parent->itemIndex($this);
+  }
+
+  public function __toString() {
+    if (!$this->parent)
+      return '';
+    $itemsTitleMaxWidth = $this->parent->itemsTitleMaxWidth();
+    $spaceCount = $itemsTitleMaxWidth + ($this->titleLen() - $this->titleWidth());
+    $repeatSpace = Str::repeat(Display::MAX_LEN - 7 - $itemsTitleMaxWidth - 4 - $this->subtitleLen() - 3);
+
+    $lineColor = new Xterm();
+    $lineColor->color(Xterm::L_BLACK);
+    $_6 = $lineColor->str('│');
+
+    if ($this->isHover)
+      return Str::repeat() . $_6 . Str::repeat() . '➜' . Str::repeat(2) . ($this->index() + 1) . '.' . Str::repeat() . sprintf('%-' . $spaceCount . 's', $this->title) . ' ─ ' . $this->subtitle . $repeatSpace . $_6;
+    else
+      return Str::repeat() . $_6 . Str::repeat(4) .                       ($this->index() + 1) . '.' . Str::repeat() . sprintf('%-' . $spaceCount . 's', $this->title) . ' ─ ' . $this->subtitle    . $repeatSpace . $_6;
+  }
+
+  public static function create($title, $subtitle) {
+    return new static($title, $subtitle);
+  }
+}
+
+class Doing extends Item {
+  public function choice() {
+    echo $this->title;
+  }
+} 
+
+class Menu extends Item {
+  private $items = [];
+
+  public function __construct($title, $subtitle) {
+    parent::__construct($title, $subtitle);
+  }
+
+  public function items() {
+    return $this->items;
+  }
+
+  public function appendItem(Item $item) {
+    $item->setParent($this);
+    array_push($this->items, $item);
+    return $this;
+  }
+
+  public function itemsTitleMaxWidth() {
+    return max(array_map(function($item) {
+      return $item->titleWidth();
+    }, $this->items));
+  }
+
+  public function families() {
+    if (!$this->parent) return [$this];
+    else return array_merge($this->parent->families(), [$this]);
+  }
+  public function itemIndex(Item $item) {
+    foreach ($this->items as $i => $tmp)
+      if ($tmp === $item)
+        return $i;
+    return 0;
+  }
+
+  private static function show(&$cho, Menu $menu) {
     system('clear');
 
     Display::logo();
@@ -296,56 +396,17 @@ class Menu {
     $_7 = $lineColor->str('├');
     $_8 = $lineColor->str('┤');
 
-    $choColor = new Xterm();
-    $choColor->color(Xterm::RED);
-    $choColor->blod();
-    $titleColor = new Xterm();
-    $lineColor = new Xterm();
-    $lineColor->dim();
-    $lineColor->color(Xterm::L_BLACK);
-    $subtitleColor = new Xterm();
-    $subtitleColor->color(Xterm::L_BLACK);
-    $choTitleColor = new Xterm();
-    $choTitleColor->color(Xterm::L_CYAN);
-    $choLineColor = new Xterm();
-    $choLineColor->dim();
-    $choLineColor->color(Xterm::CYAN);
-    $choSubtitleColor = new Xterm();
-    $choSubtitleColor->color(Xterm::CYAN);
+    $cho <= count($menu->items()) || $cho = 1;
+    $cho >= 1 || $cho = count($menu->items());
 
-    $navs = array_map(function($nav) { return [$nav, array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, Str::splitStr($nav)))]; }, $navs);
-    
-    $last = array_pop($navs);
-    array_push($navs, [Xterm::create($last[0], Xterm::YELLOW), $last[1]]);
-    $sp = Str::repeat(Display::MAX_LEN - ((count($navs) - 1) * 2 + array_sum(array_column($navs, 1))) - 7);
-    
-    echo Str::repeat() . $_6 . Str::repeat(3) . implode(Xterm::create('﹥', Xterm::L_BLACK), array_column($navs, 0)) . $sp . $_6;
+    $families = $menu->families();
+    $repeatSpace = Str::repeat(Display::MAX_LEN - ((count($families) - 1) * 2 + array_sum(array_map(function($family) { return $family->titleWidth(); }, $families))) - 7);
+    echo Str::repeat() . $_6 . Str::repeat(3) . implode(Xterm::create('﹥', Xterm::L_BLACK), array_map(function($family) use ($menu) { return Xterm::create($family->title(),  $family == $menu ? Xterm::YELLOW : null); }, $families)) . $repeatSpace . $_6;
     echo Display::LN;
     echo Str::repeat() . $_7 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_8; echo Display::LN;
-
-    foreach ($items as $key => &$val) {
-      $val[0] = Str::infos($val[0]);
-      $val[1] = Str::infos($val[1]);
-      $val[2] = Str::infos(!empty($val[2]) ? $val[2] : '');
-      $val[0][1] += ($val[2][1] ? 1 + $val[2][1] : 0);
-      $val[0][2] += ($val[2][2] ? 1 + $val[2][2] : 0);
-    }
-
-    $xLen = max(array_column(array_column($items, 0), 1));
-
-    $cho <= count($items) || $cho = 1;
-    $cho >= 1 || $cho = count($items);
-
-    foreach ($items as $key => $item) {
-      $spaceNum = $xLen + ($item[0][2] - $item[0][1]);
-      $title = $item[0][0];
-      $subTitle = $item[1][0];
-      $sr = Str::repeat(Display::MAX_LEN - 7 - $xLen - 4 - strlen($item[1][0]) - 3);
-
-      if (++$key == $cho)
-        echo Str::repeat() . $_6 . Str::repeat() . $choColor->str('➜') . Str::repeat(2) . $choTitleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $choLineColor->str(' ─ ') . $choSubtitleColor->str($subTitle) . $sr . $_6;
-      else
-        echo Str::repeat() . $_6 . Str::repeat(4) .                              $titleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $lineColor->str(' ─ ')    . $subtitleColor->str($subTitle)    . $sr . $_6;
+    
+    foreach ($menu->items() as $i => $item) {
+      echo $item->isHover(++$i == $cho);
       echo Display::LN;
     }
 
@@ -359,10 +420,10 @@ class Menu {
     echo Str::repeat() . $_2 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_4; echo Display::LN;
   }
 
-  private static function cho(&$cho, $navs, $items, $closure = null) {
-    self::display($cho, $navs, $items);
+  public function choice(int $cho = 1) {
+    Menu::show($cho, $this);
 
-    Keyboard::listener(function($code, $keyboard) use (&$cho, $navs, $items) {
+    Keyboard::listener(function($code, $keyboard) use (&$cho) {
       if (!in_array($code, [65, 66, 67, 68]))
         return;
 
@@ -378,94 +439,57 @@ class Menu {
         case 66: ++$cho; break;
       }
 
-      self::display($cho, $navs, $items);
+      Menu::show($cho, $this);
     })->run();
 
-    return $cho;
-  }
+    if (!isset($this->items[$cho - 1]))
+      return $this->parent ? $this->parent->choice($this->index() + 1) : null;
 
-  // public static function env($cho = 1) {
-  //   $cho = self::cho($cho, ['主選單', '初始專案環境'], [
-  //     ['開發環境', 'Development Environment'],
-  //     ['測試環境', 'Testing Environment'],
-  //     ['預備環境', 'Staging Environment'],
-  //     ['正式環境', 'Production Environment'],
-  //   ]);
-
-  //   switch ($cho) {
-  //     case 1:  echo "開發環境";; break;
-  //     case 2:  echo "測試環境";; break;
-  //     case 3:  echo "預備環境";; break;
-  //     case 4:  echo "正式環境";; break;
-  //     default: Menu::main(1); break;
-  //   }
-  // }
-
-  // public static function create($cho = 1) {
-  //   $cho = self::cho($cho, ['主選單', '新增檔案'], [
-  //     ['新增 Migration 檔案', 'Create Migration'],
-  //     ['新增 Model 檔案', 'Create Model'],
-  //   ]);
-
-  //   switch ($cho) {
-  //     case 1:  echo "新增 Migration ";; break;
-  //     case 2:  echo "新增 Model ";; break;
-  //     default: Menu::main(2); break;
-  //   }
-  // }
-
-  // public static function migration($cho = 1) {
-  //   $cho = self::cho($cho, ['主選單', '執行 Migration'], [
-  //     ['更新至最新版', 'Update to the latest version'],
-  //     ['輸入更新版號', 'Enter the version number'],
-  //   ]);
-
-  //   switch ($cho) {
-  //     case 1:  echo "更新至最新版 ";; break;
-  //     case 2:  echo "輸入更新版號 ";; break;
-  //     default: Menu::main(3); break;
-  //   }
-  // }
-
-  // public static function clean($cho = 1) {
-  //   $cho = self::cho($cho, ['主選單', '清除檔案目錄'], [
-  //     ['清除 Cache 目錄', 'Clean Cache Dir'],
-  //     ['清除 Tmp 目錄', 'Clean Tmp Dir'],
-  //   ]);
-
-  //   switch ($cho) {
-  //     case 1:  echo "清除 Cache 目錄 ";; break;
-  //     case 2:  echo "清除 Tmp 目錄 ";; break;
-  //     default: Menu::main(4); break;
-  //   }
-  // }
-
-  // public static function deploy($cho = 1) {
-  //   $cho = self::cho($cho, ['主選單', '部署專案'], [
-  //     ['部署測試', 'Deploy Testing'],
-  //     ['部署預備', 'Deploy Staging'],
-  //     ['部署正式', 'Deploy Production'],
-  //   ]);
-
-  //   switch ($cho) {
-  //     case 1:  echo "部署測試 ";; break;
-  //     case 2:  echo "部署預備 ";; break;
-  //     case 3:  echo "部署正式 ";; break;
-  //     default: Menu::main(5); break;
-  //   }
-  // }
-
-  public static function main($cho = 1) {
-    $cho = self::cho($cho, ['主選單'], [
-      ['初始專案環境', 'Init Project Environment', 'Menu::env'],
-      ['新增檔案', 'Create Migration or Model', 'Menu::create'],
-      ['執行 Migration', 'Migration Update', 'Menu::migration'],
-      ['清除檔案目錄', 'Clean Cache', 'Menu::clean'],
-      ['部署專案', 'Deploy Project', 'Menu::deploy'],
-    ]);
+    return $this->items[$cho - 1]->choice();
   }
 }
-echo '<meta http-equiv="Content-type" content="text/html; charset=utf-8" /><pre>';
-var_dump(is_callable('Menu::main'));
-exit();
-// Menu::main();
+
+$initDevelopmentEnv = Doing::create('開發環境', 'Development Environment');
+$initTestingEnv     = Doing::create('測試環境', 'Testing Environment');
+$initStagingEnv     = Doing::create('預備環境', 'Staging Environment');
+$initProductionEnv  = Doing::create('正式環境', 'Production Environment');
+$initEnvMenu = Menu::create('初始專案環境', 'Init Project Environment')
+               ->appendItem($initDevelopmentEnv)
+               ->appendItem($initTestingEnv)
+               ->appendItem($initStagingEnv)
+               ->appendItem($initProductionEnv);
+
+$createMigration = Doing::create('新增 Migration 檔案', 'Create Migration');
+$createModel     = Doing::create('新增 Model 檔案', 'Create Model');
+$createFileMenu = Menu::create('新增檔案', 'Create Migration or Model')
+               ->appendItem($createMigration)
+               ->appendItem($createModel);
+
+$migrationToLatest  = Doing::create('更新至最新版', 'Update to the latest version');
+$migrationToVersion = Doing::create('輸入更新版號', 'Enter the version number');
+$migrationMenu = Menu::create('執行 Migration', 'Migration Update')
+               ->appendItem($migrationToLatest)
+               ->appendItem($migrationToVersion);
+
+$cleanCache = Doing::create('清除 Cache 目錄', 'Clean Cache Dir');
+$cleanTmp   = Doing::create('清除 Tmp 目錄', 'Clean Tmp Dir');
+$cleanMenu = Menu::create('清除檔案目錄', 'Clean Cache')
+               ->appendItem($cleanCache)
+               ->appendItem($cleanTmp);
+
+$deployTesting    = Doing::create('部署測試', 'Deploy Testing');
+$deployStaging    = Doing::create('部署預備', 'Deploy Staging');
+$deployProduction = Doing::create('部署正式', 'Deploy Production');
+$deployMenu = Menu::create('部署專案', 'Deploy Project')
+               ->appendItem($deployTesting)
+               ->appendItem($deployStaging)
+               ->appendItem($deployProduction);
+
+$mainMenu = Menu::create('主選單', 'Main menu')
+                ->appendItem($initEnvMenu)
+                ->appendItem($createFileMenu)
+                ->appendItem($migrationMenu)
+                ->appendItem($cleanMenu)
+                ->appendItem($deployMenu);
+
+$mainMenu->choice();

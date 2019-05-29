@@ -268,3 +268,332 @@ exit();
 // //   $color->background($code[$i]);
 // //   echo $color->str(sr(' ', $len));
 // // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class Menu {
+
+//   private static function display(&$cho, $navs, $items) {
+//     system('clear');
+
+//     Display::logo();
+
+//     $lineColor = new Xterm();
+//     $lineColor->color(Xterm::L_BLACK);
+//     $_1 = $lineColor->str('╭');
+//     $_2 = $lineColor->str('╰');
+//     $_3 = $lineColor->str('╮');
+//     $_4 = $lineColor->str('╯');
+//     $_5 = $lineColor->str('─');
+//     $_6 = $lineColor->str('│');
+//     $_7 = $lineColor->str('├');
+//     $_8 = $lineColor->str('┤');
+
+//     $choColor = new Xterm();
+//     $choColor->color(Xterm::RED);
+//     $choColor->blod();
+//     $titleColor = new Xterm();
+//     $lineColor = new Xterm();
+//     $lineColor->dim();
+//     $lineColor->color(Xterm::L_BLACK);
+//     $subtitleColor = new Xterm();
+//     $subtitleColor->color(Xterm::L_BLACK);
+//     $choTitleColor = new Xterm();
+//     $choTitleColor->color(Xterm::L_CYAN);
+//     $choLineColor = new Xterm();
+//     $choLineColor->dim();
+//     $choLineColor->color(Xterm::CYAN);
+//     $choSubtitleColor = new Xterm();
+//     $choSubtitleColor->color(Xterm::CYAN);
+
+//     $navs = array_map(function($nav) { return [$nav, array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, Str::splitStr($nav)))]; }, $navs);
+    
+//     $last = array_pop($navs);
+//     array_push($navs, [Xterm::create($last[0], Xterm::YELLOW), $last[1]]);
+//     $sp = Str::repeat(Display::MAX_LEN - ((count($navs) - 1) * 2 + array_sum(array_column($navs, 1))) - 7);
+    
+//     echo Str::repeat() . $_6 . Str::repeat(3) . implode(Xterm::create('﹥', Xterm::L_BLACK), array_column($navs, 0)) . $sp . $_6;
+//     echo Display::LN;
+//     echo Str::repeat() . $_7 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_8; echo Display::LN;
+
+//     foreach ($items as $key => &$val) {
+//       $val[0] = Str::infos($val[0]);
+//       $val[1] = Str::infos($val[1]);
+//       $val[2] = Str::infos(!empty($val[2]) ? $val[2] : '');
+//       $val[0][1] += ($val[2][1] ? 1 + $val[2][1] : 0);
+//       $val[0][2] += ($val[2][2] ? 1 + $val[2][2] : 0);
+//     }
+
+//     $xLen = max(array_column(array_column($items, 0), 1));
+
+//     $cho <= count($items) || $cho = 1;
+//     $cho >= 1 || $cho = count($items);
+
+//     foreach ($items as $key => $item) {
+//       $spaceNum = $xLen + ($item[0][2] - $item[0][1]);
+//       $title = $item[0][0];
+//       $subTitle = $item[1][0];
+//       $sr = Str::repeat(Display::MAX_LEN - 7 - $xLen - 4 - strlen($item[1][0]) - 3);
+
+//       if (++$key == $cho)
+//         echo Str::repeat() . $_6 . Str::repeat() . $choColor->str('➜') . Str::repeat(2) . $choTitleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $choLineColor->str(' ─ ') . $choSubtitleColor->str($subTitle) . $sr . $_6;
+//       else
+//         echo Str::repeat() . $_6 . Str::repeat(4) .                              $titleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $lineColor->str(' ─ ')    . $subtitleColor->str($subTitle)    . $sr . $_6;
+//       echo Display::LN;
+//     }
+
+//     $footer = '[←]離開 [→]進入 [↑]上移 [↓]下移 [h]說明';
+    
+//     $len = Str::width($footer);
+//     $rs = Str::repeat(Display::MAX_LEN - $len - 7);
+
+//     echo Str::repeat() . $_7 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_8; echo Display::LN;
+//     echo Str::repeat() . $_6 . Str::repeat(3) . $footer . $rs . $_6; echo Display::LN;
+//     echo Str::repeat() . $_2 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_4; echo Display::LN;
+//   }
+
+//   private static function cho(&$cho, $navs, $items, $closure = null) {
+//     self::display($cho, $navs, $items);
+
+//     Keyboard::listener(function($code, $keyboard) use (&$cho, $navs, $items) {
+//       if (!in_array($code, [65, 66, 67, 68]))
+//         return;
+
+//       switch ($code) {
+//         default:
+//         case 68:
+//           $cho = 0;
+//         case 67:
+//           return $keyboard->stop();
+//           break;
+        
+//         case 65: --$cho; break;
+//         case 66: ++$cho; break;
+//       }
+
+//       self::display($cho, $navs, $items);
+//     })->run();
+
+//     return $cho;
+//   }
+
+//   // public static function env($cho = 1) {
+//   //   $cho = self::cho($cho, ['主選單', '初始專案環境'], [
+//   //     ['開發環境', 'Development Environment'],
+//   //     ['測試環境', 'Testing Environment'],
+//   //     ['預備環境', 'Staging Environment'],
+//   //     ['正式環境', 'Production Environment'],
+//   //   ]);
+
+//   //   switch ($cho) {
+//   //     case 1:  echo "開發環境";; break;
+//   //     case 2:  echo "測試環境";; break;
+//   //     case 3:  echo "預備環境";; break;
+//   //     case 4:  echo "正式環境";; break;
+//   //     default: Menu::main(1); break;
+//   //   }
+//   // }
+
+//   // public static function create($cho = 1) {
+//   //   $cho = self::cho($cho, ['主選單', '新增檔案'], [
+//   //     ['新增 Migration 檔案', 'Create Migration'],
+//   //     ['新增 Model 檔案', 'Create Model'],
+//   //   ]);
+
+//   //   switch ($cho) {
+//   //     case 1:  echo "新增 Migration ";; break;
+//   //     case 2:  echo "新增 Model ";; break;
+//   //     default: Menu::main(2); break;
+//   //   }
+//   // }
+
+//   // public static function migration($cho = 1) {
+//   //   $cho = self::cho($cho, ['主選單', '執行 Migration'], [
+//   //     ['更新至最新版', 'Update to the latest version'],
+//   //     ['輸入更新版號', 'Enter the version number'],
+//   //   ]);
+
+//   //   switch ($cho) {
+//   //     case 1:  echo "更新至最新版 ";; break;
+//   //     case 2:  echo "輸入更新版號 ";; break;
+//   //     default: Menu::main(3); break;
+//   //   }
+//   // }
+
+//   // public static function clean($cho = 1) {
+//   //   $cho = self::cho($cho, ['主選單', '清除檔案目錄'], [
+//   //     ['清除 Cache 目錄', 'Clean Cache Dir'],
+//   //     ['清除 Tmp 目錄', 'Clean Tmp Dir'],
+//   //   ]);
+
+//   //   switch ($cho) {
+//   //     case 1:  echo "清除 Cache 目錄 ";; break;
+//   //     case 2:  echo "清除 Tmp 目錄 ";; break;
+//   //     default: Menu::main(4); break;
+//   //   }
+//   // }
+
+//   // public static function deploy($cho = 1) {
+//   //   $cho = self::cho($cho, ['主選單', '部署專案'], [
+//   //     ['部署測試', 'Deploy Testing'],
+//   //     ['部署預備', 'Deploy Staging'],
+//   //     ['部署正式', 'Deploy Production'],
+//   //   ]);
+
+//   //   switch ($cho) {
+//   //     case 1:  echo "部署測試 ";; break;
+//   //     case 2:  echo "部署預備 ";; break;
+//   //     case 3:  echo "部署正式 ";; break;
+//   //     default: Menu::main(5); break;
+//   //   }
+//   // }
+
+//   public static function main($cho = 1) {
+//     $cho = self::cho(['主選單'], [
+//       'Menu::env'       => ['初始專案環境', 'Init Project Environment'],
+//       'Menu::create'    => ['新增檔案', 'Create Migration or Model'],
+//       'Menu::migration' => ['執行 Migration', 'Migration Update'],
+//       'Menu::clean'     => ['清除檔案目錄', 'Clean Cache'],
+//       'Menu::deploy'    => ['部署專案', 'Deploy Project'],
+//     ]);
+//   }
+
+//   public static function quit() {
+//   }
+// }
+
+// class Menu {
+
+  // private static function menu(&$cho, $navs, $items) {
+  //   system('clear');
+
+  //   Display::logo();
+
+  //   $lineColor = new Xterm();
+  //   $lineColor->color(Xterm::L_BLACK);
+  //   $_1 = $lineColor->str('╭');
+  //   $_2 = $lineColor->str('╰');
+  //   $_3 = $lineColor->str('╮');
+  //   $_4 = $lineColor->str('╯');
+  //   $_5 = $lineColor->str('─');
+  //   $_6 = $lineColor->str('│');
+  //   $_7 = $lineColor->str('├');
+  //   $_8 = $lineColor->str('┤');
+
+  //   $choColor = new Xterm();
+  //   $choColor->color(Xterm::RED);
+  //   $choColor->blod();
+  //   $titleColor = new Xterm();
+  //   $lineColor = new Xterm();
+  //   $lineColor->dim();
+  //   $lineColor->color(Xterm::L_BLACK);
+  //   $subtitleColor = new Xterm();
+  //   $subtitleColor->color(Xterm::L_BLACK);
+  //   $choTitleColor = new Xterm();
+  //   $choTitleColor->color(Xterm::L_CYAN);
+  //   $choLineColor = new Xterm();
+  //   $choLineColor->dim();
+  //   $choLineColor->color(Xterm::CYAN);
+  //   $choSubtitleColor = new Xterm();
+  //   $choSubtitleColor->color(Xterm::CYAN);
+
+  //   $navs = array_map(function($nav) { return [$nav, array_sum(array_map(function($t) { return strlen($t) == 3 ? 2 : 1; }, Str::splitStr($nav)))]; }, $navs);
+    
+  //   $last = array_pop($navs);
+  //   array_push($navs, [Xterm::create($last[0], Xterm::YELLOW), $last[1]]);
+  //   $sp = Str::repeat(Display::MAX_LEN - ((count($navs) - 1) * 2 + array_sum(array_column($navs, 1))) - 7);
+    
+  //   echo Str::repeat() . $_6 . Str::repeat(3) . implode(Xterm::create('﹥', Xterm::L_BLACK), array_column($navs, 0)) . $sp . $_6;
+  //   echo Display::LN;
+  //   echo Str::repeat() . $_7 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_8; echo Display::LN;
+
+  //   foreach ($items as $key => &$val) {
+  //     $val[0] = Str::infos($val[0]);
+  //     $val[1] = Str::infos($val[1]);
+  //     $val[2] = Str::infos(!empty($val[2]) ? $val[2] : '');
+  //     $val[0][1] += ($val[2][1] ? 1 + $val[2][1] : 0);
+  //     $val[0][2] += ($val[2][2] ? 1 + $val[2][2] : 0);
+  //   }
+
+  //   $xLen = max(array_column(array_column($items, 0), 1));
+
+  //   $cho <= count($items) || $cho = 1;
+  //   $cho >= 1 || $cho = count($items);
+
+  //   foreach ($items as $key => $item) {
+  //     $spaceNum = $xLen + ($item[0][2] - $item[0][1]);
+  //     $title = $item[0][0];
+  //     $subTitle = $item[1][0];
+  //     $sr = Str::repeat(Display::MAX_LEN - 7 - $xLen - 4 - strlen($item[1][0]) - 3);
+
+  //     if (++$key == $cho)
+  //       echo Str::repeat() . $_6 . Str::repeat() . $choColor->str('➜') . Str::repeat(2) . $choTitleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $choLineColor->str(' ─ ') . $choSubtitleColor->str($subTitle) . $sr . $_6;
+  //     else
+  //       echo Str::repeat() . $_6 . Str::repeat(4) .                              $titleColor->str($key . '.' . Str::repeat() . sprintf('%-' . $spaceNum . 's', $item[0][0])) . $lineColor->str(' ─ ')    . $subtitleColor->str($subTitle)    . $sr . $_6;
+  //     echo Display::LN;
+  //   }
+
+  //   $footer = '[←]離開 [→]進入 [↑]上移 [↓]下移 [h]說明';
+    
+  //   $len = Str::width($footer);
+  //   $rs = Str::repeat(Display::MAX_LEN - $len - 7);
+
+  //   echo Str::repeat() . $_7 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_8; echo Display::LN;
+  //   echo Str::repeat() . $_6 . Str::repeat(3) . $footer . $rs . $_6; echo Display::LN;
+  //   echo Str::repeat() . $_2 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_4; echo Display::LN;
+  // }
+
+//   private static function cho($cho, $navs, $items) {
+
+//     self::setDisplay($navs, $items);
+
+//     Keyboard::listener(function($code, $keyboard) use (&$cho, $navs, $items) {
+//       if (!in_array($code, [65, 66, 67, 68]))
+//         return;
+
+//       switch ($code) {
+//         default:
+//         case 68:
+//           $cho = 0;
+//         case 67:
+//           return $keyboard->stop();
+//           break;
+        
+//         case 65: --$cho; break;
+//         case 66: ++$cho; break;
+//       }
+
+//       self::display($cho);
+//     })->run();
+
+//     return $cho;
+//   }
+//   public static function main($cho = 1) {
+//     self::cho($cho, ['主選單'], [
+//       'Menu::env'       => ['初始專案環境', 'Init Project Environment'],
+//       'Menu::create'    => ['新增檔案', 'Create Migration or Model'],
+//       'Menu::migration' => ['執行 Migration', 'Migration Update'],
+//       'Menu::clean'     => ['清除檔案目錄', 'Clean Cache'],
+//       'Menu::deploy'    => ['部署專案', 'Deploy Project'],
+//     ]);
+//   }
+// }
+// Menu::main();
+
+// class ItemInfo {
+//   $
+//   public function __construct($title, $subtitle) {
+//   }
+// }
