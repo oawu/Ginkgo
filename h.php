@@ -359,7 +359,7 @@ class Menu {
     echo Str::repeat() . $_2 . Str::repeat(Display::MAX_LEN - 4, $_5) . $_4; echo Display::LN;
   }
 
-  private static function cho(&$cho, $navs, $items) {
+  private static function cho(&$cho, $navs, $items, $closure = null) {
     self::display($cho, $navs, $items);
 
     Keyboard::listener(function($code, $keyboard) use (&$cho, $navs, $items) {
@@ -384,95 +384,88 @@ class Menu {
     return $cho;
   }
 
-  public static function env($cho = 1) {
-    $cho = self::cho($cho, ['主選單', '初始專案環境'], [
-      ['開發環境', 'Development Environment'],
-      ['測試環境', 'Testing Environment'],
-      ['預備環境', 'Staging Environment'],
-      ['正式環境', 'Production Environment'],
-    ]);
+  // public static function env($cho = 1) {
+  //   $cho = self::cho($cho, ['主選單', '初始專案環境'], [
+  //     ['開發環境', 'Development Environment'],
+  //     ['測試環境', 'Testing Environment'],
+  //     ['預備環境', 'Staging Environment'],
+  //     ['正式環境', 'Production Environment'],
+  //   ]);
 
-    switch ($cho) {
-      case 1:  echo "開發環境";; break;
-      case 2:  echo "測試環境";; break;
-      case 3:  echo "預備環境";; break;
-      case 4:  echo "正式環境";; break;
-      default: Menu::main(1); break;
-    }
-  }
+  //   switch ($cho) {
+  //     case 1:  echo "開發環境";; break;
+  //     case 2:  echo "測試環境";; break;
+  //     case 3:  echo "預備環境";; break;
+  //     case 4:  echo "正式環境";; break;
+  //     default: Menu::main(1); break;
+  //   }
+  // }
 
-  public static function create($cho = 1) {
-    $cho = self::cho($cho, ['主選單', '新增檔案'], [
-      ['新增 Migration 檔案', 'Create Migration'],
-      ['新增 Model 檔案', 'Create Model'],
-    ]);
+  // public static function create($cho = 1) {
+  //   $cho = self::cho($cho, ['主選單', '新增檔案'], [
+  //     ['新增 Migration 檔案', 'Create Migration'],
+  //     ['新增 Model 檔案', 'Create Model'],
+  //   ]);
 
-    switch ($cho) {
-      case 1:  echo "新增 Migration ";; break;
-      case 2:  echo "新增 Model ";; break;
-      default: Menu::main(2); break;
-    }
-  }
+  //   switch ($cho) {
+  //     case 1:  echo "新增 Migration ";; break;
+  //     case 2:  echo "新增 Model ";; break;
+  //     default: Menu::main(2); break;
+  //   }
+  // }
 
-  public static function migration($cho = 1) {
-    $cho = self::cho($cho, ['主選單', '執行 Migration'], [
-      ['更新至最新版', 'Update to the latest version'],
-      ['輸入更新版號', 'Enter the version number'],
-    ]);
+  // public static function migration($cho = 1) {
+  //   $cho = self::cho($cho, ['主選單', '執行 Migration'], [
+  //     ['更新至最新版', 'Update to the latest version'],
+  //     ['輸入更新版號', 'Enter the version number'],
+  //   ]);
 
-    switch ($cho) {
-      case 1:  echo "更新至最新版 ";; break;
-      case 2:  echo "輸入更新版號 ";; break;
-      default: Menu::main(3); break;
-    }
-  }
+  //   switch ($cho) {
+  //     case 1:  echo "更新至最新版 ";; break;
+  //     case 2:  echo "輸入更新版號 ";; break;
+  //     default: Menu::main(3); break;
+  //   }
+  // }
 
-  public static function clean($cho = 1) {
-    $cho = self::cho($cho, ['主選單', '清除檔案目錄'], [
-      ['清除 Cache 目錄', 'Clean Cache Dir'],
-      ['清除 Tmp 目錄', 'Clean Tmp Dir'],
-    ]);
+  // public static function clean($cho = 1) {
+  //   $cho = self::cho($cho, ['主選單', '清除檔案目錄'], [
+  //     ['清除 Cache 目錄', 'Clean Cache Dir'],
+  //     ['清除 Tmp 目錄', 'Clean Tmp Dir'],
+  //   ]);
 
-    switch ($cho) {
-      case 1:  echo "清除 Cache 目錄 ";; break;
-      case 2:  echo "清除 Tmp 目錄 ";; break;
-      default: Menu::main(4); break;
-    }
-  }
+  //   switch ($cho) {
+  //     case 1:  echo "清除 Cache 目錄 ";; break;
+  //     case 2:  echo "清除 Tmp 目錄 ";; break;
+  //     default: Menu::main(4); break;
+  //   }
+  // }
 
-  public static function deploy($cho = 1) {
-    $cho = self::cho($cho, ['主選單', '部署專案'], [
-      ['部署測試', 'Deploy Testing'],
-      ['部署預備', 'Deploy Staging'],
-      ['部署正式', 'Deploy Production'],
-    ]);
+  // public static function deploy($cho = 1) {
+  //   $cho = self::cho($cho, ['主選單', '部署專案'], [
+  //     ['部署測試', 'Deploy Testing'],
+  //     ['部署預備', 'Deploy Staging'],
+  //     ['部署正式', 'Deploy Production'],
+  //   ]);
 
-    switch ($cho) {
-      case 1:  echo "部署測試 ";; break;
-      case 2:  echo "部署預備 ";; break;
-      case 3:  echo "部署正式 ";; break;
-      default: Menu::main(5); break;
-    }
-  }
+  //   switch ($cho) {
+  //     case 1:  echo "部署測試 ";; break;
+  //     case 2:  echo "部署預備 ";; break;
+  //     case 3:  echo "部署正式 ";; break;
+  //     default: Menu::main(5); break;
+  //   }
+  // }
 
   public static function main($cho = 1) {
     $cho = self::cho($cho, ['主選單'], [
-      ['初始專案環境', 'Init Project Environment'],
-      ['新增檔案', 'Create Migration or Model'],
-      ['執行 Migration', 'Migration Update'],
-      ['清除檔案目錄', 'Clean Cache'],
-      ['部署專案', 'Deploy Project'],
+      ['初始專案環境', 'Init Project Environment', 'Menu::env'],
+      ['新增檔案', 'Create Migration or Model', 'Menu::create'],
+      ['執行 Migration', 'Migration Update', 'Menu::migration'],
+      ['清除檔案目錄', 'Clean Cache', 'Menu::clean'],
+      ['部署專案', 'Deploy Project', 'Menu::deploy'],
     ]);
-
-    switch ($cho) {
-      case 1:  Menu::env(); break;
-      case 2:  Menu::create(); break;
-      case 3:  Menu::migration(); break;
-      case 4:  Menu::clean(); break;
-      case 5:  Menu::deploy(); break;
-      default: break;
-    }
   }
 }
-
-Menu::main();
+echo '<meta http-equiv="Content-type" content="text/html; charset=utf-8" /><pre>';
+var_dump(is_callable('Menu::main'));
+exit();
+// Menu::main();
