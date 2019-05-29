@@ -19,7 +19,8 @@ body {
   font-family: "微軟正黑體", system, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   @include range-width(0, 750px) {
-    padding: 8px 0;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 1.00);
   };
 }
 
@@ -27,57 +28,99 @@ main {
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
-}
-
-article, table {
-  position: relative;
-  text-align: left;
-  margin-top: 20px + 30px;
-  padding: 16px 20px;
 
   background-color: white;
   border-top: 1px solid rgba(230, 230, 230, 1.00);
   border-left: 1px solid rgba(225, 225, 225, 1.00);
   border-right: 1px solid rgba(212, 212, 212, 1.00);
   border-bottom: 1px solid rgba(212, 212, 212, 1.00);
-
-  @include border-radius(2px);
-
-  &:first-child {
-    margin-top: 30px;
+  
+  @include range-width(0, 750px) {
+    border: 0;
   }
+}
+
+h1 {
+  display: inline-block;
+  width: 100%;
+  height: 72px;
+  line-height: 72px;
+  margin: 0;
+  padding: 0;
+  padding-left: 32px;
+  
+  color: rgba(94, 94, 94, 1.00);
+  font-size: 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(230, 230, 230, 1.00);
+
+  + article {
+    margin-top: 30px + 16px;
+  }
+  &:before {
+    content: '⚠';
+    color: rgba(140, 140, 140, 1.00);
+    font-size: 32px;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  @include range-width(0, 750px) {
+    padding-left: 16px;
+    font-size: 16px;
+
+    &:before {
+      font-size: 26px;
+      margin-right: 4px;
+    }
+  }
+}
+
+article {
+  position: relative;
+  text-align: left;
+
+  margin-top: 30px + 30px;
+  padding: 8px 32px;
 
   &:before {
     content: attr(data-title);
     position: absolute;
-    top: -30px;
-    left: 0;
-    display: inline-block;
-    width: 100%;
+    top: -26px;
+    left: 32px;
 
     height: 26px;
     line-height: 26px;
 
-    font-size: 16px;
-    color: rgba(152, 147, 147, .9);
+    color: rgba(120, 120, 120, 1.00);
+    font-size: 14px;
     font-weight: bold;
-
-    @include text-shadow(1px 1px rgba(255, 255, 255, .75));
+  }
+  &:first-child {
+    margin-top: 30px + 16px;
   }
   @include range-width(0, 750px) {
-    border-top: 1px solid rgba(222, 222, 222, 1.00);
-    border-left: 0;
-    border-right: 0;
-    @include border-radius(0);
+    padding: 8px;
     &:before {
-      padding-left: 8px;
+      left: 8px;
     }
   }
 }
 
 blockquote {
   margin: 0;
-  color: rgba(120, 120, 120, 1.00);
+  padding: 12px 8px;
+
+  border: 1px solid rgba(222, 222, 222, 1.00);
+  border-left-width: 5px;
+
+  color: rgba(0, 0, 0, 1.00);
+  background-color: rgba(245, 245, 245, 1.00);;
+
+  @include border-right-radius(3px);
+  
+  + blockquote {
+    margin-top: 8px;
+  }
 }
 
 pre {
@@ -86,90 +129,88 @@ pre {
   font-size: 16px;
 }
 
+
 ul{
   margin: 0;
-  padding-left: 20px;
+  padding-left: 44px;
   list-style-type: none;
 }
 
 li{
   position: relative;
-  
   line-height: 23px;
   word-break: break-all;
-  
   font-size: 14px;
   color: rgba(87, 88, 89, 1.00);
   
   &:before{
-    content: '';
+    content: attr(data-title) '：';
 
     position: absolute;
-    left: -18px;
+    top: 0;
+    left: -44px;
 
     display: inline-block;
 
     font-weight: bold;
     color: rgba(46, 47, 48, 1.00);
-  }
-  &:not([data-title]) {
-    &:before {
-      top: 7px;
-      width: 9px;
-      height: 9px;
-      background-color: rgba(0, 0, 0, .15);
-      @include border-radius(50%);
-    }
-  }
-  &[data-title] {
-    padding-left: 22px;
 
-    &:before {
-      top: 0;
-      content: attr(data-title) '：';
-      width: auto;
-    }
   }
-
   + li {
     margin-top: 8px;
   }
 }
 
+
 table {
   padding: 0;
   width: 100%;
+
   border-spacing: 0;
   border-collapse: separate;
+
   font-size: 14px;
   color: rgba(46, 47, 48, 1);
-  border-top: 1px solid rgba(25, 25, 25, .15);
+
   @include border-radius(0);
 }
 
-td, th{
+td, th {
   line-height: 20px;
   word-break: break-all;
   word-break: break-word;
+  vertical-align: middle;
   
   &.c { text-align: center; }
   &.l { text-align: left; }
   &.r { text-align: right; }
-  &:first-child {
-    border-left: 0;
-  }
 }
 
+$c1: rgba(222, 222, 222, 1);
+$c2: rgba(230, 230, 230, 1);
+
 th {
+  font-weight: normal;
+
   padding: 6px;
-  background-color: rgba(228, 228, 228, 1);
-  border-left: 1px solid rgba(210, 210, 210, 1);
+  background-color: rgba(245, 245, 245, 1.00);
+  border-left: 1px solid $c1;
+  border-top: 1px solid $c1;
+  font-size: 13px;
+  
+  &:last-child {
+    border-right: 1px solid $c1;
+  }
 }
 
 td {
   padding: 6px;
-  border-left: 1px solid rgba(230, 230, 230, 1);
-  border-top: 1px solid rgba(230, 230, 230, 1);
+  font-size: 13px;
+  border-left: 1px solid $c2;
+  border-top: 1px solid $c2;
+  &:last-child {
+    border-right: 1px solid $c2;
+  }
 }
 
 thead {
@@ -179,12 +220,30 @@ thead {
 }
 
 tbody {
-  tr {
-    &:nth-child(2n+1){
-      background-color: white;
+  th {
+    width: 64px;
+    text-align: right;
+
+    + td {
+      border-left: 1px solid $c1;
     }
-    &:nth-child(2n){
-      background-color: rgba(247, 247, 247, 1);
+  }
+  tr:first-child {
+    th {
+      + td {
+        border-top: 1px solid $c2;
+      }
+    }
+    td {
+      border-top: 1px solid $c1;
+    }
+  }
+  tr:last-child {
+    th {
+      border-bottom: 1px solid $c1;
+    }
+    td {
+      border-bottom: 1px solid $c2;
     }
   }
 }
@@ -196,12 +255,13 @@ input {
   display: none;
   width: 0;
   height: 0;
-  @include opacity(0);
   @include scale(0);
+  @include opacity(0);
+
   &:checked {
     + label {
       width: auto;
-      font-size: 14px;
+      font-size: 13px;
       
       &:after {
         content: "";
@@ -237,7 +297,7 @@ label {
     width: 100%;
     height: 100%;
     
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
 
     @include transition(background-color .3s);
@@ -247,17 +307,15 @@ label {
 span {
   display: inline-block;
   width: 100%;
+
   margin-top: 8px;
   margin-bottom: 16px;
+  padding-right: 32px;
 
   text-align: right;
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(160, 160, 160, 1.00);
-  
-  @include range-width(0, 750px) {
-    margin-top: 16px;
-    text-align: center;
-  }
+  @include opacity(.85);
 }
 
 a {
