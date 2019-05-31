@@ -312,6 +312,9 @@ abstract class Item {
     return $this;
   }
 
+  public function back() {
+    return $this->parent ? $this->parent->choice($this->index() + 1) : null;
+  }
   public function index() {
     if (!$this->parent)
       return 0;
@@ -341,8 +344,34 @@ abstract class Item {
 }
 
 class Doing extends Item {
+  private $thingFunc;
+  private $check;
+  public function check($check) {
+    $this->check = $check;
+    return $this;
+  }
+  public function thing($thingFunc) {
+    $this->thingFunc = $thingFunc;
+    return $this;
+  }
   public function choice() {
-    echo $this->title;
+    if (!is_callable($thingFunc = $this->thingFunc))
+      return $this->back();
+    
+    if ($this->check) {
+      while (true) {
+        echo " ➜ 是否正確[y：沒錯, n：不是]：";
+        $input = strtolower(trim(readline()));
+        if (in_array($input, ['y', 'n']))
+          break;
+
+        echo "\033[1A\33[K";
+      }
+
+      exit($input);
+    }
+
+    return $thingFunc($this);
   }
 } 
 
@@ -443,13 +472,18 @@ class Menu extends Item {
     })->run();
 
     if (!isset($this->items[$cho - 1]))
-      return $this->parent ? $this->parent->choice($this->index() + 1) : null;
+      return $this->back();
 
     return $this->items[$cho - 1]->choice();
   }
 }
 
 $initDevelopmentEnv = Doing::create('開發環境', 'Development Environment');
+$initDevelopmentEnv->check(true);
+$initDevelopmentEnv->thing(function() {
+  echo "string";
+});
+
 $initTestingEnv     = Doing::create('測試環境', 'Testing Environment');
 $initStagingEnv     = Doing::create('預備環境', 'Staging Environment');
 $initProductionEnv  = Doing::create('正式環境', 'Production Environment');
