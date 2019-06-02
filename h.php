@@ -354,6 +354,7 @@ class Doing extends Item {
     $this->thingFunc = $thingFunc;
     return $this;
   }
+
   public function choice() {
     if (!is_callable($thingFunc = $this->thingFunc))
       return $this->back();
