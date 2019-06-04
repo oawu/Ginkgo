@@ -591,7 +591,7 @@ $_CircleAnimation: false !global;
   @include input-placeholder {
     font-weight: normal;
     color: rgba(175, 175, 175, 1);
-    font-size: $height * 0.475;
+    font-size: 14px;
   }
 
   &:focus {
