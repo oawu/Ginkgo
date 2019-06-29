@@ -73,6 +73,7 @@ function menu($code = 0) {
     '123',
     'abc',
   ];
+
   $top = 2;
   $bottom = 3;
 
