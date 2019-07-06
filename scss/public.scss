@@ -7,24 +7,170 @@
 
 @import "Ginkgo";
 
-html {
+body {
+  margin: 0;
+  text-align: center;
+  background-color: rgba(55, 56, 50, 1.00);
+}
+
+body, h1, h1:before, p, article, article:before, div, div:before, svg, a, a:after, i, section, footer {
+  display: inline-block;
+}
+
+a, i {
+  float: left;
+}
+
+html, body, article, div, a {
   position: relative;
-
-  body {
-    position: relative;
-
-    display: inline-block;
-    width: 100%;
-
-    margin: 0;
-    padding: 0;
-
-    color: rgba(90, 90, 90, 1.00);
-    text-align: center;
-    font-size: medium;
-    font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
-    
-    // 文字染色，背景色、文字色
-    @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+}
+article:before, div:before, a:after {
+  position: absolute;
+}
+article:before, div:before {
+  left: 0;
+  top: 0;
+}
+body, h1, article:before, div, footer, p {
+  width: 100%;
+}
+h1 {
+  margin-top: 32px;
+  color: rgba(215, 215, 215, 1.00);
+  font-size: 56px;
+  font-family: Comfortaa;
+  height: 72px;
+  line-height: 72px;
+  &:after {
+    color: rgba(230, 230, 230, 1);
+    font-size: 64px;
+    margin-left: 6px;
   }
+  &[v7]:after {
+    content: '7';
+  }
+  @include text-shadow(1px 1px 10px rgba(0, 0, 0, .5));
+}
+p {
+  color: white;
+  margin: 0;
+  margin-top: -30px;
+  color: rgba(127, 127, 127, 1.00);
+  + p {
+    margin-top: 4px;
+  }
+  + footer {
+    margin-top: 52px;
+  }
+}
+
+article {
+  width: calc(100% - #{8px * 2});
+  max-width: 500px;
+  text-align: left;
+  padding: 12px 8px;
+  padding-left: 0;
+  margin: 0 8px;
+  margin-top: 20px;
+  background-color: rgba(40, 41, 35, 1.00);
+  overflow: hidden;
+  overflow-x: auto;
+
+  @include border-radius(3px);
+  @include box-shadow(inset 1px 1px 2px rgba(0, 0, 0, .3), 1px 1px 1px rgba(255, 255, 255, .075));
+
+  &:before {
+    content: '';
+    height: 100%;
+    width: 36px;
+    background-color: rgba(40, 41, 35, 1.00);
+    @include box-shadow(0 0 5px rgba(0, 0, 0, .3), 0 0 1px rgba(0, 0, 0, .2));
+  }
+}
+
+div {
+  width: 420px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 16px;
+  padding-left: 36px + 12px;
+  color: rgba(248, 248, 242, 1.00);
+  font-family: Hack, Comfortaa;
+
+  &:before {
+    width: 36px;
+    color: rgba(144, 145, 139, 1.00);
+    font-size: 13px;
+    font-weight: 100;
+    text-align: center;
+  }
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}):before {
+      content: "0#{$i}";
+    }
+  }
+}
+
+.blue {
+  color: rgba(97, 216, 241, 1.00);
+}
+
+.yellow {
+  color: rgba(211, 201, 100, 1.00);
+}
+
+.red {
+  color: rgba(238, 27, 107, 1.00);
+}
+
+.space {
+  padding-left: 16px;
+}
+
+svg {
+  width: 14px;
+  height: 14px;
+  fill: white;
+  margin-right: 2px;
+  margin-top: (20px - 14px) / 2 - 1px;
+  fill: rgba(105, 106, 101, 1.00);
+  @include transition(fill .3s);
+}
+
+a {
+  text-decoration: none;
+  color: rgba(126, 128, 124, 1.00);
+  @include transition(color .3s);
+  font-family: Comfortaa;
+  font-size: 13px;
+  
+  &:hover {
+    color: rgba(156, 157, 156, 1.00);
+    svg {
+      fill: rgba(156, 157, 156, .7500);
+    }
+  }
+  &:after {
+    left: -11px;
+    top: calc(50% - #{12px / 2});
+    width: 1px;
+    height: 12px;
+    border-left: 1px solid rgba(255, 255, 255, .1);
+  }
+  + a {
+    margin-left: 20px + 1px;
+    &:after {
+      content: '';
+    }
+  }
+}
+
+section {
+  height: 20px;
+  line-height: 20px;
+  @include clearfix();
+}
+
+footer {
+  margin-top: 16px;
 }

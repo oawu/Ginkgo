@@ -5,5 +5,4 @@
  * @link        https://www.ioa.tw/
  */
  
-$(function() {
-});
+$(function() {});
