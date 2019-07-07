@@ -7,16 +7,546 @@
 
     <title></title>
 
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css' rel='stylesheet' >
+
     <link rel="stylesheet" type="text/css" href="css/icon.css">
     <link rel="stylesheet" type="text/css" href="css/public.css">
 
-    <script language="javascript" type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script language="javascript" type="text/javascript" src="js/public.js"></script>
   </head>
   <body>
-    
-    <h1>嗨，世界你好！</h1>
-    <span style="color: rgba(120, 120, 120, 1.00);">Ginkgo 版本 4.0.1</span>
+    <!-- <div id="load" class='hide'><h1></h1><p></p><div><i></i><i></i><i></i></div><span data-version="7.1.0"></span></div> -->
+
+    <div id="menu" data-tip='a'>
+      <form id="search">
+        <input type="text" id='input' placeholder="你想找什麼？" required>
+      </form>
+
+      <div id="apis">
+        <div class="apis" data-title="Account" data-cnt="2">
+          <label class="api active" data-type="get" data-name="GetApiAccount" data-url="/api/account" class="active">我的帳戶</label>
+          <label class="api" data-type="post" data-name="PostApiAccount" data-url="/api/account">新增、修改帳戶</label>
+        </div>
+
+        <div class="apis" data-title="Adv" data-cnt="11">
+          <label class="api" data-type="delete" data-name="DeleteApiAdvId" data-url="/api/adv/:id">刪除廣告</label>
+          <label class="api" data-type="get" data-name="GetApiAdvId" data-url="/api/adv/:id">檢視廣告</label>
+          <label class="api" data-type="get" data-name="GetApiAdvsHot" data-url="/api/advs/hot">熱門動態廣告列表</label>
+          <label class="api" data-type="get" data-name="GetApiAdvsOneId" data-url="/api/advs/one/:id">廣告列表單筆</label>
+          <label class="api" data-type="post" data-name="PostApiAdv" data-url="/api/adv">新增廣告</label>
+          <label class="api" data-type="post" data-name="PostApiAdvIdLike" data-url="/api/adv/:id/like">喜歡廣告</label>
+          <label class="api" data-type="post" data-name="PostApiAdvIdPv" data-url="/api/adv/:id/pv">廣告PV</label>
+          <label class="api" data-type="post" data-name="PostApiAdvIdReport" data-url="/api/adv/:id/report">檢舉廣告</label>
+          <label class="api" data-type="put" data-name="PutApiAdvId" data-url="/api/adv/:id">修改廣告</label>
+          <label class="api" data-type="put" data-name="PutApiAdvIdEnable" data-url="/api/adv/:id/enable">上架廣告</label>
+          <label class="api" data-type="put" data-name="PutApiAdvIdReview" data-url="/api/adv/:id/review">審核廣告</label>
+        </div>
+        <div class="apis" data-title="AdvOrder" data-cnt="6">
+          <label class="api" data-type="get" data-name="GetAdvOrdersUser" data-url="adv/orders/user">拍 sir 讀取交易明細(版權訂單)</label>
+          <label class="api" data-type="get" data-name="GetApiAdvOrders" data-url="/api/adv/orders">廣告訂單列表</label>
+          <label class="api" data-type="get" data-name="GetApiAdvOrdersIdNum" data-url="/api/adv/orders/(id:num)">廣告訂單內容</label>
+          <label class="api" data-type="get" data-name="GetApiAdvOrdersInfo" data-url="/api/adv/orders/info">版權資訊格式</label>
+          <label class="api" data-type="get" data-name="GetApiAdvOrdersTab" data-url="/api/adv/orders/tab">廣告訂單 Tab</label>
+          <label class="api" data-type="post" data-name="PostApiAdvOrders" data-url="/api/adv/orders">新增訂單</label>
+        </div>
+        <div class="apis" data-type="post" data-title="Auth" data-cnt="8">
+          <label class="api" data-name="PostApiAuthEmailExist" data-url="/api/auth/email/exist">E-Mail 是否存在</label>
+          <label class="api" data-type="post" data-name="PostApiAuthFacebookLogin" data-url="/api/auth/facebook/login">臉書登入</label>
+          <label class="api" data-type="post" data-name="PostApiAuthForget" data-url="/api/auth/forget">忘記密碼</label>
+          <label class="api" data-type="post" data-name="PostApiAuthGoogleLogin" data-url="/api/auth/google/login">谷歌登入</label>
+          <label class="api" data-type="post" data-name="PostApiAuthLogin" data-url="/api/auth/login">帳密登入</label>
+          <label class="api" data-type="post" data-name="PostApiAuthRegister" data-url="/api/auth/register">帳密註冊</label>
+          <label class="api" data-type="post" data-name="PostApiAuthResetPassword" data-url="/api/auth/reset/password">重設密碼</label>
+          <label class="api" data-type="post" data-name="PostApiAuthVerifyEmail" data-url="/api/auth/verify/email">重新驗證 E-Mail</label>
+        </div>
+        <div class="apis" data-title="Bonus" data-cnt="4">
+          <label class="api" data-type="get" data-name="GetApiBonusAmount" data-url="/api/bonus/amount">獎金統計</label>
+          <label class="api" data-type="get" data-name="GetApiBonuses" data-url="/api/bonuses">獎金列表</label>
+          <label class="api" data-type="get" data-name="GetApiRecords" data-url="/api/records">交易紀錄</label>
+          <label class="api" data-type="post" data-name="PostApiBonusReceive" data-url="/api/bonus/receive">領取獎金</label>
+        </div>
+        <div class="apis" data-type="delete" data-title="Brand" data-cnt="7">
+          <label class="api" data-name="DeleteApiBrandId" data-url="/api/brand/:id">刪除品牌</label>
+          <label class="api" data-type="get" data-name="GetApiBrandId" data-url="/api/brand/:id">品牌內容</label>
+          <label class="api" data-type="get" data-name="GetApiBrandIdAdvs" data-url="/api/brand/:id/advs">品牌頁面廣告列表</label>
+          <label class="api" data-type="get" data-name="GetApiBrandIdAdvsYet" data-url="/api/brand/:id/advs/yet">未審核廣告列表</label>
+          <label class="api" data-type="get" data-name="GetApiBrandIdProducts" data-url="/api/brand/:id/products">品牌下的商品列表</label>
+          <label class="api" data-type="post" data-name="PostApiBrand" data-url="/api/brand">新增品牌</label>
+          <label class="api" data-type="put" data-name="PutApiBrandId" data-url="/api/brand/:id">修改品牌</label>
+        </div>
+        <div class="apis" data-type="post" data-title="Device" data-cnt="1">
+          <label class="api" data-name="PostApiDevice" data-url="/api/device">新增 Device</label>
+        </div>
+        <div class="apis" data-type="delete" data-title="Message" data-cnt="4">
+          <label class="api" data-name="DeleteApiAdvIdMessageMessageid" data-url="/api/adv/:id/message/:messageId">刪除留言</label>
+          <label class="api" data-type="get" data-name="GetApiAdvIdMessages" data-url="/api/adv/:id/messages">留言列表</label>
+          <label class="api" data-type="post" data-name="PostApiAdvIdMessage" data-url="/api/adv/:id/message">新增留言</label>
+          <label class="api" data-type="put" data-name="PutApiAdvIdMessageMessageid" data-url="/api/adv/:id/message/:messageId">修改留言</label>
+        </div>
+        <div class="apis" data-title="My" data-cnt="4">
+          <label class="api" data-type="get" data-name="GetApiMy" data-url="/api/my">取得帳號個人資料</label>
+          <label class="api" data-type="get" data-name="GetApiMyBrands" data-url="/api/my/brands">我的品牌列表</label>
+          <label class="api" data-type="put" data-name="PutApiMy" data-url="/api/my">修改個人資料</label>
+          <label class="api" data-type="put" data-name="PutApiMyPassword" data-url="/api/my/password">修改個人密碼</label>
+        </div>
+        <div class="apis" data-title="Notify" data-cnt="2">
+          <label class="api" data-type="get" data-name="GetApiNotifies" data-url="/api/notifies">通知列表</label>
+          <label class="api" data-type="put" data-name="PutApiNotifyIdRead" data-url="/api/notify/:id/read">已讀通知</label>
+        </div>
+        <div class="apis" data-title="Other" data-cnt="9">
+          <label class="api" data-type="get" data-name="GetApiAddress" data-url="/api/address">台灣地址資訊</label>
+          <label class="api" data-type="get" data-name="GetApiAdvFailReasons" data-url="/api/adv/fail/reasons">審核不通過的罐頭原因</label>
+          <label class="api" data-type="get" data-name="GetApiAlerts" data-url="/api/alerts">公告列表</label>
+          <label class="api" data-type="get" data-name="GetApiBanks" data-url="/api/banks">銀行列表</label>
+          <label class="api" data-type="get" data-name="GetApiExplains" data-url="/api/explains">使用說明</label>
+          <label class="api" data-type="get" data-name="GetApiTerms" data-url="/api/terms">使用條款</label>
+          <label class="api" data-type="get" data-name="GetApiUpload" data-url="/api/upload">上傳條件</label>
+          <label class="api" data-type="get" data-name="GetApiVersion" data-url="/api/version">取得版本</label>
+          <label class="api" data-type="post" data-name="PostApiContact" data-url="/api/contact">新增意見</label>
+        </div>
+        <div class="apis" data-type="delete" data-title="Product" data-cnt="6">
+          <label class="api" data-name="DeleteApiProductId" data-url="/api/product/:id">刪除商品</label>
+          <label class="api" data-type="get" data-name="GetApiProductId" data-url="/api/product/:id">商品內容</label>
+          <label class="api" data-type="get" data-name="GetApiProducts" data-url="/api/products">商品列表</label>
+          <label class="api" data-type="post" data-name="PostApiProduct" data-url="/api/product">新增商品</label>
+          <label class="api" data-type="put" data-name="PutApiProductId" data-url="/api/product/:id">修改商品</label>
+          <label class="api" data-type="put" data-name="PutApiProductIdEnable" data-url="/api/product/:id/enable">上架商品</label>
+        </div>
+        <div class="apis" data-title="Search" data-cnt="4">
+          <label class="api" data-type="get" data-name="GetApiSearchBrands" data-url="/api/search/brands">搜尋品牌</label>
+          <label class="api" data-type="get" data-name="GetApiSearchUsers" data-url="/api/search/users">搜尋使用者</label>
+          <label class="api" data-type="post" data-name="PostApiSearchBrandIdCnt" data-url="/api/search/brand/:id/cnt">增加品牌搜尋次數</label>
+          <label class="api" data-type="post" data-name="PostApiSearchUserIdCnt" data-url="/api/search/user/:id/cnt">增加使用者搜尋次數</label>
+        </div>
+        <div class="apis" data-title="User" data-cnt="2">
+          <label class="api" data-type="get" data-name="GetApiUserId" data-url="/api/user/:id">取得使用者</label>
+          <label class="api" data-type="get" data-name="GetApiUserIdAdvs" data-url="/api/user/:id/advs">使用者頁面的廣告列表</label>
+        </div>
+      </div>
+
+      <footer id="footer">
+        <span>版型設計 by</span>
+        <a href="https://www.ioa.tw/f=apidoc" target="_blank">OA Wu</a>
+        <span>，程式碼：</span>
+        <a href="https://github.com/comdan66/OA-apiDoc-Template.git" target="_blank">GitHub</a>
+      </footer>
+    </div>
+
+    <main id="main">
+      <div id="container">
+
+        <header id="header">
+          <h1 data-title="GetAdvOrdersUser">拍 sir 讀取交易明細(版權訂單)</h1>
+          <section>
+            <p>ddddddd</p>
+          </section>
+          
+          <div id="url" data-type="get"><code>adv/orders/user</code></div>
+        </header>
+
+    <!-- 
+        <div class="important">
+          <div><span>sss</span><div><p>sssss<code>wwwwww</code></p></div><div><p>sssss<code>wwwwww</code></p></div></div>
+          <div><span>sss</span><div><p>sssss<code>wwwwww</code></p></div></div>
+        </div> -->
+
+
+        <div id="formats" data-i="1">
+          <div id="tabs">
+            <label class="tab" data-name="h">Header</label>
+            <label class="tab active" data-name="s">成功</label>
+            <label class="tab" data-name="e">錯誤</label>
+          </div>
+
+          <div id="panels">
+            <div class='panel'>
+
+<table class='list'>
+  <thead>
+    <tr>
+      <th width='80' class='center'>必須</th>
+      <th width='120'>類型</th>
+      <th width='200'>Key</th>
+      <th>敘述</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Array</td>
+      <td>advs</td>
+      <td><p>廣告陣列</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.id</td>
+      <td><p>廣告 ID</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>String</td>
+      <td>advs.title</td>
+      <td><p>廣告標題</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>String</td>
+      <td>advs.content</td>
+      <td><p>廣告內容</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>String</td>
+      <td>advs.status</td>
+      <td><p>審核狀態，目前只有 yet、pass、fail、del 四種</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Boolean</td>
+      <td>advs.enable</td>
+      <td><p>上下架</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Boolean</td>
+      <td>advs.isLike</td>
+      <td><p>針對 identity 身份是否按過喜歡</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Boolean</td>
+      <td>advs.dblAvatar</td>
+      <td><p>是否顯示雙頭像</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Datetime</td>
+      <td>advs.createAt</td>
+      <td><p>新增時間</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Datetime</td>
+      <td>advs.at</td>
+      <td><p>顯示時間</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.user</td>
+      <td><p>廣告上傳者</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.user.id</td>
+      <td><p>上傳者 ID</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>String</td>
+      <td>advs.user.name</td>
+      <td><p>上傳者名稱</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.user.avatar</td>
+      <td><p>上傳者頭像</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.user.avatar.ori</td>
+      <td><p>上傳者頭像頭像，原始圖</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.user.avatar.w100</td>
+      <td><p>上傳者頭像頭像，寬 100</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.user.avatar.c120x120</td>
+      <td><p>上傳者頭像頭像，寬 120，高 120，置中裁切</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.brand</td>
+      <td><p>所屬品牌</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.brand.id</td>
+      <td><p>品牌 ID</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>String</td>
+      <td>advs.brand.name</td>
+      <td><p>品牌名稱</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.brand.avatar</td>
+      <td><p>品牌頭像</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.brand.avatar.ori</td>
+      <td><p>品牌頭像頭像，原始圖</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.brand.avatar.w100</td>
+      <td><p>品牌頭像頭像，寬 100</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.brand.avatar.c120x120</td>
+      <td><p>品牌頭像頭像，寬 120，高 120，置中裁切</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Array</td>
+      <td>advs.covers</td>
+      <td><p>封面陣列</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.covers.id</td>
+      <td><p>封面 ID</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.covers.type</td>
+      <td><p>封面類型，目前只有 picture、video 兩種</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.covers.pic</td>
+      <td><p>封面圖片</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.covers.pic.ori</td>
+      <td><p>封面圖片，原始圖</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.covers.pic.w100</td>
+      <td><p>封面圖片，寬 100</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.covers.pic.w1440</td>
+      <td><p>封面圖片，寬 1440</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Url</td>
+      <td>advs.covers.pic.c1200x630</td>
+      <td><p>封面圖片，寬 1200，高 630，置中裁切</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.covers.duration</td>
+      <td><p>封面影音時間長度，單位為 秒</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Object</td>
+      <td>advs.cnt</td>
+      <td><p>數據</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.cnt.pv</td>
+      <td><p>瀏覽數</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.cnt.upv</td>
+      <td><p>不重複瀏覽數</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.cnt.like</td>
+      <td><p>喜歡數</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='need'>必要</span></td>
+      <td>Number</td>
+      <td>advs.cnt.message</td>
+      <td><p>留言數</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Number</td>
+      <td>advs.sellPrice</td>
+      <td><p>拍 Sir 要賣的版權金額，有的話代表可被授權</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Number</td>
+      <td>advs.brandPrice</td>
+      <td><p>品牌需付的金額，有的話代表可被授權</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Object</td>
+      <td>advs.product</td>
+      <td><p>所屬商品，商品廣告才有</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Number</td>
+      <td>advs.product.id</td>
+      <td><p>所屬商品 ID</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>String</td>
+      <td>advs.product.title</td>
+      <td><p>所屬商品標題</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>String</td>
+      <td>advs.product.rule</td>
+      <td><p>所屬商品規則</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>String</td>
+      <td>advs.product.content</td>
+      <td><p>所屬商品敘述</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Boolean</td>
+      <td>advs.product.enable</td>
+      <td><p>所屬商品上下架</p></td>
+    </tr>
+    <tr>
+      <td class='center'><span class='optional'>非必要</span></td>
+      <td>Boolean</td>
+      <td>advs.product.isDelete</td>
+      <td><p>所屬商品是否已經刪除</p></td>
+    </tr>
+  </tbody>
+</table>
+
+              <h3>不是投自己的品牌廣告:</h3>
+
+<pre class="prettyprint language-json sample prettyprinted" style=""><span class="pln">HTTP</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln"> </span><span class="lit">200</span><span class="pln"> OK
+</span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"advs"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+        </span><span class="pun">{</span><span class="pln">
+            </span><span class="str">"id"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"title"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"廣告標題"</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"content"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"廣告內容"</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"status"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"pass"</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"enable"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"isLike"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"dblAvatar"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"createAt"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2018-12-31 12:59:59"</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"user"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="str">"id"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"OA"</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"avatar"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                    </span><span class="str">"ori"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"w100"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"c120x120"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pln">
+                </span><span class="pun">}</span><span class="pln">
+            </span><span class="pun">},</span><span class="pln">
+            </span><span class="str">"brand"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="str">"id"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">7</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"品牌名稱_修改"</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"avatar"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                    </span><span class="str">"ori"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"w100"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"c120x120"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pln">
+                </span><span class="pun">}</span><span class="pln">
+            </span><span class="pun">},</span><span class="pln">
+            </span><span class="str">"covers"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+                </span><span class="pun">{</span><span class="pln">
+                    </span><span class="str">"id"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"type"</span><span class="pun">:</span><span class="pln"> </span><span class="str">'video'</span><span class="pun">,</span><span class="pln">
+                    </span><span class="str">"pic"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                        </span><span class="str">"ori"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                        </span><span class="str">"w100"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                        </span><span class="str">"w1440"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pun">,</span><span class="pln">
+                        </span><span class="str">"c1200x630"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"https://cdn.adpost.com.tw/adpost/other/api_doc/default.jpg"</span><span class="pln">
+                    </span><span class="pun">},</span><span class="pln">
+                    </span><span class="str">"duration"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pln">
+                </span><span class="pun">},</span><span class="pln">
+            </span><span class="pun">],</span><span class="pln">
+            </span><span class="str">"cnt"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="str">"pv"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"upv"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"like"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"message"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+            </span><span class="pun">},</span><span class="pln">
+            </span><span class="str">"sellPrice"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"brandPrice"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">30000</span><span class="pun">,</span><span class="pln">
+            </span><span class="str">"product"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="str">"id"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"title"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"商品標題"</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"rule"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"投稿規則"</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"content"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"商品內容"</span><span class="pln">
+                </span><span class="str">"enable"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+                </span><span class="str">"isDelete"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln">
+            </span><span class="pun">}</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">]</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+              <h3>不是投自己的品牌廣告:</h3>
+
+<pre class="prettyprint language-json sample prettyprinted" style=""><span class="pln">HTTP</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln"> </span><span class="lit">400</span><span class="pln"> </span><span class="typ">Error</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"messages"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+        </span><span class="str">"失敗惹！"</span><span class="pln">
+    </span><span class="pun">]</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+            </div>
+            <div class='panel'>2</div>
+            <div class='panel'>3</div>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+    </main>
 
   </body>
 </html>
