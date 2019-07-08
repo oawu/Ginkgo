@@ -10,11 +10,11 @@ html body::selection { color: white; background-color: #78baff; }
 
 .-pa, .-b-pa:before, .apis:before, .api:before, #url:before, #tabs:before, .-a-pa:after, #menu:after, #search:after, #footer:after, .apis[data-cnt]:not([data-cnt="0"]):not(:empty):after, .api:after, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, .panel { position: absolute; }
 
-.-pr, .-b-pr:before, .-a-pr:after, .apis:empty:after, #search, #apis, #footer, .apis, .api, #main, #url, #tabs, .tab, #panels, .list { position: relative; }
+.-pr, .-b-pr:before, .-a-pr:after, .apis:empty:after, #search, #apis, #footer, .apis, .api, #main, #url, #tabs, .tab, #panels, .list, .tree { position: relative; }
 
 .-di, .-b-di:before, .-a-di:after, #footer a { display: inline; }
 
-.-dib, .-b-dib:before, #menu:before, #apis:before, #main:before, #container:before, .apis:before, #header h1:before, #url:before, #tabs:before, .-a-dib:after, #menu:after, #search:after, #footer:after, .apis:after, .-pf-fu, .-b-pf-fu:before, .-a-pf-fu:after, #load, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, #load div, #load div i, #menu, #search, #apis, #footer, #input, .apis, .api, #main, #header, #header > *, #header section p, #url, #url code, #formats, #tabs, .tab, #panels, .panel, .list td b, .list td p, .need, .optional, h3, .sample { display: inline-block; }
+.-dib, .-b-dib:before, #menu:before, #apis:before, #main:before, #container:before, .apis:before, #header h1:before, #url:before, #tabs:before, .-a-dib:after, #menu:after, #search:after, #footer:after, .apis:after, .-pf-fu, .-b-pf-fu:before, .-a-pf-fu:after, #load, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, #load div, #load div i, #menu, #search, #apis, #footer, #input, .apis, .api, #main, #header, #header > *, #header section p, #url, #url code, #formats, #tabs, .tab, #panels, .panel, .list td b, .list td p, .need, .optional, h3, .sample, .tree { display: inline-block; }
 
 .-db, .-b-db:before, .api:before, .-a-db:after, .api:after, #load h1, #load p, #load span { display: block; }
 
@@ -26,7 +26,7 @@ html body::selection { color: white; background-color: #78baff; }
 
 .-r0, .-b-r0:before, .-a-r0:after { right: 0; }
 
-.-w100, .-b-w100:before, #menu:before, #apis:before, #main:before, #container:before, .apis:before, #tabs:before, .-a-w100:after, .apis:empty:after, .-pf-fu, .-b-pf-fu:before, .-a-pf-fu:after, #load, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, #search, #apis, #footer, #input, .apis, .api, #main, #header, #header > *, #header h1, #header section p, #url, #url code, #formats, #tabs, #panels, .panel, .list, .list td b, .list td p, h3, .sample { width: 100%; }
+.-w100, .-b-w100:before, #menu:before, #apis:before, #main:before, #container:before, .apis:before, #tabs:before, .-a-w100:after, .apis:empty:after, .-pf-fu, .-b-pf-fu:before, .-a-pf-fu:after, #load, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, #search, #apis, #footer, #input, .apis, .api, #main, #header, #header > *, #header h1, #header section p, #url, #url code, #formats, #tabs, #panels, .panel, .list, .list td b, .list td p, h3, .sample, .tree { width: 100%; }
 
 .-h100, .-b-h100:before, #url:before, .-a-h100:after, #menu:after, #search:after, #footer:after, .-pf-fu, .-b-pf-fu:before, .-a-pf-fu:after, #load, .-pa-fu, .-b-pa-fu:before, #load:before, .-a-pa-fu:after, #menu, .panel { height: 100%; }
 
@@ -236,3 +236,30 @@ h3 + .sample { margin-top: 8px; }
 .sample .str { color: #ffcb62 !important; }
 .sample .typ { color: magenta !important; }
 .sample .kwd { color: #a179c1 !important; }
+
+.tree { padding: 8px 16px; background-color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-top: 1px solid #e1e1e1; border-left: 1px solid #e1e1e1; border-right: 1px solid gainsboro; border-bottom: 1px solid gainsboro; }
+
+.branch { width: 100%; display: flex; flex-direction: column-reverse; justify-content: flex-end; align-items: center; }
+.branch > * + * { margin-bottom: 4px; }
+.branch .branch { padding-left: 32px; position: relative; }
+.branch .branch:before { content: ''; position: absolute; top: 0; left: 16px; display: inline-block; width: 16px; height: calc(100% + 4px); border-left: 1px solid #c8c8c8; }
+.branch .branch:after { content: ''; position: absolute; left: 16px; top: 15px; display: inline-block; width: 16px; height: 1px; border-bottom: 1px solid #c8c8c8; }
+.branch .branch:first-child:after { display: none; }
+.branch .branch:first-child:before { height: 15px; border-bottom: 1px solid #c8c8c8; -moz-border-radius-bottomleft: 3px; -webkit-border-bottom-left-radius: 3px; border-bottom-left-radius: 3px; }
+.branch .branch ~ .leave:before { content: ''; }
+
+.leave { position: relative; display: inline-block; width: 100%; padding-left: 4px; padding-right: 4px; *zoom: 1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-transition: background-color 0.3s; -o-transition: background-color 0.3s; -webkit-transition: background-color 0.3s; transition: background-color 0.3s; display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; }
+.leave:after { display: table; content: ""; line-height: 0; clear: both; }
+.leave:hover { background-color: whitesmoke; }
+.leave:hover:after { border-color: rgba(0, 0, 0, 0.1); }
+.leave:hover:before { top: 100%; }
+.leave:before { position: absolute; left: 16px; top: 30px; display: inline-block; width: 16px; height: calc(100% - 26px); border-left: 1px solid #c8c8c8; -moz-transition: top 0.1s; -o-transition: top 0.1s; -webkit-transition: top 0.1s; transition: top 0.1s; }
+.leave:after { position: absolute; left: 0; top: 0; display: inline-block; width: 100%; height: 100%; content: ''; border: 1px solid transparent; -moz-transition: border-color 0.3s; -o-transition: border-color 0.3s; -webkit-transition: border-color 0.3s; transition: border-color 0.3s; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+.leave > * { float: left; display: inline-block; }
+.leave b { font-size: 18px; height: 30px; line-height: 30px; font-family: Comfortaa, Hack, "Helvetica Neue", Helvetica, "Hiragino Maru Gothic ProN", "メイリオ", "ヒラギノ丸ゴ ProN W4", "微軟正黑體", Meiryo, "Droid Sans", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; }
+.leave u, .leave span, .leave i { margin-left: 4px; height: 20px; line-height: 20px; margin-top: 5px; padding: 0 6px; background-color: rgba(0, 0, 255, 0.2); font-size: 13px; font-family: Comfortaa, Hack, "Helvetica Neue", Helvetica, "Hiragino Maru Gothic ProN", "メイリオ", "ヒラギノ丸ゴ ProN W4", "微軟正黑體", Meiryo, "Droid Sans", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; white-space: nowrap; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+.leave i { font-style: normal; }
+.leave i:before { content: '預設值：'; }
+.leave u { background-color: rgba(0, 0, 255, 0.2); text-decoration: none; }
+.leave p { position: relative; margin: 0; margin-left: 28px; color: #787878; padding-top: 4px; font-size: 14px; }
+.leave p:before { content: ''; position: absolute; left: -20px; top: 14px; display: inline-block; width: 12px; height: 1px; line-height: 1px; text-align: center; color: #b4b4b4; border-bottom: 1px solid #c8c8c8; background-color: rgba(0, 0, 255, 0.2); }

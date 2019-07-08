@@ -871,12 +871,48 @@ html {
   font-size: 10px;
   @include border-radius(3px);
 }
-.need {
-  background-color: rgba(227, 85, 88, 1.00);
-}
-.optional {
-  background-color: rgba(167, 167, 167, 1.00);
-}
+.need { background-color: rgba(227, 85, 88, 1.00); }
+.optional { background-color: rgba(167, 167, 167, 1.00); }
+
+// td.n2 {
+//   position: relative;
+//   padding-left: 10px + 10px + 10px;
+//   &:before {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 10px + 5px;
+//     display: inline-block;
+//     width: 10px;
+//     height: 100%;
+//     border-left: 2px solid rgba(200, 200, 200, 1.00);
+//     // border-bottom: 2px solid rgba(200, 200, 200, 1.00);
+//     // background-color: rgba(0, 0, 255, 0.2);
+//   }
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     left: 10px + 5px;
+//     top: 50%;
+//     display: inline-block;
+//     width: 10px;
+//     height: 2px;
+//     border-bottom: 2px solid rgba(200, 200, 200, 1.00);
+
+
+//   }
+//   &.nl {
+//     &:before {
+//       height: 50%;
+//       border-bottom: 2px solid rgba(200, 200, 200, 1.00);
+//       @include border-bottom-left-radius(3px);
+//     }
+//     &:after {
+//       border-bottom: 0;
+//     }
+//   }
+// }
+
 h3 {
   @extend .-dib;
   @extend .-w100;
@@ -920,9 +956,340 @@ h3 {
     color: rgba(161, 121, 193, 1.00) !important
   }
 }
+.tree {
+  @extend .-pr;
+  @extend .-dib;
+  @extend .-w100;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 1.00);
+  @include border-radius(3px);
+
+  $borderColor1: rgba(225, 225, 225, 1);
+  $borderColor3: rgba(220, 220, 220, 1);
+
+  border-top: 1px solid $borderColor1;
+  border-left: 1px solid $borderColor1;
+  border-right: 1px solid $borderColor3;
+  border-bottom: 1px solid $borderColor3;
+}
+// .branch {
+//   @extend .-dib;
+//   @extend .-w100;
+//   height: 30px;
+//   line-height: 30px;
+//   font-family: Hack, Comfortaa, "Helvetica Neue", Helvetica, "Hiragino Maru Gothic ProN", "メイリオ", "ヒラギノ丸ゴ ProN W4", "微軟正黑體", Meiryo, "Droid Sans", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+//   @include clearfix();
+
+//   > * {
+//     float: left;
+//     display: inline-block;
+//   }
+// }
+// .branch {
+//   $borderColor: rgba(200, 200, 200, 1);
+//   display: inline-block;
+//   width: 100%;
+
+//   .leave {
+//     display: inline-block;
+//     width: 100%;
+//     // height: 30px;
+//     // line-height: 30px;
+//     padding-left: 4px;
+//     @include clearfix();
+//     @include border-radius(3px);
+//     @include transition(box-shadow .3s, background-color .3s);
+    
+
+//     &:hover {
+//       background-color: rgba(245, 245, 245, 1);
+//       @include box-shadow(0 0 1px rgba(0, 0, 0, .75));
+//     }
+//     > * {
+//       float: left;
+//       display: inline-block;
+//     }
+//     b {
+//       max-width: 200px;
+      
+//       font-size: 18px;
+//       height: 30px;
+//       line-height: 30px;
+//     }
+//     span, i {
+//       max-width: 80px;
+
+//       margin-left: 4px;
+//       height: 20px;
+//       line-height: 20px;
+//       margin-top: (30px - 20px) / 2;
+//       padding: 0 6px;
+//       background-color: rgba(0, 0, 255, 0.2);
+//       font-size: 13px;
+//       @include border-radius(3px);
+//     }
+//     i {
+//       max-width: 200px;
+//       font-style: normal;
+//       &:before {
+//         content: '預設值：';
+//       }
+//       ~ p {
+//         // max-width: calc(100% - #{200px + 4px + 200px + 4px + 80px + 20px + 8px});
+//       }
+//     }
+//     p {
+//       // max-width: calc(100% - #{200px + 4px + 80px + 20px + 8px});
+
+//       position: relative;
+//       margin: 0;
+//       margin-left: 20px + 8px;
+//       color: rgba(120, 120, 120, 1);
+//       // height: 30px;
+//       // line-height: 30px;
+//       // @include overflow-docx3();
+
+//       &:before {
+//         content: '';
+//         position: absolute;
+//         left: -20px;
+//         top: calc(50% - #{1px / 2});
+//         display: inline-block;
+//         width: 12px;
+//         height: 1px;
+//         line-height: 1px;
+//         text-align: center;
+//         color: rgba(180, 180, 180, 1);
+//         border-bottom: 1px solid $borderColor;
+//       }
+//     }
+//   }
+
+//   .branch {
+//     $w: 16px;
+//     padding-left: $w * 2;
+//     position: relative;
+
+//     &:before {
+//       content: '';
+//       position: absolute;
+//       top: 0;
+//       left: $w;
+
+//       display: inline-block;
+//       width: $w;
+//       height: 100%;
+//       border-left: 1px solid $borderColor;
+//     }
+//     &:after {
+//       content: '';
+//       position: absolute;
+//       left: $w;
+//       top: 15px;
+//       display: inline-block;
+//       width: $w;
+//       height: 1px;
+//       border-bottom: 1px solid $borderColor;
+//     }
+//     &:last-child {
+//       margin-bottom: $w;
+//       &:after {
+//         display: none;
+//       }
+//       &:before {
+//         height: 15px;
+//         border-bottom: 1px solid $borderColor;
+//         @include border-bottom-left-radius(3px);
+//       }
+//     }
+//   }
+// }
+$borderColor: rgba(200, 200, 200, 1);
+$space: 4px;
+$paddingWidth: 16px;
+
+.branch {
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  > * {
+    + * {
+      margin-bottom: $space;
+    }
+  }
+
+  .branch {
+    padding-left: $paddingWidth * 2;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: $paddingWidth;
+
+      display: inline-block;
+      width: $paddingWidth;
+      height: calc(100% + #{$space});
+      border-left: 1px solid $borderColor;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      left: $paddingWidth;
+      top: 15px;
+      display: inline-block;
+      width: $paddingWidth;
+      height: 1px;
+      border-bottom: 1px solid $borderColor;
+    }
+    &:first-child {
+      // margin-bottom: $paddingWidth;
+      &:after {
+        display: none;
+      }
+      &:before {
+        height: 15px;
+        border-bottom: 1px solid $borderColor;
+        @include border-bottom-left-radius(3px);
+      }
+    }
+    ~ .leave {
+      &:before {
+        content: '';
+      }
+    }
+  }
+}
+
+.leave {
+  $h: 30px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  // height: 30px;
+  // line-height: 30px;
+  padding-left: 4px;
+  padding-right: 4px;
+  @include clearfix();
+  @include border-radius(3px);
+  @include transition(background-color .3s);
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 
 
+  &:hover {
+    background-color: rgba(245, 245, 245, 1);
+    // @include box-shadow(0 0 1px rgba(0, 0, 0, .75));
+    &:after {
+      border-color: rgba(0, 0, 0, .1);
+    }
+    &:before {
+      // @include opacity(0);
+      top: 100%;
 
+    }
+  }
+
+  &:before {
+    position: absolute;
+    left: $paddingWidth;
+    top: 30px;
+    display: inline-block;
+    width: $paddingWidth;
+    height: calc(100% - #{30px -   $space});
+    // background-color: rgba(0, 0, 255, 0.2);
+    border-left: 1px solid $borderColor;
+    // @include opacity(1);
+    @include transition(top .1s);
+    
+  }
+  &:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    border: 1px solid rgba(0, 0, 0, 0);
+    @include transition(border-color .3s);
+    @include border-radius(3px);
+  }
+  > * {
+    float: left;
+    display: inline-block;
+  }
+  b {
+    
+    font-size: 18px;
+    height: $h;
+    line-height: $h;
+    font-family: Comfortaa, Hack, "Helvetica Neue", Helvetica, "Hiragino Maru Gothic ProN", "メイリオ", "ヒラギノ丸ゴ ProN W4", "微軟正黑體", Meiryo, "Droid Sans", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+
+  }
+  u, span, i {
+
+    margin-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: ($h - 20px) / 2;
+    padding: 0 6px;
+    background-color: rgba(0, 0, 255, 0.2);
+    font-size: 13px;
+    font-family: Comfortaa, Hack, "Helvetica Neue", Helvetica, "Hiragino Maru Gothic ProN", "メイリオ", "ヒラギノ丸ゴ ProN W4", "微軟正黑體", Meiryo, "Droid Sans", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    white-space:nowrap;
+    @include border-radius(3px);
+  }
+  i {
+    font-style: normal;
+    &:before {
+      content: '預設值：';
+    }
+    ~ p {
+      // max-width: calc(100% - #{200px + 4px + 200px + 4px + 80px + 20px + 8px});
+    }
+  }
+  u {
+    background-color: rgba(0, 0, 255, 0.2);
+    text-decoration: none;
+  }
+  p {
+    // max-width: calc(100% - #{200px + 4px + 80px + 20px + 8px});
+
+    position: relative;
+    margin: 0;
+    margin-left: 20px + 8px;
+    color: rgba(120, 120, 120, 1);
+    padding-top: 4px;
+    font-size: 14px;
+    // height: 30px;
+    // line-height: 30px;
+    // @include overflow-docx3();
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: $h / 2 - 1px;
+      display: inline-block;
+      width: 12px;
+      height: 1px;
+      line-height: 1px;
+      text-align: center;
+      color: rgba(180, 180, 180, 1);
+      border-bottom: 1px solid $borderColor;
+      background-color: rgba(0, 0, 255, 0.2);
+    }
+  }
+}
 
 
 
