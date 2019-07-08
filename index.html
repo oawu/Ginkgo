@@ -164,347 +164,437 @@
           <div id="panels">
             <div class='panel'>
 
-<div class='tree'>
-  <!-- <div class='branch'><b>advs</b><span>Array</span><p>廣告陣列</p></div>
-  <div class='branch'><i></i><b>id</b><span>Number</span><p>廣告 p</span></div>
-  <div class='branch'><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-   -->
-  <div class='branch'>
+              <div class='details' data-i='1' data-title='說明'>
+                <div class='tabs'>
+                  <label>樹狀圖</label>
+                  <label>表格圖</label>
+                </div>
 
-    <div class='branch'>
-      <div class='leave'><b>3 advs</b><span>Array</span><p>廣告陣列</p></div>
-    </div>
+                <div class='panels'>
 
-    <div class='branch'>
-      <div class='branch'>
-        <div class='leave'><b>2-2 advs</b><span>Array</span><p>廣告陣列</p></div>
-      </div>
-      <div class='branch'>
-        <div class='leave'><b>2-1 advs</b><span>Array</span><p>廣告陣列</p></div>
-      </div>
+                  <div class='detail'>
+                    <div class='tree'>
+                      
+                      <div class='branch ' data-count='2'>
+                        <label class='leaves'>
+                          <b>advs</b>
+                          <u>Array</u>
+                          <p>廣告陣列</p>
+                        </label>
 
-      <div class='leave'><b>2 advs</b><span>Array</span><p>廣告陣列</p></div>
-    </div>
+                        <div class='branch' data-count='0'>
+                          <label class='leaves'>
+                            <b>id</b>
+                            <u>Number</u>
+                            <p>廣告 ID</p>
+                          </label>
+                        </div>
+                        <div class='branch' data-count='0'>
+                          <label class='leaves'>
+                            <b class='optional'>title</b>
+                            <u>String</u>
+                            <i>String</i>
+                            <p>廣告標題</p>
+                          </label>
+                        </div>
+                        <div class='branch' data-count='0'>
+                          <label class='leaves'>
+                            <b>enable</b>
+                            <u>Boolean</u>
+                            <p>上下架</p>
+                          </label>
+                        </div>
 
-    <div class='branch'>
-      <div class='leave'><b>1 advs</b><span>Array</span><u>必</u><i>1230</i><p>廣告陣列</p></div>
-    </div>
+                        
+                        <div class='branch close' data-count='3'>
+                          <label class='leaves'>
+                            <b>user</b>
+                            <u>Object</u>
+                            <p>上傳者</p>
+                          </label>
 
-    <div class='leave'><b>advs</b><span>Array</span><u>選</u><i>1230</i><p>1廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列廣告陣列</p></div>
+                          <div class='branch' data-count='0'>
+                            <label class='leaves'>
+                              <b>id</b>
+                              <u>Number</u>
+                              <p>ID</p>
+                            </label>
+                          </div>
 
-  </div>
+                          <div class='branch' data-count='0'>
+                            <label class='leaves'>
+                              <b>name</b>
+                              <u>String</u>
+                              <p>名稱</p>
+                            </label>
+                          </div>
 
-  <!-- 
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><b>title</b><span>String</span><p>廣告標題</p></div>
-  <div class='branch'><i></i><b>title</b><span>String</span><p>廣告標題</p></div> -->
-</div>
+                          <div class='branch' data-count='2'>
+                            <label class='leaves'>
+                              <b>avatar</b>
+                              <u>Object</u>
+                              <p>頭像</p>
+                            </label>
 
-<table class='list'>
-  <thead>
-    <tr>
-      <th width='80' class='center'>必須</th>
-      <th width='120'>類型</th>
-      <th width='200'>Key</th>
-      <th>敘述</th>
-    </tr>
-  </thead>
+                            <div class='branch' data-count='0'>
+                              <label class='leaves'>
+                                <b>ori</b>
+                                <u>Url</u>
+                                <p>原始圖</p>
+                              </label>
+                            </div>
 
-  <tbody>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Array</td>
-      <td>advs</td>
-      <td><p>廣告陣列</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td class='n2'>id</td>
-      <td><p>廣告 ID</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>String</td>
-      <td>advs.title</td>
-      <td><p>廣告標題</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>String</td>
-      <td>advs.content</td>
-      <td><p>廣告內容</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>String</td>
-      <td>advs.status</td>
-      <td><p>審核狀態，目前只有 yet、pass、fail、del 四種</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Boolean</td>
-      <td>advs.enable</td>
-      <td><p>上下架</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Boolean</td>
-      <td>advs.isLike</td>
-      <td><p>針對 identity 身份是否按過喜歡</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Boolean</td>
-      <td>advs.dblAvatar</td>
-      <td><p>是否顯示雙頭像</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Datetime</td>
-      <td>advs.createAt</td>
-      <td><p>新增時間</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Datetime</td>
-      <td>advs.at</td>
-      <td><p>顯示時間</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.user</td>
-      <td><p>廣告上傳者</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.user.id</td>
-      <td><p>上傳者 ID</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>String</td>
-      <td>advs.user.name</td>
-      <td><p>上傳者名稱</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.user.avatar</td>
-      <td><p>上傳者頭像</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.user.avatar.ori</td>
-      <td><p>上傳者頭像頭像，原始圖</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.user.avatar.w100</td>
-      <td><p>上傳者頭像頭像，寬 100</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.user.avatar.c120x120</td>
-      <td><p>上傳者頭像頭像，寬 120，高 120，置中裁切</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.brand</td>
-      <td><p>所屬品牌</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.brand.id</td>
-      <td><p>品牌 ID</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>String</td>
-      <td>advs.brand.name</td>
-      <td><p>品牌名稱</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.brand.avatar</td>
-      <td><p>品牌頭像</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.brand.avatar.ori</td>
-      <td><p>品牌頭像頭像，原始圖</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.brand.avatar.w100</td>
-      <td><p>品牌頭像頭像，寬 100</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.brand.avatar.c120x120</td>
-      <td><p>品牌頭像頭像，寬 120，高 120，置中裁切</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Array</td>
-      <td>advs.covers</td>
-      <td><p>封面陣列</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.covers.id</td>
-      <td><p>封面 ID</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.covers.type</td>
-      <td><p>封面類型，目前只有 picture、video 兩種</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.covers.pic</td>
-      <td><p>封面圖片</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.covers.pic.ori</td>
-      <td><p>封面圖片，原始圖</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.covers.pic.w100</td>
-      <td><p>封面圖片，寬 100</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.covers.pic.w1440</td>
-      <td><p>封面圖片，寬 1440</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Url</td>
-      <td>advs.covers.pic.c1200x630</td>
-      <td><p>封面圖片，寬 1200，高 630，置中裁切</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.covers.duration</td>
-      <td><p>封面影音時間長度，單位為 秒</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Object</td>
-      <td>advs.cnt</td>
-      <td><p>數據</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.cnt.pv</td>
-      <td><p>瀏覽數</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.cnt.upv</td>
-      <td><p>不重複瀏覽數</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.cnt.like</td>
-      <td><p>喜歡數</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='need'>必要</span></td>
-      <td>Number</td>
-      <td>advs.cnt.message</td>
-      <td><p>留言數</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Number</td>
-      <td>advs.sellPrice</td>
-      <td><p>拍 Sir 要賣的版權金額，有的話代表可被授權</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Number</td>
-      <td>advs.brandPrice</td>
-      <td><p>品牌需付的金額，有的話代表可被授權</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Object</td>
-      <td>advs.product</td>
-      <td><p>所屬商品，商品廣告才有</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Number</td>
-      <td>advs.product.id</td>
-      <td><p>所屬商品 ID</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>String</td>
-      <td>advs.product.title</td>
-      <td><p>所屬商品標題</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>String</td>
-      <td>advs.product.rule</td>
-      <td><p>所屬商品規則</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>String</td>
-      <td>advs.product.content</td>
-      <td><p>所屬商品敘述</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Boolean</td>
-      <td>advs.product.enable</td>
-      <td><p>所屬商品上下架</p></td>
-    </tr>
-    <tr>
-      <td class='center'><span class='optional'>非必要</span></td>
-      <td>Boolean</td>
-      <td>advs.product.isDelete</td>
-      <td><p>所屬商品是否已經刪除</p></td>
-    </tr>
-  </tbody>
-</table>
+                            <div class='branch' data-count='0'>
+                              <label class='leaves'>
+                                <b>w100</b>
+                                <u>Url</u>
+                                <p>寬 100 px</p>
+                              </label>
+                            </div>
+                          </div>
 
-              <h3>不是投自己的品牌廣告:</h3>
+                        </div>
 
+                        <div class='branch' data-count='2'>
+                          <label class='leaves'>
+                            <b>brand</b>
+                            <u>Object</u>
+                            <p>所屬品牌</p>
+                          </label>
+
+                          <div class='branch' data-count='0'>
+                            <label class='leaves'>
+                              <b>id</b>
+                              <u>Number</u>
+                              <p>ID</p>
+                            </label>
+                          </div>
+
+                          <div class='branch' data-count='0'>
+                            <label class='leaves'>
+                              <b>name</b>
+                              <u>String</u>
+                              <p>名稱</p>
+                            </label>
+                          </div>
+
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class='detail'>
+                    <table class='list'>
+                      <thead>
+                        <tr>
+                          <th width='80' class='center'>必須</th>
+                          <th width='120'>類型</th>
+                          <th width='200'>Key</th>
+                          <th>敘述</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Array</td>
+                          <td>advs</td>
+                          <td><p>廣告陣列</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.id</td>
+                          <td><p>廣告 ID</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>String</td>
+                          <td>advs.title</td>
+                          <td><p>廣告標題</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>String</td>
+                          <td>advs.content</td>
+                          <td><p>廣告內容</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>String</td>
+                          <td>advs.status</td>
+                          <td><p>審核狀態，目前只有 yet、pass、fail、del 四種</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Boolean</td>
+                          <td>advs.enable</td>
+                          <td><p>上下架</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Boolean</td>
+                          <td>advs.isLike</td>
+                          <td><p>針對 identity 身份是否按過喜歡</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Boolean</td>
+                          <td>advs.dblAvatar</td>
+                          <td><p>是否顯示雙頭像</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Datetime</td>
+                          <td>advs.createAt</td>
+                          <td><p>新增時間</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Datetime</td>
+                          <td>advs.at</td>
+                          <td><p>顯示時間</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.user</td>
+                          <td><p>廣告上傳者</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.user.id</td>
+                          <td><p>上傳者 ID</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>String</td>
+                          <td>advs.user.name</td>
+                          <td><p>上傳者名稱</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.user.avatar</td>
+                          <td><p>上傳者頭像</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.user.avatar.ori</td>
+                          <td><p>上傳者頭像頭像，原始圖</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.user.avatar.w100</td>
+                          <td><p>上傳者頭像頭像，寬 100</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.user.avatar.c120x120</td>
+                          <td><p>上傳者頭像頭像，寬 120，高 120，置中裁切</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.brand</td>
+                          <td><p>所屬品牌</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.brand.id</td>
+                          <td><p>品牌 ID</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>String</td>
+                          <td>advs.brand.name</td>
+                          <td><p>品牌名稱</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.brand.avatar</td>
+                          <td><p>品牌頭像</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.brand.avatar.ori</td>
+                          <td><p>品牌頭像頭像，原始圖</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.brand.avatar.w100</td>
+                          <td><p>品牌頭像頭像，寬 100</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.brand.avatar.c120x120</td>
+                          <td><p>品牌頭像頭像，寬 120，高 120，置中裁切</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Array</td>
+                          <td>advs.covers</td>
+                          <td><p>封面陣列</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.covers.id</td>
+                          <td><p>封面 ID</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.covers.type</td>
+                          <td><p>封面類型，目前只有 picture、video 兩種</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.covers.pic</td>
+                          <td><p>封面圖片</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.covers.pic.ori</td>
+                          <td><p>封面圖片，原始圖</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.covers.pic.w100</td>
+                          <td><p>封面圖片，寬 100</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.covers.pic.w1440</td>
+                          <td><p>封面圖片，寬 1440</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Url</td>
+                          <td>advs.covers.pic.c1200x630</td>
+                          <td><p>封面圖片，寬 1200，高 630，置中裁切</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.covers.duration</td>
+                          <td><p>封面影音時間長度，單位為 秒</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Object</td>
+                          <td>advs.cnt</td>
+                          <td><p>數據</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.cnt.pv</td>
+                          <td><p>瀏覽數</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.cnt.upv</td>
+                          <td><p>不重複瀏覽數</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.cnt.like</td>
+                          <td><p>喜歡數</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='need'>必要</span></td>
+                          <td>Number</td>
+                          <td>advs.cnt.message</td>
+                          <td><p>留言數</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Number</td>
+                          <td>advs.sellPrice</td>
+                          <td><p>拍 Sir 要賣的版權金額，有的話代表可被授權</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Number</td>
+                          <td>advs.brandPrice</td>
+                          <td><p>品牌需付的金額，有的話代表可被授權</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Object</td>
+                          <td>advs.product</td>
+                          <td><p>所屬商品，商品廣告才有</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Number</td>
+                          <td>advs.product.id</td>
+                          <td><p>所屬商品 ID</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>String</td>
+                          <td>advs.product.title</td>
+                          <td><p>所屬商品標題</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>String</td>
+                          <td>advs.product.rule</td>
+                          <td><p>所屬商品規則</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>String</td>
+                          <td>advs.product.content</td>
+                          <td><p>所屬商品敘述</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Boolean</td>
+                          <td>advs.product.enable</td>
+                          <td><p>所屬商品上下架</p></td>
+                        </tr>
+                        <tr>
+                          <td class='center'><span class='optional'>非必要</span></td>
+                          <td>Boolean</td>
+                          <td>advs.product.isDelete</td>
+                          <td><p>所屬商品是否已經刪除</p></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class='details' data-i='1' data-title='結果'>
+                 <div class='tabs'>
+                  <label>不是投自己的品牌廣告</label>
+                  <label>不是投自己的品牌廣告</label>
+                </div>
+
+                <div class='panels'>
+                  <div class='detail'>
 <pre class="prettyprint language-json sample prettyprinted" style=""><span class="pln">HTTP</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln"> </span><span class="lit">200</span><span class="pln"> OK
 </span><span class="pun">{</span><span class="pln">
     </span><span class="str">"advs"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
@@ -567,15 +657,17 @@
         </span><span class="pun">}</span><span class="pln">
     </span><span class="pun">]</span><span class="pln">
 </span><span class="pun">}</span></pre>
-
-              <h3>不是投自己的品牌廣告:</h3>
-
+                  </div>
+                  <div class='detail'>
 <pre class="prettyprint language-json sample prettyprinted" style=""><span class="pln">HTTP</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln"> </span><span class="lit">400</span><span class="pln"> </span><span class="typ">Error</span><span class="pln">
 </span><span class="pun">{</span><span class="pln">
     </span><span class="str">"messages"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
         </span><span class="str">"失敗惹！"</span><span class="pln">
     </span><span class="pun">]</span><span class="pln">
 </span><span class="pun">}</span></pre>
+                  </div>
+                </div>
+              </div>
 
             </div>
             <div class='panel'>2</div>
