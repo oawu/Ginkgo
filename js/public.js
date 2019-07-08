@@ -6,7 +6,7 @@
  */
  
 $(function() {
-  $('.leaves').click(function() {
-    $(this).parent().toggleClass('close');
-  });
+  // $('.leaves').click(function() {
+  //   $(this).parent().toggleClass('close');
+  // });
 });

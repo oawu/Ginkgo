@@ -31,8 +31,12 @@ $loadBg: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAA
 .-b0 { bottom: 0; }                 .-b-b0:before { @extend .-b0; }     .-a-b0:after { @extend .-b0; }
 .-l0 { left: 0; }                   .-b-l0:before { @extend .-l0; }     .-a-l0:after { @extend .-l0; }
 .-r0 { right: 0; }                  .-b-r0:before { @extend .-r0; }     .-a-r0:after { @extend .-r0; }
+
 .-w100 { width: 100%; }             .-b-w100:before { @extend .-w100; } .-a-w100:after { @extend .-w100; }
 .-h100 { height: 100%; }            .-b-h100:before { @extend .-h100; } .-a-h100:after { @extend .-h100; }
+.-w1 { width: 1px; }             .-b-w1:before { @extend .-w1; } .-a-w1:after { @extend .-w1; }
+.-h1 { height: 1px; }            .-b-h1:before { @extend .-h1; } .-a-h1:after { @extend .-h1; }
+
 .-cf { @include clearfix(); }       .-b-cf:before { @extend .-cf; }     .-a-cf:after { @extend .-cf; }
 .-cl { float: left; }               .-b-cl:before { @extend .-cl; }     .-a-cl:after { @extend .-cl; }
 .-cr { float: right; }              .-b-cr:before { @extend .-cr; }     .-a-cr:after { @extend .-cr; }
@@ -54,6 +58,15 @@ $loadBg: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAA
 
 .-cp { cursor: pointer; }
 
+.-doc3 { @include overflow-docx3(); } .-b-doc3:before { @extend .-doc3; } .-a-doc3:after { @extend .-doc3; }
+
+.-o1 { @include opacity(1); } .-b-o1:before { @extend .-o1; } .-a-o1:after { @extend .-o1; }
+.-o0 { @include opacity(0); } .-b-o0:before { @extend .-o0; } .-a-o0:after { @extend .-o0; }
+
+.-m0 { margin: 0; }  .-b-m0:before { @extend .-m0; } .-a-m0:after { @extend .-m0; }
+.-p0 { padding: 0; } .-b-p0:before { @extend .-p0; } .-a-p0:after { @extend .-p0; }
+
+
 html {
   @extend .-pr;
 }
@@ -64,9 +77,8 @@ body {
   @extend .-w100;
   @extend .-f-01;
   @extend .-t-c;
-
-  margin: 0;
-  padding: 0;
+  @extend .-m0;
+  @extend .-p0;
 
   color: rgba(90, 90, 90, 1.00);
   font-size: medium;
@@ -76,17 +88,16 @@ body {
   background-color: rgba(245, 245, 245, 1.00);
 }
 
-
 #load {
   @extend .-pf-fu;
   @extend .-b;
   @extend .-b-pa-fu;
+  @extend .-o1;
 
   padding: 44px 0;
   background: url(#{$loadBg}) repeat left top rgba(55, 56, 50, 1.00);
   z-index: 999;
 
-  @include opacity(1);
   @include transition(opacity .3s);
   
   &:before {
@@ -95,7 +106,7 @@ body {
   }
 
   &.hide {
-    @include opacity(0);
+    @extend .-o0;
   }
 
   h1, p, span {
@@ -103,11 +114,12 @@ body {
   }
 
   h1 {
+    @extend .-m0;
     font-size: 64px;
     height: 72px;
     line-height: 72px;
     color: rgba(0, 0, 0, .45);
-    margin: 0;
+    
     @include text-shadow(1px 1px 1px rgba(255, 255, 255, 0.08));
     &:before {
       content: 'Maple';
@@ -122,11 +134,11 @@ body {
   }
 
   p {
+    @extend .-m0;
     color: rgba(0, 0, 0, .45);
     font-size: 22px;
     font-weight: bold;
 
-    margin: 0;
     margin-top: 44px;
     
     @include text-shadow(1px 1px 1px rgba(255, 255, 255, 0.05));
@@ -224,6 +236,7 @@ body {
   @extend .-a-t0;
   @extend .-a-dib;
   @extend .-a-h100;
+  @extend .-a-w1;
 
   width: 320px;
   background-color: rgba(245, 245, 245, 1.00);
@@ -235,7 +248,6 @@ body {
 
   &:after {
     right: -1px;
-    width: 1px;
     @include box-shadow(0 0 3px rgba(0, 0, 0, .3));
   }
 }
@@ -252,12 +264,12 @@ body {
   @extend .-a-t0;
   @extend .-a-dib;
   @extend .-a-h100;
+  @extend .-a-w1;
 
   background-color: rgba(245, 245, 245, 1);
   
   &:after {
     right: -1px;
-    width: 1px;
     @include box-shadow(0 0 3px rgba(0, 0, 0, .1));
   }
 }
@@ -354,8 +366,8 @@ body {
   @extend .-a-dib;
   @extend .-a-t-c;
   @extend .-t-l;
+  @extend .-p0;
 
-  padding: 0;
   margin-top: 44px;
   
   border-top: 1px solid #e1e1e1;
@@ -442,6 +454,8 @@ body {
   @extend .-b-f-02;
   @extend .-b-t-c;
   @extend .-cp;
+  @extend .-b-doc3;
+  @extend .-a-doc3;
 
   $beforeWidth: 44px;
   overflow: hidden;
@@ -456,11 +470,6 @@ body {
   color: rgba(111, 111, 111, 1.00);
   
   @include transition(color .3s);
-  
-
-  &:before, &:after {
-    @include overflow-docx3();
-  }
 
   &:before {
     content: "?";
@@ -523,10 +532,10 @@ body {
     }
   }
   &.active {
+    @extend .-b-o1;
     color: rgba(50, 50, 50, 1.00);
     font-weight: bold;
     &:before {
-      @include opacity(1);
       font-weight: bold;
     }
     &:after {
@@ -546,7 +555,7 @@ body {
 }
 
 #container {
-  position: relative;
+  @extend .-pr;
   min-height: 100vh;
 }
 
@@ -565,14 +574,13 @@ body {
   h1 {
     @extend .-w100;
     @extend .-b-dib;
+    @extend .-doc3;
+    @extend .-m0;
     height: 32px;
     line-height: 32px;
 
-    margin: 0;
     font-size: 22px;
-    // color: rgba(255, 237, 120, 1.00);
 
-    @include overflow-docx3();
     &:before {
       margin-right: 8px
     }
@@ -586,7 +594,7 @@ body {
     p {
       @extend .-dib;
       @extend .-w100;
-      margin: 0;
+      @extend .-m0;
       // color: rgba(255, 255, 255, 0.8);
       font-size: 13px
     }
@@ -637,8 +645,9 @@ body {
     @extend .-w100;
     @extend .-c-w;
     @extend .-f-02;
+    @extend .-m0;
+    // @extend .-doc3;
     
-    margin: 0;
     // height: 44px;
     // line-height: 44px;
 
@@ -650,7 +659,7 @@ body {
     // background-color: rgba(63, 73, 93, 1.00);
     background-color: rgba(40, 41, 35, .850);
     @include box-shadow(inset 1px 1px 4px rgba(0, 0, 0, .3));
-    // @include overflow-docx3();
+    
     word-break: break-all;
   }
 }
@@ -669,6 +678,7 @@ body {
   @extend .-b-l0;
   @extend .-b-dib;
   @extend .-b-w100;
+  @extend .-b-h1;
 
   padding: 12px 32px;
   padding-bottom: 0;
@@ -678,7 +688,6 @@ body {
   &:before {
     content: "";
     bottom: -1px;
-    height: 1px;
     z-index: 6;
     background-color: rgba(222, 222, 222, 1.00);
     @include box-shadow(0 -1px 3px rgba(200, 200, 200, 0.5), 0 0 1px rgba(0, 0, 0, .2));
@@ -738,17 +747,17 @@ body {
   @extend .-dib;
   @extend .-w100;
   @extend .-h100;
+  @extend .-o0;
   padding: 20px 32px;
-  
-  @include opacity(0);
+
   @include transition(left .3s, opacity .3s);
 
   @for $i from 1 through 5 {
     &:nth-child(#{$i}) {
       left: 100% * ($i - 1);
       @if ($i - 1 == 0) {
-        position: relative;
-        @include opacity(1);
+        @extend .-pr;
+        @extend .-o1;
       }
     }
   }
@@ -761,8 +770,8 @@ body {
         .panel:nth-child(#{$j}) {
           left: 100% * ($j - $i);
           @if ($j - $i == 0) {
-            position: relative;
-            @include opacity(1);
+            @extend .-pr;
+            @extend .-o1;
           }
         }
       }
@@ -775,7 +784,7 @@ body {
         background-color: $mainColor;
         @include box-shadow(0 2px 10px 1px rgba(0, 0, 0, .2));
 
-        @include opacity(1);
+        @extend .-o1;
         @include border-top-radius(3px);
         z-index: 6;
 
@@ -793,12 +802,12 @@ body {
 .sample {
   @extend .-dib;
   @extend .-w100;
+  @extend .-m0;
   padding: 16px 20px !important;
   border: 0 !important;
 
   font-size: 16px;
   overflow-x: auto;
-  margin: 0;
   background-color: rgba(57, 58, 53, 1.00);
   @include border-radius(3px);
   @include box-shadow(inset 1px 1px 4px rgba(0, 0, 0, 0.3), 1px 1px 1px white);
@@ -820,12 +829,16 @@ body {
   }
 }
 
-
 .details {
   @extend .-pr;
   @extend .-dib;
   @extend .-w100;
   @extend .-bg-w;
+  @extend .-b-pa;
+  @extend .-b-l0;
+  @extend .-b-dib;
+  @extend .-b-w100;
+  @extend .-b-f-00;
 
   margin-top: 32px;
 
@@ -837,39 +850,7 @@ body {
   border-bottom-color: rgba(220, 220, 220, 1);
   @include border-radius(3px);
   
-  &:first-child {
-    margin-top: 16px;
-  }
-
-  @for $i from 1 through 3 {
-    &[data-i='#{$i}'] {
-      .tabs label:nth-child(#{$i}) {
-        color: rgba(54, 144, 220, 1.00);
-        
-        &:after {
-          background-color: rgba(83, 164, 232, 1);
-        }
-      }
-      @for $j from 1 through 3 {
-        .panels > *:nth-child(#{$j}) {
-          left: 100% * ($j - $i);
-          @if ($j - $i == 0) {
-            position: relative;
-            @include opacity(1);
-          }
-        }
-      }
-    }
-  }
-
-  @extend .-b-pa;
-  @extend .-b-l0;
-  @extend .-b-dib;
-  @extend .-b-w100;
-  @extend .-b-f-00;
-
   &:before {
-
     content: "其他";
     top: -32px;
 
@@ -882,14 +863,37 @@ body {
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 1.00);
   }
 
+  &:first-child {
+    margin-top: 16px;
+  }
+
+  @for $i from 1 through 3 {
+    &[data-i='#{$i}'] {
+      label:nth-child(#{$i}) {
+        color: rgba(54, 144, 220, 1.00);
+        
+        &:after {
+          background-color: rgba(83, 164, 232, 1);
+        }
+      }
+      @for $j from 1 through 3 {
+        .detail:nth-child(#{$j}) {
+          left: 100% * ($j - $i);
+          @if ($j - $i == 0) {
+            @extend .-pr;
+            @extend .-o1;
+          }
+        }
+      }
+    }
+  }
+
   &[data-title]:not([data-title=""]) {
     &:before {
       content: attr(data-title);
     }
 
     margin-top: 32px + 32px;
-
-
     &:first-child {
       margin-top: 16px + 32px;
     }
@@ -906,9 +910,9 @@ body {
   @extend .-b-l0;
   @extend .-b-b0;
   @extend .-b-w100;
+  @extend .-b-h1;
 
   &:before {
-    height: 1px;
     border-bottom: 1px solid rgba(215, 215, 215, 1.00);
   }
 
@@ -953,21 +957,19 @@ body {
   @extend .-pr;
   overflow: hidden;
   @include border-bottom-radius(3px);
+}
 
-  > * {
-    @extend .-pa;
-    @extend .-l0;
-    @extend .-t0;
-    @extend .-dib;
-    @extend .-w100;
-    @include opacity(0);
-    @include transition(opacity .3s, left .3s);
-  }
-
-  .detail {
-    padding: 20px 16px;
-    background-color: rgba(250, 250, 250, 1);
-  }
+.detail {
+  @extend .-pa;
+  @extend .-l0;
+  @extend .-t0;
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-o0;
+  
+  @include transition(opacity .3s, left .3s);
+  padding: 20px 16px;
+  background-color: rgba(250, 250, 250, 1);
 }
 
 $treeLeavesHeight: 26px;
@@ -984,9 +986,11 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @extend .-dib;
   @extend .-w100;
   @extend .-bg-w;
+
   padding: 16px 20px;
   padding-bottom: 0;
   background-color: rgba(245, 245, 245, 1);
+
   @include border-radius(3px);
   @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .1), inset 0 0 1px rgba(0, 0, 0, .1), 1px 1px 1px white);
 
@@ -996,25 +1000,26 @@ $treeLineColor: rgba(99, 112, 126, .4);
 }
 
 .branch, .leaves {
+  @extend .-b-pa;
+  @extend .-b-dib;
+  @extend .-b-w1;
+
   &:before {
-    position: absolute;
     left: $treeBranchPaddingLeft;
-    display: inline-block;
-    width: 1px;
     border-left: 1px $treeLineStyle $treeLineColor;
   }
 }
+
 .branch {
   @extend .-pr;
-  display: inline-block;
-  width: 100%;
-  
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-b-t0;
+  @extend .-b-h100;
+  @extend .-a-dn;
+
   padding-top: $treeBranchPaddingTop;
 
-  &:before {
-    top: 0;
-    height: 100%;
-  }
   &:last-child {
     &:before {
       width: $treeBranchPaddingLeft;
@@ -1023,75 +1028,64 @@ $treeLineColor: rgba(99, 112, 126, .4);
       @include border-bottom-left-radius(3px);
     }
     > .leaves {
-      &:after {
-        display: none;
-      }
+      @extend .-a-dn;
     }
   }
+
   &:after {
     content: '隱藏 ' attr(data-count) ' 個項目';
-    display: none;
     max-width: calc(100% - #{$treeBranchPaddingLeft * 2});
     padding: 0 8px;
     font-size: 10px;
     font-style: italic;
-    @include border-radius(3px);
     background-color: rgba(220, 220, 220, 1.00);
 
     height: $treeBranchHideHeight;
     line-height: $treeBranchHideHeight;
     margin-top: $treeBranchHideMarginTop;
     margin-left: $treeBranchPaddingLeft * 2;
+    @include border-radius(3px);
   }
+
   &[data-count]:not([data-count='0']) {
     margin-bottom: $treeBranchLastMarginBottom;
+    
     &:before {
       height: calc(100% + #{$treeBranchLastMarginBottom});
     }
 
-    &:last-child {
-      &:before {
-        height: $treeLeavesHeight / 2 + $treeBranchPaddingTop;
-      }
+    &:last-child:before {
+      height: $treeLeavesHeight / 2 + $treeBranchPaddingTop;
     }
+
     > .leaves {
       cursor: pointer;
-      &:before {
-        content: '';
-      }
+      @extend .-b;
     }
+
     > .branch {
       padding-left: $treeBranchPaddingLeft * 2;
-      &:before {
-        content: '';
-      }
+      @extend .-b;
     }
+
     &.close {
+      @extend .-a-dib;
+      @extend .-b-h100;
       margin-bottom: 0;
-      &:before {
-        height: 100%;
-      }
-    
+      
       > .branch {
-        display: none;
+        @extend .-dn;
       }
 
-      &:last-child {
-        &:before {
-          height: $treeLeavesHeight / 2 + $treeBranchPaddingTop;
-        }
+      &:last-child:before {
+        height: $treeLeavesHeight / 2 + $treeBranchPaddingTop;
       }
 
-      > .leaves {
-        &:before {
-          width: $treeBranchPaddingLeft;
-          height: calc(100% - #{$treeLeavesHeight} + #{$treeBranchHideHeight / 2 + $treeBranchHideMarginTop});
-          border-bottom: 1px $treeLineStyle $treeLineColor;
-          @include border-bottom-left-radius(3px);
-        }
-      }
-      &:after {
-        display: inline-block;
+      > .leaves:before {
+        width: $treeBranchPaddingLeft;
+        height: calc(100% - #{$treeLeavesHeight} + #{$treeBranchHideHeight / 2 + $treeBranchHideMarginTop});
+        border-bottom: 1px $treeLineStyle $treeLineColor;
+        @include border-bottom-left-radius(3px);
       }
     }
   }
@@ -1101,11 +1095,15 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @extend .-pr;
   @extend .-df;
   @extend .-w100;
+  @extend .-a-pa;
+  @extend .-a-dib;
+  @extend .-a-h1;
 
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
+
   padding: 4px;
   @include border-radius(5px);
   
@@ -1113,38 +1111,43 @@ $treeLineColor: rgba(99, 112, 126, .4);
     background-color: rgba(250, 250, 250, 1);
     @include box-shadow(0 0 1px rgba(0, 0, 0, .5));
   }
+
   &:before {
     top: $treeLeavesHeight;
     height: calc(100% - #{$treeLeavesHeight});
   }
+
   &:after {
     content: '';
-    position: absolute;
     left: -$treeBranchPaddingLeft;
     top: $treeLeavesHeight / 2;
-    display: inline-block;
     width: $treeBranchPaddingLeft;
-    height: 1px;
     border-bottom: 1px $treeLineStyle $treeLineColor;
   }
+
   b, u, i, p {
-    display: inline-block;
-    margin: 0;
+    @extend .-dib;
+    @extend .-m0;
+    
     padding: 0 4px;
     line-height: $treeLeavesHeight;
   }
+
   b, u, i {
     white-space: nowrap;
   }
+
   b, u {
     @extend .-f-02;
   }
+
   b {
+    @extend .-pr;
     @extend .-b-pa-fu;
-    position: relative;
+    @extend .-c-w;
+    
     font-size: 16px;
     font-weight: normal;
-    color: white;
     background-color: rgba(99, 112, 126, 1.00);
     padding: 0 8px;
     @include border-left-radius(5px);
@@ -1153,68 +1156,76 @@ $treeLineColor: rgba(99, 112, 126, .4);
       border: 1px dashed rgba(132, 143, 153, 1.00);
       @include border-left-radius(5px);
     }
+
     &.optional {
-      background-color: rgba(100, 120, 130, 0.2);
+      @extend .-b;
+
       color: rgba(99, 112, 126, 1.00);
-      &:before {
-        content: '';
-      }
-      + u {
-        &:after {
-          border-style: dashed;
-        }
+      background-color: rgba(100, 120, 130, 0.2);
+
+      + u:after {
+        border-style: dashed;
       }
     }
   }
+  
   u {
-    position: relative;
+    @extend .-pr;
+    @extend .-bg-w;
+    @extend .-a;
+    @extend .-a-pa-fu;
+
     text-decoration: none;
     font-size: 13px;
     color: rgba(99, 112, 126, 1.00);
-    background-color: white;
 
-    @extend .-a-pa-fu;
     &:after {
-      content: '';
       border: 1px solid rgba(132, 143, 153, 1.00);
       border-left: 0;
       @include border-right-radius(5px);
     }
   }
+
   i {
-    display: inline-block;
+    @extend .-dib;
+    @extend .-c-w;
+
     height: 20px;
-    background-color: rgba(238, 106, 100, 1.00);
-    font-size: 11px;
     line-height: 20px;
+    
     margin-top: ($treeLeavesHeight - 20px) / 2;
     margin-left: 4px;
-    color: white;
+    
+    font-size: 11px;
+    background-color: rgba(238, 106, 100, 1.00);
+
     @include border-radius(3px);
+
     &:before {
       content: '預設值：';
       font-style: normal;
       color: rgba(255, 255, 255, .75);
     }
   }
+
   p {
+    @extend .-dib;
+    @extend .-b-f-02;
+    @extend .-b-dib;
+
     font-size: 13px;
     color: rgba(120, 120, 120, 1.00);
     margin-left: 8px;
     font-style: italic;
-    @extend .-b-f-02;
 
     &:before {
       content: '#';
-      display: inline-block;
       margin-right: 2px;
       font-style: italic;
-      // font-weight: bold;
       color: rgba(180, 180, 180, 1);
     }
   }
 }
-
 
 .list {
   $radius: 3px;
@@ -1224,8 +1235,8 @@ $treeLineColor: rgba(99, 112, 126, .4);
 
   @extend .-pr;
   @extend .-w100;
+  @extend .-p0;
 
-  padding: 0;
   border-spacing: 0;
   border-collapse: separate;
 
@@ -1235,14 +1246,17 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @include border-radius(0);
 
   th, td {
-    text-align: left;
+    @extend .-t-l;
     word-break: break-word;
     vertical-align: middle;
     line-height: 20px;
 
-    &.center { text-align: center; }
-    &.right { text-align: right; }
-    &.ctrl { text-align: right; }
+    &.center {
+      @extend .-t-c;
+    }
+    &.right {
+      @extend .-t-r;
+    }
   }
 
   th {
@@ -1272,9 +1286,10 @@ $treeLineColor: rgba(99, 112, 126, .4);
       @extend .-w100;
     }
     p {
-      margin: 0;
+      @extend .-m0;
     }
     b {
+      @extend .-doc3;
       color: rgba(203, 61, 64, 1.00);
       height: 22px + 4px;
       line-height: 22px;
@@ -1282,8 +1297,6 @@ $treeLineColor: rgba(99, 112, 126, .4);
       margin-bottom: 6px;
       padding-bottom: 4px;
       border-bottom: 1px dashed rgba(222, 222, 222, 1.00);
-
-      @include overflow-docx3();
 
       &:before {
         color: rgba(227, 85, 88, 1.00);
