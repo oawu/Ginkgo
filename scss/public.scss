@@ -41,7 +41,7 @@ $loadBg: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAA
 .-cl { float: left; }               .-b-cl:before { @extend .-cl; }     .-a-cl:after { @extend .-cl; }
 .-cr { float: right; }              .-b-cr:before { @extend .-cr; }     .-a-cr:after { @extend .-cr; }
 .-cc { float: right; }              .-b-cc:before { @extend .-cc; }     .-a-cc:after { @extend .-cc; }
-.-bg-w { background-color: white; } .-b-gb-w:before { @extend .-bg-w; } .-a-gb-w:after { @extend .-bg-w; }
+.-bg-w { background-color: white; } .-b-bg-w:before { @extend .-bg-w; } .-a-bg-w:after { @extend .-bg-w; }
 .-c-w { color: white; }             .-b-c-w:before { @extend .-c-w; }   .-a-c-w:after { @extend .-c-w; }
 .-pf-fu { @extend .-pf; @extend .-dib; @extend .-t0; @extend .-l0; @extend .-w100; @extend .-h100; } .-b-pf-fu:before { @extend .-pf-fu; } .-a-pf-fu:after { @extend .-pf-fu; }
 .-pa-fu { @extend .-pa; @extend .-dib; @extend .-t0; @extend .-l0; @extend .-w100; @extend .-h100; } .-b-pa-fu:before { @extend .-pa-fu; } .-a-pa-fu:after { @extend .-pa-fu; }
@@ -66,6 +66,8 @@ $loadBg: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAA
 .-m0 { margin: 0; }  .-b-m0:before { @extend .-m0; } .-a-m0:after { @extend .-m0; }
 .-p0 { padding: 0; } .-b-p0:before { @extend .-p0; } .-a-p0:after { @extend .-p0; }
 
+.-br3 { @include border-radius(3px) } .-b-br3:before { @extend .-br3; } .-a-br3:after { @extend .-br3; }
+
 
 html {
   @extend .-pr;
@@ -82,29 +84,21 @@ body {
 
   color: rgba(90, 90, 90, 1.00);
   font-size: medium;
-  
-  // 文字染色，背景色、文字色
-  @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
   background-color: rgba(245, 245, 245, 1.00);
+  
+  @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
 }
 
 #load {
   @extend .-pf-fu;
-  @extend .-b;
-  @extend .-b-pa-fu;
   @extend .-o1;
 
   padding: 44px 0;
-  background: url(#{$loadBg}) repeat left top rgba(55, 56, 50, 1.00);
+  background-color: rgba(80, 182, 187, 1.00);
   z-index: 999;
 
   @include transition(opacity .3s);
   
-  &:before {
-    z-index: 2;
-    @include background-image(radial-gradient(45px 45px, rgba(0, 0, 0, .3) 0, rgba(0, 0, 0, .5) 1000px));
-  }
-
   &.hide {
     @extend .-o0;
   }
@@ -145,6 +139,9 @@ body {
     
     &:before {
       content: 'API 文件';
+    }
+    &[data-title]:not([data-title='']):before {
+      content: attr(data-title);
     }
   }
 
@@ -187,7 +184,11 @@ body {
       color: rgba(0, 0, 0, .4);
       font-weight: normal;
     }
+
     &:after {
+      content: '0.0.0';
+    }
+    &[data-version]:not([data-version='']) {
       content: attr(data-version);
     }
   }
@@ -199,11 +200,14 @@ body {
 }
 
 #menu, #apis, #main, #container {
+  @extend .-b-pa;
+  @extend .-b-l0;
   @extend .-b-dib;
   @extend .-b-w100;
   @extend .-b-t-c;
 
   &:before {
+    top: calc(50% - #{48px / 2});
     height: 48px;
     line-height: 48px;
 
@@ -287,7 +291,7 @@ body {
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar-thumb {
     background-color: rgba(200, 200, 200, 1.00);
-    @include border-radius(2px);  
+    @include border-radius(5px);  
   }
   &::-webkit-scrollbar {
     background-color: transparent;
@@ -331,6 +335,7 @@ body {
 #input {
   @extend .-dib;
   @extend .-w100;
+  @extend .-br3;
 
   height: 32px;
   line-height: 32px;
@@ -340,7 +345,6 @@ body {
   font-size: 16px;
   color: rgba(100, 100, 100, 1.00);
 
-  @include border-radius(3px);
   @include transition(box-shadow .3s);
   @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .075), inset 0 0 1px rgba(0, 0, 0, .5), 1px 1px 1px white);
 
@@ -533,12 +537,18 @@ body {
   }
   &.active {
     @extend .-b-o1;
+    @extend .-a-f-02;
+
     color: rgba(50, 50, 50, 1.00);
     font-weight: bold;
+    // border: 1px solid rgba(255, 0, 0, .3);
+    // @include box-shadow(inset 0 0 1px rgba(21, 128, 251, 1.00), inset 0 0 0 3px rgba(0,123,255,.25));
+
     &:before {
       font-weight: bold;
     }
     &:after {
+      // border-bottom: 0;
       color: rgba(111, 111, 111, 1.00);
       font-weight: bold;
     }
@@ -556,7 +566,33 @@ body {
 
 #container {
   @extend .-pr;
+  @extend .-a-pa;
+  @extend .-a-dib;
+
   min-height: 100vh;
+
+  &:after {
+    top: 32px;
+    right: 32px;
+    z-index: 99;
+    padding: 12px 16px;
+    font-weight: bolder;
+    border: 3px solid rgba(205, 63, 62, 1.00);
+    color: rgba(205, 63, 62, 1.00);
+    
+    @include opacity(.65);
+    @include rotate(15deg);
+    @include border-radius(6px);
+  }
+
+  &[data-deprecated]:not([data-deprecated='']) {
+    h1, section {
+      padding-right: 120px;
+    }
+    &:after {
+      content: attr(data-deprecated);
+    }
+  }
 }
 
 #header {
@@ -565,39 +601,39 @@ body {
   padding: 20px 32px;
   padding-bottom: 32px;
   background-color: rgba(222, 222, 222, 1.00);
+}
 
-  > * {
+h1 {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-b-dib;
+  @extend .-doc3;
+  @extend .-m0;
+  height: 32px;
+  line-height: 32px;
+
+  font-size: 22px;
+
+  &:before {
+    margin-right: 8px
+  }
+}
+
+section {
+  @extend .-dib;
+  @extend .-w100;
+
+  &:empty {
+    display: none
+  }
+
+  p {
     @extend .-dib;
     @extend .-w100;
-  }
-
-  h1 {
-    @extend .-w100;
-    @extend .-b-dib;
-    @extend .-doc3;
     @extend .-m0;
-    height: 32px;
-    line-height: 32px;
-
-    font-size: 22px;
-
-    &:before {
-      margin-right: 8px
-    }
-  }
-
-  section {
-    &:empty {
-      display: none
-    }
-
-    p {
-      @extend .-dib;
-      @extend .-w100;
-      @extend .-m0;
-      // color: rgba(255, 255, 255, 0.8);
-      font-size: 13px
-    }
+    color: rgba(130, 130, 130, 1);
+    font-size: 13px;
+    margin-top: 4px;
   }
 }
 
@@ -605,6 +641,7 @@ body {
   @extend .-pr;
   @extend .-dib;
   @extend .-w100;
+  @extend .-br3;
   @extend .-b-pa;
   @extend .-b-h100;
   @extend .-b-dib;
@@ -618,7 +655,6 @@ body {
   padding-left: 70px;
   overflow: hidden;
 
-  @include border-radius(3px);
   @include box-shadow(1px 1px 1px rgba(255, 255, 255, 1));
   
   &:before {
@@ -751,16 +787,6 @@ body {
   padding: 20px 32px;
 
   @include transition(left .3s, opacity .3s);
-
-  @for $i from 1 through 5 {
-    &:nth-child(#{$i}) {
-      left: 100% * ($i - 1);
-      @if ($i - 1 == 0) {
-        @extend .-pr;
-        @extend .-o1;
-      }
-    }
-  }
 }
 
 #formats {
@@ -803,13 +829,13 @@ body {
   @extend .-dib;
   @extend .-w100;
   @extend .-m0;
+  @extend .-br3;
   padding: 16px 20px !important;
   border: 0 !important;
 
   font-size: 16px;
   overflow-x: auto;
   background-color: rgba(57, 58, 53, 1.00);
-  @include border-radius(3px);
   @include box-shadow(inset 1px 1px 4px rgba(0, 0, 0, 0.3), 1px 1px 1px white);
 
   .pln, .pun {
@@ -833,6 +859,7 @@ body {
   @extend .-pr;
   @extend .-dib;
   @extend .-w100;
+  @extend .-br3;
   @extend .-bg-w;
   @extend .-b-pa;
   @extend .-b-l0;
@@ -848,7 +875,6 @@ body {
   border-left-color: rgba(225, 225, 225, 1);
   border-right-color: rgba(220, 220, 220, 1);
   border-bottom-color: rgba(220, 220, 220, 1);
-  @include border-radius(3px);
   
   &:before {
     content: "其他";
@@ -985,17 +1011,19 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @extend .-pr;
   @extend .-dib;
   @extend .-w100;
+  @extend .-br3;
   @extend .-bg-w;
 
   padding: 16px 20px;
-  padding-bottom: 0;
   background-color: rgba(245, 245, 245, 1);
 
-  @include border-radius(3px);
   @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .1), inset 0 0 1px rgba(0, 0, 0, .1), 1px 1px 1px white);
 
   > .branch {
     padding-top: 0;
+    > .leaves {
+      @extend .-a-dn;
+    }
   }
 }
 
@@ -1017,6 +1045,7 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @extend .-b-t0;
   @extend .-b-h100;
   @extend .-a-dn;
+  @extend .-a-br3;
 
   padding-top: $treeBranchPaddingTop;
 
@@ -1044,7 +1073,6 @@ $treeLineColor: rgba(99, 112, 126, .4);
     line-height: $treeBranchHideHeight;
     margin-top: $treeBranchHideMarginTop;
     margin-left: $treeBranchPaddingLeft * 2;
-    @include border-radius(3px);
   }
 
   &[data-count]:not([data-count='0']) {
@@ -1095,6 +1123,7 @@ $treeLineColor: rgba(99, 112, 126, .4);
   @extend .-pr;
   @extend .-df;
   @extend .-w100;
+  @extend .-a;
   @extend .-a-pa;
   @extend .-a-dib;
   @extend .-a-h1;
@@ -1118,7 +1147,6 @@ $treeLineColor: rgba(99, 112, 126, .4);
   }
 
   &:after {
-    content: '';
     left: -$treeBranchPaddingLeft;
     top: $treeLeavesHeight / 2;
     width: $treeBranchPaddingLeft;
@@ -1189,6 +1217,7 @@ $treeLineColor: rgba(99, 112, 126, .4);
   i {
     @extend .-dib;
     @extend .-c-w;
+    @extend .-br3;
 
     height: 20px;
     line-height: 20px;
@@ -1198,8 +1227,6 @@ $treeLineColor: rgba(99, 112, 126, .4);
     
     font-size: 11px;
     background-color: rgba(238, 106, 100, 1.00);
-
-    @include border-radius(3px);
 
     &:before {
       content: '預設值：';
@@ -1323,15 +1350,54 @@ $treeLineColor: rgba(99, 112, 126, .4);
 span.need, span.optional {
   @extend .-dib;
   @extend .-c-w;
+  @extend .-t-c;
+  @extend .-br3;
 
   width: 54px;
   height: 20px;
   line-height: 20px;
   font-size: 10px;
-  @include border-radius(3px);
 }
+
 span.need { background-color: rgba(227, 85, 88, 1.00); }
 span.optional { background-color: rgba(167, 167, 167, 1.00); }
+
+#importants {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-cf;
+  @extend .-b-dib;
+  @extend .-b-w100;
+  @extend .-b-cl;
+
+  margin-top: 28px;
+
+  &:empty {
+    display: none;
+  }
+
+  &:before {
+    content: '權限要求：';
+    height: 23px;
+    line-height: 23px;
+    color: rgba(136, 136, 136, 1);
+    font-weight: bold;
+    @include text-shadow(1px 1px 1px rgba(255, 255, 255, .55));
+  }
+}
+.important {
+  @extend .-dib;
+  @extend .-cl;
+  @extend .-c-w;
+  @extend .-br3;
+
+  height: 26px;
+  line-height: 26px;
+  background-color: rgba(205, 63, 62, 1.00);
+  margin-right: 8px;
+  margin-top: 4px;
+  padding: 0 12px;
+}
 
 //   > * {
 //     @extend .-dib;
@@ -2341,18 +2407,21 @@ span.optional { background-color: rgba(167, 167, 167, 1.00); }
 // }
 
 
-  // .important {
-  //   @extend .-dib;
-  //   @extend .-w100;
-  //   margin-top: 30px;
+// .important {
+//   @extend .-dib;
+//   @extend .-w100;
+//   @extend .-b-dib;
+//   height: 32px;
+//   line-height: 32px;
 
-  //   &:empty {
-  //     display: none;
-  //   }
-  //   > * {
-  //     @extend .-dib;
-  //     @extend .-w100;
-  //   }
+//   &:before {
+//     content: attr(data-title) '：';
+//     color: rgba(100, 100, 100, 1);
+//   }
+//   + .important {
+//     margin-top: 3px;
+//   }
+// }
   //   > div {
   //     margin-left: 0;
   //     margin-right: 0;
@@ -2383,7 +2452,7 @@ span.optional { background-color: rgba(167, 167, 167, 1.00); }
   //     }
   //     span {
   //       @extend .-b-dib;
-  //       @extend .-b-gb-w;
+  //       @extend .-b-bg-w;
   //       height: 28px;
   //       line-height: 28px;
   //       font-weight: bold;
