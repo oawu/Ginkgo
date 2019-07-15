@@ -5,7 +5,7 @@
 
 <br/>
 ## 初步安裝
-使用之前需要安裝 [Node.js](https://nodejs.org/) 與 [Compass](http://compass-style.org/)，以下依據作業系統介紹做初步安裝：
+使用之前需要安裝 [Node.js](https://nodejs.org/) 與 [Compass](http://compass-style.org/) ，以下依據作業系統介紹做初步安裝：
 
 * [Window7](cmd/doc/WindowInstall.md)
 * MacOS
