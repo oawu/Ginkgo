@@ -24,7 +24,7 @@ javascripts_path = "../js"
 
 # 其他要匯入的資源
   # add_import_path = "./libs"
-additional_import_paths = ["./libs/scss"]
+additional_import_paths = ["./libs/scss", "../scss"]
 
 # 選擇輸出的 css 類型，:expanded or :nested or :compact or :compressed
   # nested     有縮排 沒壓縮，會有 @charset "UTF-8";

@@ -6,14 +6,12 @@
 //
 
 @import "GinkgoMixin";
-@import "GinkgoUi";
 
 $_InitGinkgo: false !global;
 
 @mixin init-ginkgo() {
   @if ($_InitGinkgo == false) {
     $_InitGinkgo: true !global;
-    
     * {
       &, &:after, &:before {
         vertical-align: top;
@@ -25,3 +23,5 @@ $_InitGinkgo: false !global;
 }
 
 @include init-ginkgo;
+
+@import "GinkgoUi";
