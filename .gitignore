@@ -1,6 +1,26 @@
 .DS_Store
 sftp-config*
 
-**/npm-debug.log
-**/node_modules/*
-**/package-lock.json
+.sass-cache/*
+package-lock.json
+npm-debug.log
+node_modules/*
+
+# Log files
+**/yarn-debug.log
+**/yarn-error.log
+
+# local env files
+.env.local
+.env.*.local
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+/dist
