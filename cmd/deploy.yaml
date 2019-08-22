@@ -1,0 +1,25 @@
+#                                #
+# - path: ""                     # 路徑，專案目錄開始的相對目錄
+#   formats: [".html", ".text"]  # 接受的副檔名，[] 為全部的副檔名都接受
+#   hidden: No                   # 是否包含隱藏檔，Yes 與 No 兩種選項，預設 No
+#   recursive: Yes               # 是否包含子資料夾，Yes 與 No 兩種選項，預設 Yes
+#   allowEmpty: Yes              # 是否包空檔案，Yes 與 No 兩種選項，預設 Yes
+#   includes: ["a.php"]          # 直接包含檔案，不可與 recursive 違背
+#   excludes: ["a.php"]          # 直接排除檔案，不可與 recursive 違背
+#                                # 順序 hidden > includes > excludes > allowEmpty > formats > recursive
+
+- path: ''
+  formats: ['.html', '.txt']
+  recursive: No
+
+- path: "js"
+  formats: [".js"]
+
+- path: "css"
+  formats: [".css"]
+
+- path: "font"
+  formats: [".eot", ".svg", ".ttf", ".woff"]
+
+- path: "img"
+  formats: [".png", ".jpg", ".jpeg", ".gif", ".svg"]
