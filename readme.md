@@ -13,8 +13,8 @@
 
 ### 部署
 1. 專案目錄下執行指令 `npm run build`，產生出靜態檔案
-2. 專案目錄下執行指令 `node deploy`，再依據步驟完成輸入即可！
+2. 參考官方文件 [部署](https://cli.vuejs.org/zh/guide/deployment.html#github-pages) 方法
 
 ### 打包
 1. 專案目錄下執行指令 `npm run build`，產生出靜態檔案
-2. 專案目錄下執行指令 `node zip`，即可！
+2. 直接在輸出靜態目錄壓縮即可

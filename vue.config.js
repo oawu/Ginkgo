@@ -1,14 +1,16 @@
-const path = require('path')
+const Path = require('path')
+
+// console.error();
+
 
 module.exports = {
-  // publicPath: 'Ginkgo',
-  // outputDir: '../Ginkgo',
-  // devServer: {
-  //   host: 'dev.ginkgo.ioa.tw'
-  // }
+  // publicPath: '',             // 網址後面的 uri
+  // outputDir: 'dist',          // build 完後存放的位置
+  // assetsDir: 'asset',         // build 完後在 outputDir 內的 assets 目錄
 
-  // outputDir: 'dist',
-  // assetsDir: 'asset',
+  // devServer: {                // 開發時的設定
+  //   host: 'dev.ginkgo.ioa.tw' // 開發時的 domain
+  // }
 
   pages: {
     index: {
