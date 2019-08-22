@@ -18,7 +18,7 @@ module.exports = title => {
   print(' '.repeat(3) + '🎉 太棒惹，已經完成部署囉，趕緊去看最新版的吧！' + Display.LN)
   
   let goal  = Argv.data.goal === 'aws-s3' ? 'Amazon S3' : 'GitHub Pages'
-  let url   = Argv.data.goal === 'aws-s3' ? 'https://' + Argv.data.domain + '/' + Argv.data.folder + '/index.html' : 'https://' + Argv.githubUris.shift() + '.github.io/' + Argv.githubUris.shift() + '/index.html'
+  let url   = Argv.data.goal === 'aws-s3' ? 'https://' + Argv.data.domain + '/' + (Argv.data.folder.length ? Argv.data.folder + '/' : '') + 'index.html' : 'https://' + Argv.githubUris.shift() + '.github.io/' + Argv.githubUris.shift() + '/index.html'
   let cache = Argv.data.goal === 'aws-s3' ? '若有設定 CDN 快取的話，請等 Timeout 後再試。' : '因為快取問題，請稍待' + Xterm.color.gray('約 1 分鐘', true) + '後再試。'
   let rate  = Argv.minifyRate === null    ? '尚未壓縮' : ''
   print(' '.repeat(3) + '❗️ ' + cache + Display.LN)

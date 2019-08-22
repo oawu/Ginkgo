@@ -9,7 +9,10 @@ const Display = require('../Display')
 const Path    = require('path')
 
 let data = {
-  ...require('fs').existsSync(Path.config) ? require('./Config') : require('./Config.sample')
+  ...require('fs').existsSync(
+    Path.cmd + 'deploy.config.js')
+      ? require(Path.cmd + 'deploy.config')
+      : require(Path.cmd + 'deploy.config.sample')
 }
 
 const fetch = (title, closure) => {

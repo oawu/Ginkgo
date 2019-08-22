@@ -11,9 +11,9 @@ Path.root    = Path.resolve(__dirname, '..' + Path.sep) + Path.sep
 
 Path.cmd     = Path.root + 'cmd'  + Path.sep
 Path.deploy  = Path.cmd + 'libs' + Path.sep + 'node' + Path.sep + 'deploy' + Path.sep
-Path.config  = Path.deploy + 'Config.js'
+
 Path.plugin  = Path.cmd + 'libs' + Path.sep + 'plugin' + Path.sep
-Path.yaml    = Path.cmd + 'deploy.yaml'
+Path.yaml    = Path.cmd + 'deploy.rule.yaml'
 
 Path.js      = Path.root + 'js' + Path.sep
 Path.css     = Path.root + 'css' + Path.sep

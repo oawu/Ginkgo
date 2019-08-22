@@ -74,7 +74,7 @@ const mapDir = (dir, options, filelist) => {
         return filelist.push(path) 
     }
 
-    if (FileStat(path).isDirectory() && options.recursive)
+    if (stat.isDirectory() && options.recursive)
       filelist = mapDir(path + Path.sep, options, filelist)
   })
 
