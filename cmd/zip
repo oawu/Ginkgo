@@ -9,7 +9,7 @@ const Path = require('path')
 
 Path.root  = Path.resolve(__dirname, '..' + Path.sep) + Path.sep
 Path.cmd   = Path.root + 'cmd'  + Path.sep
-Path.yaml  = Path.cmd + 'deploy.yaml'
+Path.yaml  = Path.cmd + 'deploy.rule.yaml'
 Path.zip   = Path.root + Path.root.split(Path.sep).map(t => t.trim()).filter(v => v.length).pop() + '.zip'
 
 const Load = require('./libs/node/Ginkgo').load

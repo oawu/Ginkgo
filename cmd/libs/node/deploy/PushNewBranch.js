@@ -12,8 +12,8 @@ const Argv     = require('./Argv')
 const Exec     = require('child_process').exec
 
 const checkoutOriBranch = closure => true &&
-  Display.line('切換回 ' + Xterm.color.gray(Argv.oriBranch, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git checkout ' + Argv.oriBranch + ' --quiet', true).dim().italic()) &&
+  Display.lines('切換回 ' + Xterm.color.gray(Argv.oriBranch, true) + ' 分支',
+    ['執行指令', 'git checkout ' + Argv.oriBranch + ' --quiet']) &&
   
   Exec('git checkout ' + Argv.oriBranch + ' --quiet',
     (error, stdout, stderr) => !error
@@ -23,8 +23,8 @@ const checkoutOriBranch = closure => true &&
       : Display.line(false) || Rollback(['相關原因：' + error.message]))
 
 const pushBranch = closure => true &&
-  Display.line('推送 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支推至 ' + Xterm.color.gray('origin remote', true),
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git push origin ' + Argv.data.goal + ' --force', true).dim().italic()) &&
+  Display.lines('推送 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支推至 ' + Xterm.color.gray('origin remote', true),
+    ['執行指令', 'git push origin ' + Argv.data.goal + ' --force']) &&
   
   Exec('git push origin ' + Argv.data.goal + ' --force',
     (error, stdout, stderr) => !error
@@ -34,8 +34,8 @@ const pushBranch = closure => true &&
       : Display.line(false) || Rollback(['相關原因：' + error.message]))
 
 const commitWithMessage = closure => true &&
-  Display.line('變更紀錄提交 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git commit --message "上傳前壓縮紀錄。" --quiet', true).dim().italic()) &&
+  Display.lines('變更紀錄提交 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git commit --message "上傳前壓縮紀錄。" --quiet']) &&
   
   Exec('git commit --message "上傳前壓縮紀錄。" --quiet',
     (error, stdout, stderr) => !error
@@ -45,8 +45,8 @@ const commitWithMessage = closure => true &&
       : Display.line(false) || Rollback(['相關原因：' + error.message]))
 
 const addAllModify = closure => true &&
-  Display.line('添加變更檔案至 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git add --all', true).dim().italic()) &&
+  Display.lines('添加變更檔案至 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git add --all']) &&
 
   Exec('git add --all',
     (error, stdout, stderr) => !error
@@ -57,8 +57,8 @@ const addAllModify = closure => true &&
 
 module.exports = (title, closure) => true &&
   Display.title(title) &&
-  Display.line('檢查 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支是否變更',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git status --porcelain', true).dim().italic()) &&
+  Display.lines('檢查 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支是否變更',
+    ['執行指令', 'git status --porcelain']) &&
 
   Exec('git status --porcelain',
     (error, stdout, stderr) => !error 

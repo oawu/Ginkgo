@@ -41,8 +41,8 @@ const getArgv = key => {
 }
 
 const checkPlugins = () => {
-  Display.line('取得外掛',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('get plugin files', true).dim().italic())
+  Display.lines('取得外掛',
+    ['執行動作', 'get plugin files'])
 
   Argv.plugins = Argv.setPlugins()
 
@@ -68,8 +68,8 @@ const execPlugins = (i, closure) => {
   
   let pluginCmd = Argv.plugins[i].cmd + ' ' + Argv.plugins[i].file + ' ' + Argv.plugins[i].argv
 
-  Display.line('執行外掛 ' +  Xterm.color.gray(Argv.plugins[i].title, true) + '',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray(pluginCmd, true).dim().italic())
+  Display.lines('執行外掛 ' +  Xterm.color.gray(Argv.plugins[i].title, true) + '',
+    ['執行指令', pluginCmd])
 
   return Exec(pluginCmd, (error, stdout, stderr) => {
     if (error) {
@@ -98,8 +98,8 @@ const runPlugins = (i, closure) => {
   if (i >= Argv.plugins.length)
     return closure && closure()
 
-  Display.line('確認是否可以執行 ' +  Xterm.color.gray(Argv.plugins[i].cmd, true) + ' 指令',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('check ' + Argv.plugins[i].cmd + ' command', true).dim().italic())
+  Display.lines('確認是否可以執行 ' +  Xterm.color.gray(Argv.plugins[i].cmd, true) + ' 指令',
+    ['執行動作', 'check ' + Argv.plugins[i].cmd + ' command'])
 
   if (cmds.indexOf(Argv.plugins[i].cmd) !== -1)
     return Display.line(true) && execPlugins(i, closure)

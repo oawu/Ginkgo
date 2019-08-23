@@ -27,8 +27,8 @@ const setGitOriBranch = (branches, stdout) => {
 }
 
 const checkoutBranch = closure => true &&
-  Display.line('分支切換至 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git checkout ' + Argv.data.goal + ' --quiet', true).dim().italic()) &&
+  Display.lines('分支切換至 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git checkout ' + Argv.data.goal + ' --quiet']) &&
 
   Exec('git checkout ' + Argv.data.goal + ' --quiet',
     (error, stdout, stderr) => !error
@@ -38,8 +38,8 @@ const checkoutBranch = closure => true &&
       : Display.line(false, ['相關原因：' + error.message]))
 
 const createBranch = closure => true &&
-  Display.line('新增本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git branch --verbose ' + Argv.data.goal, true).dim().italic()) &&
+  Display.lines('新增本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git branch --verbose ' + Argv.data.goal]) &&
 
   Exec('git branch --verbose ' + Argv.data.goal,
     (error, stdout, stderr) => !error
@@ -49,8 +49,8 @@ const createBranch = closure => true &&
       : Display.line(false, ['相關原因：' + error.message]))
 
 const delectBranch = closure => true &&
-  Display.line('刪除本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git branch --delete --force ' + Argv.data.goal, true).dim().italic()) &&
+  Display.lines('刪除本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git branch --delete --force ' + Argv.data.goal]) &&
 
   Exec('git branch --delete --force ' + Argv.data.goal,
     (error, stdout, stderr) => !error
@@ -62,8 +62,8 @@ const delectBranch = closure => true &&
 module.exports = (title, closure) => true &&
   Display.title(title) &&
   
-  Display.line('檢查本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git branch --list', true).dim().italic()) &&
+  Display.lines('檢查本地端 ' + Xterm.color.gray(Argv.data.goal, true) + ' 分支',
+    ['執行指令', 'git branch --list']) &&
 
   Exec('git branch --list', (error, stdout, stderr) => {
     if (error)

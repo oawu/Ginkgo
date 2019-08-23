@@ -9,11 +9,11 @@ const Notifier   = require('../Ginkgo').notifier
 const Bus        = require('../Ginkgo').bus
 const Display    = require('../Display')
 const Xterm      = require('../Xterm')
-
 const Path       = require('path')
 const FileSystem = require('fs')
 const ReadFile   = require('fs').readFileSync
 const Exists     = require('fs').existsSync
+
 const html       = Exists(Path.iconHtml) ? ReadFile(Path.iconHtml, 'utf8') : ''
 
 let timers = {}
@@ -124,18 +124,18 @@ const modify = (event1, event2, filepath) => {
 
 const wait = closure => setTimeout(() => Object.keys(timers).length ? wait(closure) : Display.line(true) && closure && closure(), readyLater)
 
-module.exports = (title, closure) => {
-  Display.title(title)
-  Display.line('監控目錄',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() +
-    Xterm.color.gray('watch ' + Path.icon.replace(Path.root, ''), true).dim().italic())
+module.exports = (title, closure) => true &&
+  Display.title(title) &&
 
-  require('chokidar').watch(Path.icon)
-                     .on('change', modify.bind(null, '修改', 'rebuild'))
-                     .on('add',    modify.bind(null, '新增', 'create'))
-                     .on('unlink', modify.bind(null, '移除', 'remove'))
-                     .on('error',  error => Notifier('[icon 目錄] 錯誤！', '監控目錄發生錯誤', '請至終端機確認錯誤原因！') && Display.line(false, error))
-                     .on('ready',  () => wait(closure))
+  Display.lines('監控目錄',
+    ['執行動作', 'watch ' + Path.icon.replace(Path.root, '')]) &&
+
+  require('chokidar')
+    .watch(Path.icon)
+    .on('change', modify.bind(null, '修改', 'rebuild'))
+    .on('add',    modify.bind(null, '新增', 'create'))
+    .on('unlink', modify.bind(null, '移除', 'remove'))
+    .on('error',  error => Notifier('[icon 目錄] 錯誤！', '監控目錄發生錯誤', '請至終端機確認錯誤原因！') && Display.line(false, error))
+    .on('ready',  () => wait(closure)) &&
 
   Bus.on('ready', status => ready = status)
-}

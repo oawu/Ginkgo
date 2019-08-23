@@ -8,14 +8,13 @@
 const Display = require('../Display')
 const Xterm   = require('../Xterm')
 const AdmZip  = require('adm-zip')
+const zip     = new AdmZip()
 
 module.exports = (title, closure, files) => {
   Display.title(title)
   Display.line('加入檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('zip add files', true).dim().italic())
+    ['執行動作', 'zip add files'])
   Display.line(files.length)
-
-  const zip = new AdmZip()
 
   files.forEach(file => Display.line() && zip.addFile(file.name, file.buffer))
   zip.writeZip(require('path').zip)

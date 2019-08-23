@@ -12,8 +12,8 @@ const Exec    = require('child_process').exec
 module.exports = (title, closure) => true &&
   Display.title(title) &&
 
-  Display.line('檢查是否已經 Commit',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git status --porcelain', true).dim().italic()) &&
+  Display.lines('檢查是否已經 Commit',
+    ['執行指令', 'git status --porcelain']) &&
 
   Exec('git status --porcelain',
     (error, stdout, stderr) => !error

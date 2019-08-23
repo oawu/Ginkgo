@@ -12,8 +12,8 @@ const Argv    = require('./Argv')
 const Exec    = require('child_process').exec
 
 const checkoutOriBranch = () => true &&
-  Display.line('分支切換回 ' + Xterm.color.gray(Argv.oriBranch, true) + ' 分支',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git checkout ' + Argv.oriBranch + ' --quiet', true).dim().italic()) &&
+  Display.lines('分支切換回 ' + Xterm.color.gray(Argv.oriBranch, true) + ' 分支',
+    ['執行指令', 'git checkout ' + Argv.oriBranch + ' --quiet']) &&
 
   Exec('git checkout ' + Argv.oriBranch + ' --quiet',
     (error, stdout, stderr) => !error
@@ -23,8 +23,8 @@ const checkoutOriBranch = () => true &&
       : Display.line(false, ['相關原因：' + error.message, '請記得手動將分支設定回 ' + Xterm.color.gray(Argv.oriBranch, true)]))
 
 const gitClear = () => true &&
-  Display.line('清除與恢復修改',
-    Xterm.color.gray('執行指令', true).dim() + Display.markSemicolon() + Xterm.color.gray('git checkout .. --quiet', true).dim().italic()) &&
+  Display.lines('清除與恢復修改',
+    ['執行指令', 'git checkout .. --quiet']) &&
 
   Exec('git checkout .. --quiet',
     (error, stdout, stderr) => !error
@@ -35,7 +35,7 @@ const gitClear = () => true &&
 
 module.exports = messages => true &&
   print(messages.length
-    ? Display.LN + ' ' + Xterm.color.red('【錯誤訊息】') + Display.LN + messages.map(error => ' '.repeat(3) + Display.markList() + ' ' + error.replace('\n', '') + Display.LN).join('')
+    ? Display.LN + ' ' + Xterm.color.red('【錯誤訊息】') + Display.LN + messages.map(error => ' '.repeat(3) + Display.markList() + ' ' + error.replace(Display.LN, '') + Display.LN).join('')
     : Display.LN + ' ' + Xterm.color.red('【退回原本分支】') + Display.LN) &&
 
   gitClear()

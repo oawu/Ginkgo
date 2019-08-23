@@ -36,8 +36,8 @@ const setGithubUri = stdout => {
 module.exports = (title, closure) => true &&
   Display.title(title) &&
 
-  Display.line('檢查專案是否為 ' + Xterm.color.gray('GitHub', true) + ' 專案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('check .git origin remote url', true).dim().italic()) &&
+  Display.lines('檢查專案是否為 ' + Xterm.color.gray('GitHub', true) + ' 專案',
+    ['執行動作', 'check .git origin remote url']) &&
 
   Exec('git remote get-url origin',
     (error, stdout, stderr) => !error

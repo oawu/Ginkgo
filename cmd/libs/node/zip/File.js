@@ -12,20 +12,17 @@ const ReadFile    = require('fs').readFileSync
 const FileStat    = require('fs').statSync
 const Path        = require('path')
 
-const files = (title, files, closure) => {
-  Display.line(title)
-  Display.line(files.length)
-
-  files = files.map(file => Display.line() && { name: file.replace(Path.root, ''), buffer: ReadFile(file), size: FileStat(file).size })
-
-  return Display.line(true) && closure && closure(files)
-}
+const files = (title, files, closure) => true &&
+  Display.line(title) &&
+  Display.line(files.length) &&
+  (files = files.map(file => Display.line() && { name: file.replace(Path.root, ''), buffer: ReadFile(file), size: FileStat(file).size })) &&
+  Display.line(true) && closure && closure(files)
 
 module.exports = (title, closure) => {
   Display.title(title)
   
-  Display.line('讀取設定檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('read deploy.yaml', true).dim().italic())
+  Display.lines('讀取設定檔案',
+    ['執行動作', 'read deploy.rule.yaml'])
 
   if (!require('fs').existsSync(Path.yaml))
     return Display.line(false, 'deploy.yaml 不存在！')

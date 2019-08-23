@@ -23,8 +23,8 @@ let minSize = 0
 const minifyCSS = closure => {
   const easterEgg = Exists(Path.deploy + 'EasterEgg-css.txt') ? ReadFile(Path.deploy + 'EasterEgg-css.txt', 'utf8') : null
 
-  Display.line('壓縮 ' + Xterm.color.gray('.css', true) + ' 檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('minify ' + Path.css.replace(Path.root, '') + '*.css', true).dim().italic())
+  Display.lines('壓縮 ' + Xterm.color.gray('.css', true) + ' 檔案',
+    ['執行動作', 'minify ' + Path.css.replace(Path.root, '') + '*.css'])
 
   const files = Argv.localFiles.filter(file => file.path.match(/\.css$/g))
   
@@ -38,7 +38,7 @@ const minifyCSS = closure => {
     let css = ReadFile(files[i].path, 'utf8')
     
     if (easterEgg !== null && easterEgg.length)
-      css = css.replace(/(^@charset "UTF-8";)/g, '$1\n' + easterEgg)
+      css = css.replace(/(^@charset "UTF-8";)/g, '$1' + Display.LN + easterEgg)
 
     WriteFile(files[i].path, css.replace(/\}\n+/gm, '}'), 'utf8')
     minSize += FileStat(files[i].path).size
@@ -52,8 +52,8 @@ const minifyCSS = closure => {
 const minifyHTML = closure => {
   const easterEgg = Exists(Path.deploy + 'EasterEgg-html.txt') ? ReadFile(Path.deploy + 'EasterEgg-html.txt', 'utf8') : null
 
-  Display.line('壓縮 ' + Xterm.color.gray('.html', true) + ' 檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('minify ' + Path.root.replace(Path.root, '') + '*.html', true).dim().italic())
+  Display.lines('壓縮 ' + Xterm.color.gray('.html', true) + ' 檔案',
+    ['執行動作', 'minify ' + Path.root.replace(Path.root, '') + '*.html'])
 
   const files = Argv.localFiles.filter(file => file.path.match(/\.html$/g))
 
@@ -75,7 +75,7 @@ const minifyHTML = closure => {
     if (html === null)
       return Display.line(false) || Rollback(['壓縮 ' + files[i].path.replace(Path.root, '') + ' 時發生不明原因錯誤！'])
     else
-      WriteFile(files[i].path, (easterEgg !== null && easterEgg.length ? '<!-- \n' + easterEgg + '\n' + '-->\n' : '') + html, 'utf8')
+      WriteFile(files[i].path, (easterEgg !== null && easterEgg.length ? '<!-- ' + Display.LN + easterEgg + Display.LN + '-->' + Display.LN : '') + html, 'utf8')
    
     minSize += FileStat(files[i].path).size
   }
@@ -86,8 +86,8 @@ const minifyHTML = closure => {
 const uglifyJS = closure => {
   const easterEgg = Exists(Path.deploy + 'EasterEgg-js.txt') ? ReadFile(Path.deploy + 'EasterEgg-js.txt', 'utf8') : null
 
-  Display.line('壓縮 ' + Xterm.color.gray('.js', true) + ' 檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('uglify ' + Path.js.replace(Path.root, '') + '*.js', true).dim().italic())
+  Display.lines('壓縮 ' + Xterm.color.gray('.js', true) + ' 檔案',
+    ['執行動作', 'uglify ' + Path.js.replace(Path.root, '') + '*.js'])
 
   const files = Argv.localFiles.filter(file => file.path.match(/\.js$/g))
 
@@ -103,7 +103,7 @@ const uglifyJS = closure => {
     if (result.error)
       return Display.line(false) || Rollback(['壓縮 ' + files[i].path.replace(Path.root, '') + ' 時發生錯誤！', '錯誤訊息：' + result.error.message, '錯誤位置：第 ' + result.error.line + ' 行，第 ' + result.error.col + ' 個字'])
     else
-      WriteFile(files[i].path, (easterEgg !== null && easterEgg.length ? easterEgg.replace(/^\n+/g, '') + '\n' : '') + result.code, 'utf8')
+      WriteFile(files[i].path, (easterEgg !== null && easterEgg.length ? easterEgg.replace(/^\n+/g, '') + Display.LN : '') + result.code, 'utf8')
     minSize += FileStat(files[i].path).size
   }
 

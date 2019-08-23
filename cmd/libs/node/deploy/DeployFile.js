@@ -27,21 +27,21 @@ const localFiles =
 module.exports = (title, minifyClosure, notMinifyClosure) => {
   Display.title(title)
   
-  Display.line('讀取設定檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('read deploy.yaml', true).dim().italic())
+  Display.lines('讀取設定檔案',
+    ['執行動作', 'read deploy.rule.yaml'])
 
   if (!require('fs').existsSync(Path.yaml))
-    return Display.line(false) || Rollback(['deploy.yaml 不存在！'])
+    return Display.line(false) || Rollback(['deploy.rule.yaml 不存在！'])
 
   let yaml = require('fs').readFileSync(Path.yaml, 'utf8')
   Display.line(true)
 
-  Display.line('轉譯設定檔案',
-    Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('compile deploy.yaml', true).dim().italic())
+  Display.lines('轉譯設定檔案',
+    ['執行動作', 'compile deploy.rule.yaml'])
 
   yaml = GetYamlFile(yaml)
   if (typeof yaml.error !== 'undefined')
-    return Display.line(false) || Rollback(['轉譯 deploy.yaml 失敗！', yaml.error.message])
+    return Display.line(false) || Rollback(['轉譯 deploy.rule.yaml 失敗！', yaml.error.message])
   Display.line(true)
 
  return localFiles('整理本機內檔案', yaml,

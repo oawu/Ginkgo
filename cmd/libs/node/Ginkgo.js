@@ -39,13 +39,14 @@ const bus = {
   on: (name, closure) => {
     if (typeof bus.events[name] === 'undefined')
       bus.events[name] = []
-    bus.events[name].push(closure)
+    return bus.events[name].push(closure)
   },
   call: (name, ...params) => {
     if (typeof bus.events[name] === 'undefined')
       return
     for (i in bus.events[name])
       bus.events[name][i](params)
+    return true
   }
 }
 

@@ -25,9 +25,9 @@ class Display {
   }
 
   static progress() {
-    Display.present = Display.total ? Math.ceil(Display.index * 100) / Display.total : 100
-    Display.present = Display.present <= 100 ? Display.present >= 0 ? Display.present : 0 : 100
-    return Display.present
+    Display._present = Display._total ? Math.ceil(Display._index * 100) / Display._total : 100
+    Display._present = Display._present <= 100 ? Display._present >= 0 ? Display._present : 0 : 100
+    return Display._present
   }
 
   static showPresent() {
@@ -37,45 +37,45 @@ class Display {
 
   static line(title, error) {
     if (typeof title === 'string') {
-      Display.present = null
+      Display._present = null
       let args = Array.prototype.slice.call(arguments).reduce((a, b) => a.concat(b), []).filter(t => t !== null)
-      Display.lines = args.map((t, i) => '\x1b[K' + ' '.repeat(3 + (i ? 2 : i * 2)) + (i ? Display.markHash() : Display.markList()) + ' ' + t.replace(/(^\s*)/g,''))
-      print(Display.lines.join(Display.LN) + Xterm.color.black('…', true).dim() + ' ')
+      Display._lines = args.map((t, i) => '\x1b[K' + ' '.repeat(3 + (i ? 2 : i * 2)) + (i ? Display.markHash() : Display.markList()) + ' ' + t.replace(/(^\s*)/g,''))
+      print(Display._lines.join(Display.LN) + Xterm.color.black('…', true).dim() + ' ')
     }
 
-    if (typeof title === 'boolean' && Display.lines.length) {
+    if (typeof title === 'boolean' && Display._lines.length) {
       if (title == true) {
-        Display.index = Display.total
-        Display.lines[0] += (Display.present !== null ? Xterm.color.gray('(' + Display.index + '/' + Display.total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent() : '') + ' ' + Xterm.color.black('─', true).dim() + ' ' + Xterm.color.green(typeof error === 'string' ? error : '完成')
-        print((Display.lines.length > 1 ? '\x1b[' + (Display.lines.length - 1) + 'A' : '') + Display.LR + Display.lines.join(Display.LN) + Display.LN)
-        Display.present = null
-        Display.lines = []
+        Display._index = Display._total
+        Display._lines[0] += (Display._present !== null ? Xterm.color.gray('(' + Display._index + '/' + Display._total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent() : '') + ' ' + Xterm.color.black('─', true).dim() + ' ' + Xterm.color.green(typeof error === 'string' ? error : '完成')
+        print((Display._lines.length > 1 ? '\x1b[' + (Display._lines.length - 1) + 'A' : '') + Display.LR + Display._lines.join(Display.LN) + Display.LN)
+        Display._present = null
+        Display._lines = []
       } else {
-        Display.lines[0] += (Display.present !== null ? Xterm.color.gray('(' + Display.index + '/' + Display.total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent() : '') + ' ' + Xterm.color.black('─', true).dim() + ' ' + Xterm.color.red('錯誤')
-        print((Display.lines.length > 1 ? '\x1b[' + (Display.lines.length - 1) + 'A' : '') + Display.LR + Display.lines.join(Display.LN) + Display.LN)
+        Display._lines[0] += (Display._present !== null ? Xterm.color.gray('(' + Display._index + '/' + Display._total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent() : '') + ' ' + Xterm.color.black('─', true).dim() + ' ' + Xterm.color.red('錯誤')
+        print((Display._lines.length > 1 ? '\x1b[' + (Display._lines.length - 1) + 'A' : '') + Display.LR + Display._lines.join(Display.LN) + Display.LN)
         error && Display.error(error)
-        Display.present = null
-        Display.lines = []
+        Display._present = null
+        Display._lines = []
         return false
       }
     }
 
     if (typeof title === 'number') {
-      Display.total = title
-      Display.index = 0
+      Display._total = title
+      Display._index = 0
 
-      let lines = Display.lines.slice()
+      let _lines = Display._lines.slice()
 
-      lines[0] += Xterm.color.gray('(' + Display.index + '/' + Display.total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent()
-      print((lines.length > 1 ? '\x1b[' + (lines.length - 1) + 'A' : '') + Display.LR + lines.join(Display.LN))
+      _lines[0] += Xterm.color.gray('(' + Display._index + '/' + Display._total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent()
+      print((_lines.length > 1 ? '\x1b[' + (_lines.length - 1) + 'A' : '') + Display.LR + _lines.join(Display.LN))
     }
     
     if (typeof title === 'undefined') {
-      Display.index += 1
-      let lines = Display.lines.slice()
+      Display._index += 1
+      let _lines = Display._lines.slice()
 
-      lines[0] += Xterm.color.gray('(' + Display.index + '/' + Display.total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent()
-      print((lines.length > 1 ? '\x1b[' + (lines.length - 1) + 'A' : '') + Display.LR + lines.join(Display.LN))
+      _lines[0] += Xterm.color.gray('(' + Display._index + '/' + Display._total + ')').dim() + ' ' + Xterm.color.black('─', true).dim() + ' ' + Display.showPresent()
+      print((_lines.length > 1 ? '\x1b[' + (_lines.length - 1) + 'A' : '') + Display.LR + _lines.join(Display.LN))
     }
     
     return true
@@ -107,13 +107,17 @@ class Display {
   static markSemicolon() {
     return Xterm.new('：').dim() + ''
   }
+  static lines(title, ...actions) {
+    return Display.line(title, actions.filter(t => t !== null).map(
+      action => Xterm.color.gray(action[0], true).dim() + Display.markSemicolon() + Xterm.color.gray(action[1], true).dim().italic()))
+  }
 }
 
 Display.LR = '\r'
 Display.LN = '\n'
-Display.lines = []
-Display.total = 0
-Display.index = 0
-Display.present = null
+Display._lines = []
+Display._total = 0
+Display._index = 0
+Display._present = null
 
 module.exports = Display
