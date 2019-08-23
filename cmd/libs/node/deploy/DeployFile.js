@@ -12,23 +12,17 @@ const Rollback    = require('./Rollback')
 const Argv        = require('./Argv')
 const Path        = require('path')
 
-const localFiles = (title, localFiles, closure) => {
+const localFiles =
+  (title, localFiles, closure) => true &&
+    Display.line(title) &&
+    Display.line(localFiles.length) &&
 
-  Display.line(title)
-  Display.line(localFiles.length)
+    (Argv.localFiles = localFiles.map(
+      file => Display.line() && {
+        name: (Argv.data.folder.length ? Argv.data.folder + '/' : '') + file.replace(Path.root, ''),
+        path: file })) &&
 
-  localFiles = localFiles.map(
-    localFile => Display.line() && {
-      name: (Argv.data.folder.length ? Argv.data.folder + '/' : '') + localFile.replace(Path.root, ''),
-      path: localFile
-    })
-
-  Display.line(true)
-
-  Argv.localFiles = localFiles
-
-  return closure && closure()
-}
+    Display.line(true) && closure && closure()
 
 module.exports = (title, minifyClosure, notMinifyClosure) => {
   Display.title(title)
@@ -41,7 +35,6 @@ module.exports = (title, minifyClosure, notMinifyClosure) => {
 
   let yaml = require('fs').readFileSync(Path.yaml, 'utf8')
   Display.line(true)
-
 
   Display.line('轉譯設定檔案',
     Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('compile deploy.yaml', true).dim().italic())

@@ -34,21 +34,16 @@ const setGithubUri = stdout => {
 }
 
 module.exports = (title, closure) => true &&
-
   Display.title(title) &&
 
   Display.line('檢查專案是否為 ' + Xterm.color.gray('GitHub', true) + ' 專案',
     Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('check .git origin remote url', true).dim().italic()) &&
 
-  Exec('git remote get-url origin', (error, stdout, stderr) => {
-    if (error)
-      return Display.line(false, err)
-
-    if (!stdout.length)
-      return Display.line(false, '執行指令 git remote get-url origin 失敗！')
-
-    if (!setGithubUri(stdout))
-      return Display.line(false, ['找不到你的 origin remote url', '請確認專案內有 origin remote url', 'remote url 應為 git@github.com 或 https://github.com/ 開頭'])
-
-    return Display.line(true) && closure && closure()
-  })
+  Exec('git remote get-url origin',
+    (error, stdout, stderr) => !error
+      ? stdout.length
+        ? setGithubUri(stdout)
+          ? Display.line(true) && closure && closure()
+          : Display.line(false, ['執行指令 git remote get-url origin 失敗！', '請確認專案內有 origin remote url，其 remote url 應為 git@github.com 或 https://github.com/ 開頭！'])
+        : Display.line(false, ['執行指令 git remote get-url origin 失敗！', '相關原因：' + '無法取得 GitHub remote RUL'])
+      : Display.line(false, ['執行指令 git remote get-url origin 失敗！', '相關原因：' + error.message]))

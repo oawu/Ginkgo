@@ -73,7 +73,7 @@ const execPlugins = (i, closure) => {
 
   return Exec(pluginCmd, (error, stdout, stderr) => {
     if (error) {
-      error = [error.message]
+      error = ['相關原因：' + error.message]
       
       if (jsJson(stdout))
         stdout = JSON.parse(stdout)

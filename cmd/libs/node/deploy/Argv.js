@@ -16,7 +16,6 @@ let data = {
 }
 
 const fetch = (title, closure) => {
-
   Display.title(title)
   Display.line('取得參數')
 

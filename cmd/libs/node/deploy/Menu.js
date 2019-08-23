@@ -11,21 +11,17 @@ const Xterm   = require('../Xterm')
 const Argv    = require('./Argv')
 
 const get = (items, closure) => {
-  const read = require('readline').createInterface
-  const line = read({ input: process.stdin, output: process.stdout })
-
+  const line = require('readline').createInterface({ input: process.stdin, output: process.stdout })
   line.question(Xterm.color.red(' ➜') + ' 請輸入您的選項：', answer => {
     line.close()
+
     let cho = answer.toLowerCase().trim()
     if (isNaN(cho))
       return get(items, closure)
 
     cho = parseInt(cho, 10)
 
-    if (typeof items[cho - 1] === 'undefined')
-      return get(items, closure)
-
-    return closure(items[cho - 1].value)
+    return typeof items[cho - 1] === 'undefined' ? get(items, closure) : closure(items[cho - 1].value)
   })
 }
 
@@ -69,8 +65,8 @@ const choice = (d4, items, closure) => {
 
 module.exports = {
   choice: choice,
-  default: (s3Closure, githubClosure) => {
-    Display.title('部署平台')
+  default: (s3Closure, githubClosure) => true &&
+    Display.title('部署平台') &&
     choice(Argv.data.goal, [
       { title: 'GitHub Pages', subtitle: 'gh-pages branch',            value: 'gh-pages' },
       { title: 'Amazon S3   ', subtitle: 'AWS Simple Storage Service', value: 'aws-s3' }
@@ -88,5 +84,4 @@ module.exports = {
           : githubClosure && githubClosure()
       })
     })
-  }
 }

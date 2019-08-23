@@ -11,6 +11,7 @@ const Xterm   = require('../Xterm')
 const Menu    = require('./Menu')
 const Argv    = require('./Argv')
 const Path    = require('path')
+const S3      = require('aws-sdk/clients/s3')
 
 let reInput   = false
 let lastCheck = false
@@ -44,33 +45,19 @@ const checkInput = closure => true &&
     { title: '不對，我要重寫', subtitle: 'No, the information should be rewritten', value: '2' }
   ], val => val == '2' && (reInput = true) ? info('重新確認 S3 資訊', closure) : testS3(closure))
 
-const testS3 = closure => {
-  Display.title('測試連線')
+const testS3 = closure => true &&
+  Display.title('測試連線') &&
 
-  Display.line('測試 S3 是否可以正常連線')
+  Display.line('測試 S3 是否可以正常連線') &&
 
-  const S3 = require('aws-sdk/clients/s3')
-
-  const s3 = new S3({
-    accessKeyId: Argv.data.access,
-    secretAccessKey: Argv.data.secret
-  })
-
-  if (!s3)
-    return Display.line(false, ['初始 S3 物件失敗！', '請確認 S3 連線資訊是否正確！'])
-
-  return s3.listBuckets((error, data) => {
-    if (error)
-      return Display.line(false, error.message)
-    
-    if (data.Buckets.map(t => t.Name ).indexOf(Argv.data.bucket) == -1)
-      return Display.line(false, '您這組 ' + Xterm.color.gray('access') + '、' + Xterm.color.gray('secret') + ' 無法操作 ' + Xterm.color.gray(Argv.data.bucket, true) + ' 此 Bucket！')
-
-    Argv.s3 = s3
-
-    return Display.line(true) && closure && closure()
-  })
-}
+  (Argv.s3 = new S3({ accessKeyId: Argv.data.access, secretAccessKey: Argv.data.secret }))
+    ? Argv.s3.listBuckets(
+      (error, data) => !error
+        ? data.Buckets.map(t => t.Name ).indexOf(Argv.data.bucket) == -1
+          ? Display.line(false, '您這組 ' + Xterm.color.gray('access') + '、' + Xterm.color.gray('secret') + ' 無法操作 ' + Xterm.color.gray(Argv.data.bucket, true) + ' 此 Bucket！')
+          : Display.line(true) && closure && closure()
+        : Display.line(false, ['相關原因：' + error.message]))
+    : Display.line(false, ['初始 S3 物件失敗！', '請確認 S3 連線資訊是否正確！'])
 
 const info = (title, closure) => true &&
   Display.title(title) &&

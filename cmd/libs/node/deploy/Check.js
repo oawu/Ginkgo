@@ -9,7 +9,6 @@ const Display   = require('../Display')
 const Xterm     = require('../Xterm')
 
 module.exports = closure => true &&
-
   Display.line('檢查是否有 Git 指令',
     Xterm.color.gray('執行動作', true).dim() + Display.markSemicolon() + Xterm.color.gray('check git command', true).dim().italic()) &&
 
