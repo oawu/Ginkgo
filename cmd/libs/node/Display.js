@@ -97,19 +97,33 @@ class Display {
   }
 
   static markHash() {
-    return Xterm.color.purple('↳').dim() + ''
+    return process.platform === 'win32'
+      ? Xterm.color.purple('*').dim() + ''
+      : Xterm.color.purple('↳').dim() + ''
   }
 
   static markList() {
-    return Xterm.color.purple('◉') + ''
+    return process.platform === 'win32'
+      ? Xterm.color.purple('＊') + ''
+      : Xterm.color.purple('◉') + ''
   }
 
   static markSemicolon() {
-    return Xterm.new('：').dim() + ''
+    return process.platform === 'win32'
+      ? '：' + ''
+      : Xterm.new('：').dim() + ''
   }
+
   static lines(title, ...actions) {
-    return Display.line(title, actions.filter(t => t !== null).map(
-      action => Xterm.color.gray(action[0], true).dim() + Display.markSemicolon() + Xterm.color.gray(action[1], true).dim().italic()))
+    return process.platform === 'win32'
+      ? Display.line(
+          title,
+          actions.filter(t => t !== null).map(
+            action => Xterm.color.black(action[0], true).dim() + Xterm.color.black('：', true).dim() + Xterm.color.black(action[1], true).dim()))
+      : Display.line(
+          title,
+          actions.filter(t => t !== null).map(
+            action => Xterm.color.gray(action[0], true).dim() + Display.markSemicolon() + Xterm.color.gray(action[1], true).dim().italic()))
   }
 }
 

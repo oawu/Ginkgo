@@ -5,6 +5,7 @@
  * @link        https://www.ioa.tw/
  */
 
+const windowPath = require('../Ginkgo').windowPath
 const Notifier   = require('../Ginkgo').notifier
 const Bus        = require('../Ginkgo').bus
 const Display    = require('../Display')
@@ -56,7 +57,7 @@ module.exports = (title, formats, closure, clinetReload) => true &&
 
   formats.map(
     format => require('chokidar')
-                .watch(Path.root + '**' + Path.sep + '*.' + format)
+                .watch(windowPath(Path.root + '**' + Path.sep + '*.' + format))
                 .on('change', reload.bind(null, '修改', format, clinetReload))
                 .on('add',    reload.bind(null, '新增', format, clinetReload))
                 .on('unlink', reload.bind(null, '移除', format, clinetReload))

@@ -5,6 +5,7 @@
  * @link        https://www.ioa.tw/
  */
 
+const windowPath = require('../Ginkgo').windowPath
 const Notifier   = require('../Ginkgo').notifier
 const Bus        = require('../Ginkgo').bus
 const Display    = require('../Display')
@@ -128,10 +129,10 @@ module.exports = (title, closure) => true &&
   Display.title(title) &&
 
   Display.lines('監控目錄',
-    ['執行動作', 'watch ' + Path.icon.replace(Path.root, '')]) &&
+    ['執行動作', 'watch ' + Path.icon.replace(Path.root, '') + 'style.css']) &&
 
   require('chokidar')
-    .watch(Path.icon)
+    .watch(windowPath(Path.icon))
     .on('change', modify.bind(null, '修改', 'rebuild'))
     .on('add',    modify.bind(null, '新增', 'create'))
     .on('unlink', modify.bind(null, '移除', 'remove'))

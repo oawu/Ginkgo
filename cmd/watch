@@ -26,7 +26,7 @@ process.stdout.write('\x1b[0f')
 Loader('Display').mainTitle('Ginkgo 開發工具')
 
 Loader('EnvCheck')('檢查環境', Load('Check'),
-  Load('WatchIcon').bind(null, 'Watch icon 目錄',
+  () => Load('WatchIcon')('Watch icon 目錄',
     Load('WatchSCSS').bind(null, 'Watch SCSS 目錄',
       Load('OpenServer').bind(null, '開啟開發伺服器', 
         Load('WatchFile').bind(null, 'Watch 專案', watchFormats,

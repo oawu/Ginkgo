@@ -100,7 +100,11 @@ const openServer = (closure, port) => {
   const socketIO = require('socket.io').listen(server)
 
   Display.line(true, '完成')
-  print(' '.repeat(5) + Display.markHash() + ' ' + Xterm.color.gray('網址', true).dim() + Display.markSemicolon() + Xterm.color.blue('http://127.0.0.1:' + port + '/', true).italic().underline() + Display.LN)
+  
+  if (process.platform === 'win32')
+    print(' '.repeat(5) + Display.markHash() + ' ' + '網址' + Display.markSemicolon() + 'http://127.0.0.1:' + port + '/' + Display.LN)
+  else
+    print(' '.repeat(5) + Display.markHash() + ' ' + Xterm.color.gray('網址', true).dim() + Display.markSemicolon() + Xterm.color.blue('http://127.0.0.1:' + port + '/', true).italic().underline() + Display.LN)
 
   socketIO.sockets.on('connection',
     socket => true &&

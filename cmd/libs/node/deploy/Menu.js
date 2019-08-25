@@ -12,7 +12,7 @@ const Argv    = require('./Argv')
 
 const get = (items, closure) => {
   const line = require('readline').createInterface({ input: process.stdin, output: process.stdout })
-  line.question(Xterm.color.red(' ➜') + ' 請輸入您的選項：', answer => {
+  line.question(Xterm.color.red(process.platform === 'win32' ? ' >' : ' ➜') + ' 請輸入您的選項：', answer => {
     line.close()
 
     let cho = answer.toLowerCase().trim()
@@ -35,7 +35,9 @@ const choice = (d4, items, closure) => {
     str += ' '
 
     if (d4 == items[i].value)
-      str += Xterm.color.green('➜')
+      str += process.platform === 'win32'
+              ? Xterm.color.green('>')
+              : Xterm.color.green('➜')
     else
       str += ' '
     

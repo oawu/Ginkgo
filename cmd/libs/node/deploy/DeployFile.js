@@ -5,6 +5,7 @@
  * @link        https://www.ioa.tw/
  */
 
+const windowPath = require('../Ginkgo').windowPath
 const GetYamlFile = require('../Ginkgo').getYamlFile
 const Display     = require('../Display')
 const Xterm       = require('../Xterm')
@@ -19,7 +20,9 @@ const localFiles =
 
     (Argv.localFiles = localFiles.map(
       file => Display.line() && {
-        name: (Argv.data.folder.length ? Argv.data.folder + '/' : '') + file.replace(Path.root, ''),
+        name: process.platform === 'win32'
+          ? windowPath((Argv.data.folder.length ? Argv.data.folder + Path.sep : '') + file.replace(Path.root, ''))
+          : (Argv.data.folder.length ? Argv.data.folder + Path.sep : '') + file.replace(Path.root, ''),
         path: file })) &&
 
     Display.line(true) && closure && closure()

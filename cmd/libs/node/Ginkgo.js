@@ -9,6 +9,8 @@ const Path     = require('path')
 const DirRead  = require('fs').readdirSync
 const FileStat = require('fs').statSync
 
+const windowPath = str => process.platform === 'win32' ? str.replace(/\\/g, "/") : str
+
 const print = str => {
   process.stdout.write('\r' + str)
   return true
@@ -164,6 +166,7 @@ module.exports = {
   print: print,
   notifier: notifier,
   timeUnit: timeUnit,
+  windowPath: windowPath,
   getYamlFile: getYamlFile,
   load: name => require('./' + name),
   loadWatch: name => require('./watch/' + name),
