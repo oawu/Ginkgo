@@ -25,7 +25,7 @@ class PluginException extends Exception {
 if (!function_exists('errorHandler')) {
   function errorHandler($severity, $message, $filepath, $line) {
     // 一般錯誤，例如 1/0; 這種錯誤！
-    echo $message;
+    echo '檔案：' . $filepath . '(' . $line . ')，錯誤原因：' . $message;
     exit(1);
   }
 }

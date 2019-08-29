@@ -22,6 +22,7 @@
 @import "compass/css3/background-size";
 @import "compass/css3/background-clip";
 @import "compass/utilities/color/contrast";
+@import "compass/css3/hyphenation";
 
 @mixin range-width($min: 0, $max: 0) {
   @if $max == 0 {
