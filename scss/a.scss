@@ -1,0 +1,722 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+@import "_def";
+
+.TableViewSection {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  margin: 12px 0;
+  text-align: left;
+  
+  &:before, &:after {
+    display: inline-block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+
+    font-size: 13px;
+    padding-left: 16px;
+    color: rgba(138, 139, 144, 1.00);
+  }
+  &:before {
+    margin-bottom: 2px;
+  }
+
+  &:after {
+    margin-top: 3px;
+  }
+
+  &[data-header]:not([data-header='']):before { content: attr(data-header); }
+  &[data-footer]:not([data-footer='']):after { content: attr(data-footer); }
+
+  .TableViewCell {
+  }
+}
+.TableViewCell {
+  @extend %-user-select-none;
+  position: relative;
+
+  display: inline-block;
+  width: 100%;
+  padding: 12px 12px 11px 16px;
+  background-color: white;
+
+  &:first-child { border-top: 1px solid rgba(222, 222, 222, 1.00); }
+  &:last-child { border-bottom: 1px solid rgba(218, 218, 218, 1.00); }
+  
+  b, span {
+    display: block;
+  }
+  b {
+    font-weight: normal;
+    line-height: 21px;
+    font-size: 15px;
+    color: rgba(72, 72, 72, 1.00);
+  }
+  span {
+    font-size: 11px;
+    color: rgba(142, 145, 148, 1.00);
+    line-height: 16px;
+  }
+  &:not(.wrap) {
+    b, span {
+      @include overflow-docx3();
+    }
+  }
+
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 14px;
+
+    display: inline-block;
+    height: 1px;
+    border-top: 1px solid rgba(220, 220, 220, 1.00);
+  }
+
+  & + .TableViewCell:after {
+    content: '';
+  }
+  &.blue {
+    cursor: pointer;
+    $linkColor: rgba(24, 144, 255, 1.00);
+    b, span { @include transition(color .3s); }
+    b { color: $linkColor; }
+    span { color: adjust-lightness($linkColor, 16%); }
+    &:hover {
+      b { color: adjust-lightness($linkColor, -10%);}
+      span { color: adjust-lightness($linkColor, 6%); }
+    }
+    &:active {
+      b { color: adjust-lightness($linkColor, -16%);}
+      span { color: adjust-lightness($linkColor, -10%); }
+    }
+  }
+  &.red {
+    cursor: pointer;
+    $linkColor: rgba(243, 38, 38, 1.00);
+    b, span { @include transition(color .3s); }
+    b { color: $linkColor; }
+    span { color: adjust-lightness($linkColor, 16%); }
+    &:hover {
+      b { color: adjust-lightness($linkColor, -10%);}
+      span { color: adjust-lightness($linkColor, 6%); }
+    }
+    &:active {
+      b { color: adjust-lightness($linkColor, -16%);}
+      span { color: adjust-lightness($linkColor, -10%); }
+    }
+  }
+  &.center { b, span { text-align: center; } }
+  &.right { b, span { text-align: right; } }
+  &.subtitle { padding: 9px 12px 8px 16px; }
+
+  &.switch {
+    $switchWidth: 40px;
+    $switchHeight: 24px;
+    padding-right: 12px + $switchWidth + 12px;
+
+    label {
+      @extend %-user-select-none;
+      position: absolute;
+      right: 12px;
+      top: calc(50% - #{($switchHeight / 2)});
+      display: inline-block;
+      width: $switchWidth;
+      height: $switchHeight;
+      cursor: pointer;
+      
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        display: inline-block;
+      }
+        
+      &:before {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(228, 228, 228, 1.00);
+        @include border-radius($switchHeight / 2);
+        @include box-shadow(inset 0 1px 4px 0 rgba(0, 35, 11, .2));
+        @include transition(background-color .3s, box-shadow .3s);
+      }
+
+      &:after {
+        left: 2px;
+        top: 2px;
+        width: $switchHeight - 2px * 2;
+        height: calc(100% - #{2px * 2});
+
+        background-color: white;
+        @include opacity(1);
+        @include border-radius(50%);
+        @include transition(left .3s, box-shadow .3s);
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+      }
+    }
+    &.on label {
+      &:before {
+        background-color: rgba(37, 184, 153, 1.00);
+      }
+      &:after {
+        left: $switchWidth - ($switchHeight - 2px * 2 + 2px);
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, 0.2));
+      }
+    }
+  }
+  &.arrow, &.checkmark {
+    cursor: pointer;
+
+    b, span, strong {
+      @include transition(color .3s);
+    }
+    strong {
+      position: absolute;
+      display: inline-block;
+      text-align: center;
+
+      &:before {
+        @extend %-icon;
+      }
+    }
+    &:not(.blue):not(.red):hover {
+      b { color: rgba(32, 32, 32, 1.00); }
+      span { color: rgba(112, 115, 118, 1.00); }
+    }
+  }
+  &.arrow {
+    $arrowWidth: 20px;
+    $arrowHeight: 24px;
+    padding-right: 6px + $arrowWidth + 6px;
+
+    strong {
+      right: 6px;
+      top: calc(50% - #{($arrowHeight / 2)});
+      width: $arrowWidth;
+      height: $arrowHeight;
+      line-height: $arrowHeight;
+      font-size: 20px;
+      color: rgba(200, 202, 204, 1);
+
+      &:before {
+        content: '\a0008';
+      }
+    }
+    &:hover {
+      strong { color: rgba(170, 172, 174, 1); }
+    }
+  }
+  &.checkmark {
+    $arrowWidth: 28px;
+    $arrowHeight: 28px;
+    padding-right: 10px + $arrowWidth + 12px;
+
+    strong {
+      right: 12px;
+      top: calc(50% - #{($arrowHeight / 2)});
+      width: $arrowWidth;
+      height: $arrowHeight;
+      line-height: $arrowHeight;
+      font-size: 18px;
+      color: rgba(228, 229, 233, 1.00);
+
+      &:before {
+        content: '\a0030';
+      }
+    }
+    &:hover {
+      strong { color: rgba(210, 212, 214, 1); }
+    }
+    &:active {
+      strong { color: rgba(24, 144, 255, 1.00); }
+    }
+    &.on {
+      strong { color: rgba(24, 144, 255, 1.00); } 
+    }
+  }
+  &.value1, &.value2, &.input, &.textarea {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    b {
+      flex-shrink: 0;
+      margin-right: 8px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    span, input, textarea {
+      flex-grow: 1;
+      min-width: 0;
+      max-width: 100%;
+      text-align: right;
+    }
+  }
+  &.value2 {
+    b { font-size: 13px; color: rgba(125, 127, 130, 1.00); }
+    span { font-size: 15px; color: rgba(72, 72, 72, 1.00); }
+  }
+  &.input {
+    b {
+      color: rgba(95, 97, 99, 1.00);
+    }
+    input {
+      border: 0;
+      display: inline-block;
+      color: rgba(72, 72, 72, 1.00);
+      font-size: 15px;
+      height: 21px;
+
+      @include input-placeholder {
+        color: rgba(180, 180, 180, 1.00);
+        font-size: 13px;
+      }
+      &:focus {
+        outline: 0;
+      }
+
+      &[type='date']::-webkit-datetime-edit {
+        font-size: 13px;
+        color: rgba(180, 180, 180, 1.00);
+      }
+    }
+    &.left input {
+      text-align: left;
+    }
+  }
+  &.textarea {
+    b {
+      color: rgba(95, 97, 99, 1.00);
+    }
+    textarea {
+      @extend %-scroll-white;
+      border: 0;
+      display: inline-block;
+      color: rgba(72, 72, 72, 1.00);
+      font-size: 15px;
+      line-height: 21px;
+      resize: none;
+      height: 21px * 4;
+      position: relative;
+
+      @include input-placeholder {
+        color: rgba(180, 180, 180, 1.00);
+        font-size: 13px;
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+    &.left textarea {
+      text-align: left;
+    }
+    // p {
+    //   margin: 0;
+    //   color: rgba(72, 72, 72, 1.00);
+    //   line-height: 21px;
+    //   font-size: 15px;
+    //   max-height: 21px * 3;
+    //   overflow-y: auto;
+    //   overflow-x: none;
+
+    //   &:empty[placeholder]:not([placeholder='']):before {
+    //     content: attr(placeholder);
+    //     color: rgba(180, 180, 180, 1.00);
+    //     font-size: 13px;
+    //   }
+    //   &:focus {
+    //     outline: 0;
+    //   }
+    // }
+  }
+}
+
+// #{$TableViewCell}, #{$TableViewInputCell}, #{$TableViewButtonCell} {
+//   @extend %-user-select-none;
+
+//   position: relative;
+//   display: inline-block;
+//   width: 100%;
+
+//   @include overflow-docx3();
+
+//   &:before, &:after {
+//     position: absolute;
+//     display: inline-block;
+//     z-index: 1;
+//   }
+
+//   &:after {
+//     content: '';
+//     right: 0;
+//     bottom: 0;
+
+//     font-size: 10px;
+//     border-bottom: 1px solid rgba(222, 222, 222, 1);
+
+//     height: 1px;
+//     @include overflow-docx3();
+//   }
+
+//   &:last-child:after {
+//     border-bottom-color: transparent;
+//   }
+// }
+
+// #{$TableViewCell} {
+//   $height: 44px;
+//   $subtitleHeight: 16px;
+//   $heightWithSubtitle: $height + $subtitleHeight / 2; // icon 高
+//   $iconWidth: 30px; // icon 寬
+//   $iconHeight: 30px; // icon 高
+//   $leftSpace: 16px; // 左邊間隔
+//   $rightSpace: 12px; // 左邊間隔
+//   $iconSpace: 12px; // icon 與文字的間隔
+
+//   height: $height;
+//   line-height: $height;
+//   padding-left: $leftSpace + $leftSpace / 3;
+//   padding-right: $rightSpace;
+         
+//   i {
+//     position: absolute;
+//     display: inline-block;
+//     z-index: 1;
+//     @include transition(color .3s);
+//     right: $rightSpace;
+//     text-align: right;
+//     font-size: 20px;
+//     z-index: 2;
+//   }
+
+//   &:before {
+//     @extend %-icon;
+//     font-size: 24px;
+//     left: $leftSpace;
+//     top: ($height - $iconHeight) / 2;
+
+//     width: $iconWidth;
+//     height: $iconHeight;
+//     line-height: $iconHeight;
+    
+//     text-align: center;
+//   }
+
+//   &:after {
+//     padding-right: $rightSpace;
+//     left: $leftSpace;
+//     padding-left: $leftSpace / 3;
+//   }
+
+//   &[data-subtitle]:not([data-subtitle=""]) {
+//     height: $heightWithSubtitle;
+//     line-height: $heightWithSubtitle - $subtitleHeight;
+    
+//     &:before {
+//       top: ($heightWithSubtitle - $iconHeight) / 2;
+//     }
+
+//     &:after {
+//       content: attr(data-subtitle);
+//       height: $heightWithSubtitle / 2;
+//       line-height: $heightWithSubtitle / 2 - $subtitleHeight / 3;
+//     }
+//   }
+
+//   color: rgba(110, 110, 110, 1.00);
+//   i { color: rgba(198, 199, 203, 1.00); }
+//   &:before, &:after { color: rgba(146, 146, 146, 1); }
+  
+//   &#{$TableViewCellIcon} {
+//     $leftSpace: 12px; // 左邊間隔
+//     padding-left: $leftSpace + $iconWidth + $iconSpace;
+//     &:after {
+//       left: $leftSpace + $iconWidth + $iconSpace / 3 * 2;
+//       padding-left: 0 + $iconSpace / 3;
+//     }
+//     &:before {
+//       left: $leftSpace;
+//     }
+//   }
+  
+//   &#{$TableViewCellArrow} {
+//     $arrowWidth: 24px;
+//     $arrowHeight: 24px;
+//     $arrowSpace: 8px;
+
+//     cursor: pointer;
+//     padding-right: $arrowSpace + $arrowWidth + $rightSpace;
+
+//     i, &:before, &:after {
+//       @include transition(color .3s);
+//     }
+    
+//     &:after {
+//       padding-right: $arrowSpace + $arrowWidth + $rightSpace;
+//     }
+
+//     i {
+//       width: $arrowWidth;
+//       height: $arrowHeight;
+//       line-height: $arrowHeight;
+//       top: ($height - $arrowHeight) / 2;
+//       &:before {
+//         @extend %-icon;
+//         content: '\a0008';
+//       }
+//     }
+
+//     &[data-subtitle]:not([data-subtitle=""]) {
+//       i {
+//         top: ($heightWithSubtitle - $arrowHeight) / 2;
+//       }
+//     }
+
+//     &:hover {
+//       color: rgba(90, 90, 90, 1);
+//       &:before, &:after { color: rgba(120, 120, 120, 1); }
+//       i { color: rgba(179, 180, 183, 1.00); }
+//     }
+//   }
+
+//   &#{$TableViewCellSwitch} {
+//     $switchWidth: 44px;
+//     $switchHeight: 24px;
+//     $switchSpace: 8px;
+    
+//     padding-right: $switchSpace + $switchWidth + $rightSpace;
+
+//     &:after {
+//       padding-right: $switchSpace + $switchWidth + $rightSpace;
+//     }
+//     i {
+//       cursor: pointer;
+//       width: $switchWidth;
+//       height: $switchHeight;
+//       top: ($height - $switchHeight) / 2;
+      
+//       &:before, &:after {
+//         content: '';
+//         position: absolute;
+//         display: inline-block;
+//       }
+        
+//       &:before {
+//         left: 0;
+//         top: 0;
+//         width: 100%;
+//         height: 100%;
+    
+//         background-color: rgba(235, 235, 235, 1.00);
+//         @include border-radius($switchHeight / 2);
+//         @include box-shadow(inset 0 1px 4px 0 rgba(0, 35, 11, .2));
+//         @include transition(background-color .3s, box-shadow .3s);
+//       }
+
+//       &:after {
+//         left: 2px;
+//         top: 2px;
+//         width: $switchHeight - 2px * 2;
+//         height: calc(100% - #{2px * 2});
+        
+//         background-color: white;
+//         @include opacity(1);
+//         @include border-radius(50%);
+//         @include transition(left .3s, box-shadow .3s);
+//         @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+//       }
+//     }
+//     &[data-subtitle]:not([data-subtitle=""]) {
+//       i {
+//         top: ($heightWithSubtitle - $switchHeight) / 2;
+//       }
+//     }
+//     &#{$TableViewCellSwitchOn} {
+//       i {
+//         &:before {
+//           background-color: rgba(37, 184, 153, 1.00);
+//         }
+//         &:after {
+//           left: $switchWidth - ($switchHeight - 2px * 2 + 2px);
+//           @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+//         }
+//       }
+//     }
+//   }
+// }
+
+// #{$TableViewInputCell} {
+//   $height: 44px;
+//   $leftSpace: 16px; // 左邊間隔
+//   $rightSpace: 16px; // 左邊間隔
+
+//   height: $height;
+//   line-height: $height;
+//   padding-right: $rightSpace;
+//   padding-left: $leftSpace;
+
+//   &:before {
+//     left: $leftSpace;
+//     right: 65%;
+//     top: 0;
+//     text-align: left;
+//     font-size: 14px;
+
+//     height: $height;
+//     line-height: $height;
+//     color: rgba(100, 100, 100, 1.00);
+//   }
+
+//   &:after {
+//     padding-right: $rightSpace;
+//     left: $leftSpace;
+//     padding-left: $leftSpace / 3;
+//   }
+
+//   &[data-title]:not([data-title='']) {
+//     padding-left: 35%;
+//     &:before {
+//       content: attr(data-title);
+//     }
+//     input {
+//       text-align: right;
+//     }
+//   }
+
+//   input {
+//     border: 0;
+//     display: inline-block;
+//     width: 100%;
+//     height: $height;
+//     text-align: left;
+
+//     color: rgba(80, 80, 80, 1.00);
+//     font-size: 16px;
+
+//     @include input-placeholder {
+//       color: rgba(180, 180, 180, 1.00);
+//       font-size: 13px;
+//     }
+//     &:focus {
+//       outline: 0;
+//     }
+//   }
+// }
+
+// #{$TableViewButtonCell} {
+//   @extend %-user-select-none;
+//   @extend %-ginkgo-link;
+//   $height: 44px;
+//   $leftSpace: 16px; // 左邊間隔
+//   $rightSpace: 16px; // 左邊間隔
+
+//   height: $height;
+//   line-height: $height;
+//   padding-right: $rightSpace;
+//   padding-left: $leftSpace;
+
+//   border: 0;
+//   background-color: white;
+//   font-size: 14px;
+//   cursor: pointer;
+//   text-align: left;
+
+//   &:focus {
+//     outline: 0;
+//   }
+//   &[type='reset'] {
+//     color: rgba(245, 98, 98, 1.00);
+//   }
+//   &:after {
+//     padding-right: $rightSpace;
+//     left: $leftSpace;
+//     padding-left: $leftSpace / 3;
+//   }
+// }
+
+
+
+
+
+
+
+
+
+// // .CreateFeatureView {
+
+// //   $sectionFirstMarginTop: 16px;
+// //   $sectionLastMarginBottom: 16px;
+// //   $sectionMarginTop: 20px;
+// //   $sectionTitleHeight: 22px;
+// //   $sectionTitleMarginTop: 4px;
+// //   background-color: rgba(244, 245, 247, 1.00) !important;
+
+// //   section {
+// //     position: relative;
+
+// //     display: inline-block;
+// //     width: 100%;
+
+// //     margin-top: $sectionMarginTop;
+
+// //     text-align: left;
+    
+// //     border-top: 1px solid rgba(225, 225, 225, 1.00);
+// //     border-bottom: 1px solid rgba(220, 220, 220, 1.00);
+// //     background-color: white;
+
+// //     &:first-child {
+// //       margin-top: $sectionFirstMarginTop;
+// //     }
+// //     &:last-child {
+// //       margin-bottom: $sectionLastMarginBottom;
+// //     }
+    
+// //     &:before {
+// //       position: absolute;
+// //       top: -($sectionTitleHeight + $sectionTitleMarginTop);
+// //       left: 0;
+
+// //       display: inline-block;
+// //       width: 100%;
+// //       height: 22px;
+// //       line-height: 22px;
+
+// //       font-size: 14px;
+// //       padding-left: 10px;
+// //       color: rgba(132, 133, 138, 1.00);
+// //     }
+
+// //     &[data-title]:not([data-title='']) {
+// //       margin-top: $sectionMarginTop + $sectionTitleHeight + $sectionTitleMarginTop;
+// //       &:first-child {
+// //         margin-top: $sectionFirstMarginTop + $sectionTitleHeight + $sectionTitleMarginTop;
+// //       }
+// //       &:before {
+// //         content: attr(data-title);
+// //       }
+// //     }
+
+// //   }
+// // }
+
+
+// .d {
+//   display: inline-block;
+//   width: 100px;
+//   height: 100px;
+//   background-color: rgba(0, 0, 255, 0.2);
+// }

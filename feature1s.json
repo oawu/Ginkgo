@@ -1,0 +1,113 @@
+{
+  "title": null,
+  "sections": [
+    {
+      "title": "一起共乘",
+      "rows": [
+        {
+          "icon": "icon-2e",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        },
+        {
+          "icon": "icon-2e",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        }
+      ]
+    },
+    {
+      "title": "免費接駁",
+      "rows": [
+        {
+          "icon": "icon-2c",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        },
+        {
+          "icon": "icon-2c",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        }
+      ]
+    },
+    {
+      "title": "付費接駁",
+      "rows": [
+        {
+          "icon": "icon-2b",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        },
+        {
+          "icon": "icon-2b",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        }
+      ]
+    },
+    {
+      "title": "大眾接駁",
+      "rows": [
+        {
+          "icon": "icon-2d",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        },
+        {
+          "icon": "icon-2d",
+          "system": "both",
+          "type": "feature",
+          "title": "吳先生",
+          "subtitle": "大甲火車站 ➜ 清水交流道",
+          "url": "feature1.json",
+          "nativeKey": null,
+          "fbType": null,
+          "fbId": null
+        }
+      ]
+    }
+  ]
+}

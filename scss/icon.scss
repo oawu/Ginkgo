@@ -6,3 +6,66 @@
 //
 
 @import "compass/css3/font-face";
+
+@include font-face("icon", font-files(
+  "icomoon/fonts/icomoon.eot",
+  "icomoon/fonts/icomoon.woff",
+  "icomoon/fonts/icomoon.ttf",
+  "icomoon/fonts/icomoon.svg"));
+
+*[class^="icon-"]:before, *[class*=" icon-"]:before {
+  font-family: "icon";
+
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+.icon-2e:before { content: "\a002e"; }
+.icon-2b:before { content: "\a002b"; }
+.icon-2c:before { content: "\a002c"; }
+.icon-17:before { content: "\a0017"; }
+.icon-2d:before { content: "\a002d"; }
+.icon-19:before { content: "\a0019"; }
+.icon-2f:before { content: "\a002f"; }
+.icon-1a:before { content: "\a001a"; }
+.icon-01:before { content: "\a0001"; }
+.icon-02:before { content: "\a0002"; }
+.icon-03:before { content: "\a0003"; }
+.icon-04:before { content: "\a0004"; }
+.icon-05:before { content: "\a0005"; }
+.icon-06:before { content: "\a0006"; }
+.icon-07:before { content: "\a0007"; }
+.icon-08:before { content: "\a0008"; }
+.icon-09:before { content: "\a0009"; }
+.icon-0a:before { content: "\a000a"; }
+.icon-0b:before { content: "\a000b"; }
+.icon-0c:before { content: "\a000c"; }
+.icon-0d:before { content: "\a000d"; }
+.icon-0e:before { content: "\a000e"; }
+.icon-0f:before { content: "\a000f"; }
+.icon-10:before { content: "\a0010"; }
+.icon-11:before { content: "\a0011"; }
+.icon-12:before { content: "\a0012"; }
+.icon-14:before { content: "\a0014"; }
+.icon-w1:before { content: "\b0001"; }
+.icon-w2:before { content: "\b0002"; }
+.icon-w3:before { content: "\b0003"; }
+.icon-w4:before { content: "\b0004"; }
+.icon-w5:before { content: "\b0005"; }
+.icon-w6:before { content: "\b0006"; }
+.icon-w7:before { content: "\b0007"; }
+.icon-w8:before { content: "\b0008"; }
+.icon-w9:before { content: "\b0009"; }
+.icon-wa:before { content: "\b000a"; }
+.icon-wb:before { content: "\b000b"; }
+.icon-wc:before { content: "\b000c"; }
+.icon-wd:before { content: "\b000d"; }
+.icon-we:before { content: "\b000e"; }
+.icon-18:before { content: "\a0018"; }
+.icon-30:before { content: "\a0030"; }
+.icon-2a:before { content: "\a002a"; }
+.icon-13:before { content: "\a0013"; }
+.icon-16:before { content: "\a0016"; }
+.icon-15:before { content: "\a0015"; }

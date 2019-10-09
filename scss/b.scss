@@ -1,0 +1,992 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+@import "_def";
+
+
+$Window: '.Window';
+  $Controller: '.Controller';
+  $AlertController: '.AlertController';
+  $AlertControllerActionSheet: '.actionSheet';
+  $present: '.present';
+
+    $NavigationController: '.NavigationController';
+    $NavigationControllerPush: '.push';
+      $NavigationBar: ' .NavigationBar';
+        $NavigationBarLeft: ' > label:first-child';
+        $NavigationBarBack: '.back';
+        $NavigationBarRight: ' > label:last-child';
+        $NavigationBarTitle: ' > header';
+
+    $View: '.View';
+      $AlertControllerInfo: '.Info';
+        $AlertControllerInfoTitle: '.Title';
+        $AlertControllerInfoMessage: '.Message';
+      $AlertControllerButtons: '.Buttons';
+        // $AlertControllerButtonPreferred: '.preferred';
+    $TableView: '.TableView';
+      $TableViewSection: '.TableViewSection';
+      $TableViewCell: '.TableViewCell';
+      $TableViewCellIcon: '.TableViewCellIcon';
+      $TableViewCellArrow: '.TableViewCellArrow';
+      $TableViewCellSwitch: '.TableViewCellSwitch';
+      $TableViewCellSwitchOn: '.TableViewCellSwitchOn';
+      
+      $TableViewInputCell: '.TableViewInputCell';
+      $TableViewButtonCell: '.TableViewButtonCell';
+      
+
+// .AlertController {
+//   background-color: rgba(0, 0, 255, 0.2);
+// }
+#{$Window} {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 3;
+  display: inline-block;
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    display: inline-block;
+
+    z-index: 1;
+    
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(32, 33, 36, 0.6);
+    @include opacity(1);
+  }
+
+  #{$Controller} {
+    position: absolute;
+    display: inline-block;
+    
+    z-index: 2;
+
+    overflow: hidden;
+    @include box-shadow(0 4px 10px 1px rgba(0, 0, 0, .26));
+
+    top: 100%;
+    // left: 50%;
+
+    @include opacity(0);
+    @include transition(opacity cubic-bezier(0.4, 0.0, 0.2, 1) .3s, top .3s);
+
+    @include range-width(0, 750px) { width: 100%; height: 100%; left: 0; }
+    @include range-width(750px) { height: calc(100% - #{(40px * 2)}); @include border-radius(13px); }
+    @include range-width(750px, 1300px) { width: 520px; left: calc(50% - #{(520px / 2)}) }
+    @include range-width(1300px) { width: 640px; left: calc(50% - #{(640px / 2)}) }
+
+    &#{$present} {
+      @include opacity(1);
+      @include range-width(0, 750px) { top: 0; }
+      @include range-width(750px) { top: 40px; }
+    }
+
+    #{$View} {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      @extend %-scroll-white;
+
+      &#{$TableView} {
+        background-color: rgba(238, 239, 243, 1.00);
+        // background-color: rgba(244, 245, 247, 1.00);
+      }
+    }
+
+    #{$NavigationController} {
+      $NavigationBarHeight: 48px;
+
+      position: absolute;
+      left: 100%;
+      top: 0;
+
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+
+      @include transition(left .3s);
+      @include box-shadow(0 0 10px 1px rgba(0, 0, 0, .2));
+
+      #{$View} {
+        height: calc(100% - #{$NavigationBarHeight});
+      }
+
+      &#{$NavigationControllerPush} {
+        left: 0;
+      }
+
+      #{$NavigationBar} {
+        width: 100%;
+        z-index: 2;
+        background-color: white;
+        overflow: hidden;
+
+        &, * {
+          position: relative;
+          display: inline-block;
+          height: $NavigationBarHeight;
+          line-height: $NavigationBarHeight;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          display: inline-block;
+          width: 100%;
+          height: 1px;
+          border-bottom: 1px solid rgba(213, 213, 213, 1.00);
+          z-index: 3;
+        }
+        *:empty {
+          display: none;
+        }
+
+        #{$NavigationBarLeft}, #{$NavigationBarRight} {
+          @extend %-user-select-none;
+          @extend %-ginkgo-link;
+
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          width: 80px;
+          z-index: 2;
+
+          &:not(:empty) {
+            cursor: pointer;
+          }
+        }
+
+        #{$NavigationBarLeft} {
+          &#{$NavigationBarBack} {
+            &:before {
+              @extend %-icon;
+              content: '\a0014';
+              font-size: 18px;
+            }
+          }
+        }
+
+        #{$NavigationBarRight} {
+          left: auto;
+          right: 0;
+        }
+
+        #{$NavigationBarTitle} {
+          width: 100%;
+          padding: 0 80px;
+          z-index: 1;
+        }
+      }
+    }
+
+    &#{$AlertController} {
+      top: 50%;
+      left: 50%;
+      width: calc(100% - #{(16px * 2)});
+      max-width: 320px;
+      height: auto;
+
+      @include border-radius(13px);
+      @include transform(translate(-50%, -50%) scale(0));
+      @include transition(transform .3s, opacity cubic-bezier(0.4, 0.0, 0.2, 1) .33s);
+
+      &#{$present} {
+        @include transform(translate(-50%, -50%) scale(1));
+      }
+
+      #{$View} {
+        #{$AlertControllerInfo} {
+          &, * {
+            display: inline-block;
+            width: 100%;
+            @include word-break(break-all);
+          }
+          padding: 16px;
+
+          #{$AlertControllerInfoTitle} {
+            font-size: 14px;
+            + #{$AlertControllerInfoMessage} {
+              margin-top: 8px;
+            }
+          }
+          #{$AlertControllerInfoMessage} {
+            font-size: 13px;
+            line-height: 18px;
+          }
+          + #{$AlertControllerButtons} {
+            *:before {
+              content: '';
+            }
+          }
+        }
+        #{$AlertControllerButtons} {
+          position: relative;
+          width: 100%;
+          height: 44px;
+          line-height: 44px;
+
+          display: flex;
+          flex-direction: row-reverse;
+          align-content: flex-start;
+
+          * {
+            @extend %-user-select-none;
+            @extend %-ginkgo-link;
+            @include overflow-docx3();
+            position: relative;
+            display: inline-block;
+            flex: 1;
+
+            z-index: 1;
+            height: 44px;
+            line-height: 44px;
+            cursor: pointer;
+            @include transition(color .3s, background-color .3s);
+
+            &:first-child {
+              font-weight: bold;
+              font-size: 16px;
+            }
+            &:hover {
+              background-color: rgba(250, 250, 250, 1);
+            }
+            &:before, &:after {
+              position: absolute;
+              top: 0;
+              display: inline-block;
+              @include border-radius(1px / 2);
+              z-index: 2;
+            }
+            &:before {
+              left: 0;
+              width: 100%;
+              height: 1px;
+              border-top: 1px solid rgba(222, 222, 222, 1.00);
+            }
+            &:after {
+              width: 1px;
+              right: 0;
+              height: 100%;
+              border-left: 1px solid rgba(222, 222, 222, 1.00);
+            }
+            + *:after {
+              content: '';
+            }
+          }
+        }
+      }
+
+      &#{$AlertControllerActionSheet} {
+        max-width: 440px;
+        top: auto;
+        bottom: 0;
+        @include opacity(1);
+        @include transform(translate(-50%, 100%));
+        @include transition(transform .3s, bottom .3s);
+        
+        @include range-width(0, 750px) {
+          max-width: calc(100% - #{(16px * 2)});
+        }
+        &#{$present} {
+          bottom: 20px;
+          @include transform(translate(-50%, 0));
+          @include range-width(0, 750px) {
+            bottom: 16px;
+          }
+        }
+        
+        #{$View} {
+          #{$AlertControllerInfo} {
+            padding: 16px 20px;
+          }
+          #{$AlertControllerButtons} {
+            height: auto;
+            flex-direction: column;
+            * + *:before {
+              content: '';
+            }
+            *:after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+.Article, .FeatureView, .CreateFeatureView {
+  &.aniShow > * {
+    @include opacity(1);
+  }
+}
+.Article, .WebTableView, .HistotyMap, .FeatureView {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: 24px;
+    height: 24px;
+    @include border-radius(50%);
+    border-top: 3px solid rgba(220, 220, 220, 1.00);
+    border-right: 3px solid rgba(220, 220, 220, 1.00);
+    @include transform(translate(-50%, calc(-50% - #{(44px / 2)})));
+    @include animation(rotate 1s linear infinite);
+  }
+
+  &:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    height: 24px;
+    line-height: 24px;
+
+    display: none;
+    content: '讀取中，請稍候…';
+    @include transform(translate(-50%, calc(-50% + #{(44px / 2)})));
+    color: rgba(154, 154, 154, 1.00);
+  }
+  &:empty {
+    &:before, &:after {
+      display: inline-block;
+    }
+  }
+
+}
+.Article {
+  text-align: left;
+  padding: 12px 16px;
+  
+  section {
+    display: inline-block;
+    width: 100%;
+    
+    + section {
+      margin-top: 12px;
+    }
+  }
+  figure {
+    @extend %-cover;
+    @extend %-figure;
+
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 0;
+
+    margin: 0;
+    padding-top: 56.25%;
+    @include border-radius(2px);
+    overflow: visible;
+
+    &:after {
+      @include border-radius(2px);
+    }
+    figcaption {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      display: inline-block;
+      width: 100%;
+      padding: 6px 12px;
+
+      background-color: rgba(0, 0, 0, .5);
+      color: white;
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  h1, h2 {
+    width: 100%;
+    font-size: 20px;
+    margin: 0;
+    margin: 12px 0;
+  }
+  h2 {
+    font-size: 16px;
+    margin: 8px 0;
+  }
+  p {
+    font-size: 14px;
+    margin: 13px 0;
+  }
+  ul {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: 16px 0;
+    padding-top: 10px;
+    border-top: 1px solid rgba(210, 210, 210, 1);
+    padding-left: 0;
+    list-style-type: none;
+
+
+    li {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      font-size: 13px;
+      padding-left: 20px;
+      margin-top: 8px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background-color: rgba(210, 210, 210, 1.00);
+        @include border-radius(7px / 2);
+      }
+      a {
+        @extend %-ginkgo-link;
+        text-decoration: none;
+        &:after {
+          content: ' - ' attr(href);
+          color: rgba(155, 155, 155, 1.00);
+          font-size: 10px;
+          display: inline-block;
+          margin-top: 4px;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  time {
+    display: inline-block;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(160, 160, 160, 1.00);
+    &:before {
+      content: '最後編輯日期：';
+      color: rgba(190, 190, 190, 1.00);
+      font-size: 12px;
+    }
+  }
+  > * {
+    @include opacity(0);
+    @include transition(opacity .3s);
+  }
+    
+}
+
+.WebTableView {
+}
+
+.HistotyMap {
+  position: relative;
+  background-color: rgba(242, 241, 240, 1.00) !important;
+
+  > b {
+    position: absolute;
+    left: 50%;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 16px;
+    color: white;
+    background-color: rgba(32, 33, 36, 0.6);
+    white-space: nowrap;
+    @include transform(translate(-50%, 0));
+    @include border-radius(32px / 2);
+
+    top: 16px;
+    @include range-width(0, 750px) {
+      top: 10px;
+    }
+
+    @include range-width(750px, 1300px) {
+      top: 12px;
+    }
+  }
+  > span {
+    @extend %-user-select-none;
+    position: absolute;
+    
+    display: inline-block;
+    padding: 0 12px;
+    
+    z-index: 2;
+    font-size: 16px;
+
+    color: rgba(111, 111, 111, 1.00);
+    background-color: rgba(255, 255, 255, .9);
+    @include border-radius(3px);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+    &:before, &:after {
+      font-size: 12px;
+      display: inline-block;
+    }
+    &:before {
+      content: '全長：';
+    }
+    &:after {
+      content: '公里';
+      margin-left: 4px;
+    }
+
+    left: 16px;
+    bottom: 16px;
+    height: 30px;
+    line-height: 30px;
+    &:before, &:after {
+      line-height: 32px;
+    }
+
+    @include range-width(0, 750px) {
+      left: 10px;
+      bottom: 10px;
+      height: 28px;
+      line-height: 28px;
+
+      &:before, &:after {
+        line-height: 30px;
+      }
+    }
+    @include range-width(750px) {
+      @include transition(color .3s, background-color .3s);
+      &:hover {
+        color: rgba(55, 55, 55, 1);
+        background-color: rgba(255, 255, 255, 1);
+      }
+    }
+    @include range-width(750px, 1300px) {
+      left: 12px;
+      bottom: 12px;
+      height: 28px;
+      line-height: 28px;
+
+      &:before, &:after {
+        line-height: 30px;
+      }
+    }
+  }
+
+  > div {
+    @extend %-user-select-none;
+
+    position: absolute;
+    display: inline-block;
+    z-index: 2;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, .9);
+    @include border-radius(3px);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      display: inline-block;
+      width: calc(100% - #{(8px * 2)});
+      height: 1px;
+      background-color: rgba(220, 220, 220, 1.00);
+      @include border-radius(1px / 2);
+    }
+
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px * 2 + 1px;
+    font-size: 26px;
+
+    &:before {
+      top: 50px;
+      left: 8px;
+      width: calc(100% - #{(8px * 2)});
+    }
+
+    @include range-width(0, 750px) {
+      bottom: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px * 2 + 1px;
+      font-size: 20px;
+
+      &:before {
+        top: 40px;
+        left: 6px;
+        width: calc(100% - #{(6px * 2)});
+      }
+    }
+
+    @include range-width(750px) {
+      @include transition(background-color .3s);
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 1);
+      }
+    }
+
+    @include range-width(750px, 1300px) {
+      bottom: 12px;
+      right: 12px;
+      width: 44px;
+      height: 44px * 2 + 1px;
+      font-size: 22px;
+
+      &:before {
+        top: 44px;
+        left: 7px;
+        width: calc(100% - #{(7px * 2)});
+      }
+    }
+
+    label {
+      display: inline-block;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      color: rgba(111, 111, 111, 1.00);
+
+      &:before {
+        @extend %-icon;
+        display: inline-block;
+        content: '\a0003';
+      }
+
+      @include range-width(0, 750px) {
+        height: 40px;
+        line-height: 40px;
+      }
+      @include range-width(750px) {
+        &:before {
+          @include transition(transform .15s);
+        }
+
+        &:hover {
+          color: rgba(55, 55, 55, 1);
+        }
+
+        &:active {
+          color: rgba(11, 11, 11, 1);
+          &:before {
+            @include scale(1.1);
+          }
+        }
+      }
+      @include range-width(750px, 1300px) {
+        height: 44px;
+        line-height: 44px;
+      }
+      + label {
+        margin-top: 1px;
+        &:before {
+          content: '\a0002';
+        }
+      }
+    }
+  }
+}
+
+.FeatureView {
+  $sectionFirstMarginTop: 16px;
+  $sectionLastMarginBottom: 16px;
+  $sectionAndSectionMarginTop: 20px;
+  $sectionTitleHeight: 22px;
+  $sectionTitleMarginTop: 4px;
+  background-color: rgba(244, 245, 247, 1.00) !important;
+
+  > span {
+    display: inline-block;
+    width: calc(100% - 16px * 2);
+    margin: 16px;
+    margin-bottom: 0;
+    @include border-radius(3px);
+    padding: 4px 10px;
+    
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    background-color: rgba(245, 98, 98, 1.00);
+  }
+  .buttons {
+    position: relative;
+
+    margin-top: $sectionAndSectionMarginTop;
+    display: inline-block;
+    width: 100%;
+    border-top: 1px solid rgba(225, 225, 225, 1.00);
+    border-bottom: 1px solid rgba(220, 220, 220, 1.00);
+    background-color: white;
+    @include clearfix();
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 16px;
+      display: inline-block;
+      width: 1px;
+      height: calc(100% - #{(16px * 2)});
+      border-left: 1px solid rgba(230, 230, 230, 1.00);
+      @include border-radius(1px / 2);
+    }
+
+    * {
+      @extend %-user-select-none;
+      cursor: pointer;
+      position: relative;
+      float: left;
+      display: inline-block;
+      width: calc(50% - #{(1px / 2)});
+      
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 12px;
+      font-size: 13px;
+
+
+      &:before {
+        @extend %-icon;
+        content: '\a002f';
+
+        display: block;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        
+        margin: 0 auto;
+        font-size: 32px;
+      }
+      + * {
+        margin-left: 1px;
+        &:before {
+          content: '\a0007';
+        }
+      }
+
+      color: rgba(110, 110, 110, 1.00); @include transition(color .3s);
+      &:before { color: rgba(146, 146, 146, 1); @include transition(color .3s); }
+
+      &:hover {
+        color: rgba(90, 90, 90, 1);
+        i { color: rgba(179, 180, 183, 1.00); }
+      }
+    }
+  }
+  .comments, section {
+    position: relative;
+
+    display: inline-block;
+    width: 100%;
+
+    margin-top: $sectionAndSectionMarginTop;
+
+    text-align: left;
+    
+    &:first-child {
+      margin-top: $sectionFirstMarginTop;
+    }
+    &:last-child {
+      margin-bottom: $sectionLastMarginBottom;
+    }
+    
+    &:before {
+      position: absolute;
+      top: -($sectionTitleHeight + $sectionTitleMarginTop);
+      left: 0;
+
+      display: inline-block;
+      width: 100%;
+      height: 22px;
+      line-height: 22px;
+
+      font-size: 14px;
+      padding-left: 10px;
+      color: rgba(132, 133, 138, 1.00);
+    }
+
+    &[data-title]:not([data-title='']) {
+      margin-top: $sectionAndSectionMarginTop + $sectionTitleHeight + $sectionTitleMarginTop;
+      &:first-child {
+        margin-top: $sectionFirstMarginTop + $sectionTitleHeight + $sectionTitleMarginTop;
+      }
+      &:before {
+        content: attr(data-title);
+      }
+    }
+  }
+  section {
+    border-top: 1px solid rgba(225, 225, 225, 1.00);
+    border-bottom: 1px solid rgba(220, 220, 220, 1.00);
+    background-color: white;
+
+    span {
+      @extend %-user-select-none;
+      $height: 44px;
+      $leftSpace: 16px; // 左邊間隔
+      $rightSpace: 16px; // 左邊間隔
+
+
+      position: relative;
+      display: inline-block;
+      width: 100%;
+
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-right: $rightSpace;
+      padding-left: $leftSpace;
+      font-size: 14px;
+
+      &, &:before, &:after {
+        @include transition(color .3s);
+      }
+      
+      &:before, &:after {
+        position: absolute;
+        display: inline-block;
+        z-index: 1;
+      }
+
+      &:before {
+        left: $leftSpace;
+        right: 60%;
+        top: 0;
+        text-align: left;
+        font-size: 13px;
+
+        height: $height;
+        line-height: $height;
+      }
+
+      &[data-title]:not([data-title='']) {
+        padding-left: 40%;
+        text-align: right;
+        height: $height;
+        line-height: $height;
+        padding-top: 0;
+        padding-bottom: 0;
+        font-size: 15px;
+        @include overflow-docx3();
+
+        &:before {
+          content: attr(data-title);
+        }
+      }
+      &:after {
+        content: '';
+        right: 0;
+        bottom: 0;
+
+        padding-right: $rightSpace;
+
+        left: $leftSpace;
+        padding-left: $leftSpace / 3;
+
+
+        font-size: 10px;
+        border-bottom: 1px solid rgba(222, 222, 222, 1);
+
+        height: 1px;
+        @include overflow-docx3();
+      }
+
+      &:last-child:after {
+        border-bottom-color: transparent;
+      }
+
+      color: rgba(110, 110, 110, 1.00);
+      &:before { color: rgba(146, 146, 146, 1); }
+    }
+  }
+  .comments {
+    border-top: 1px solid rgba(225, 225, 225, 1.00);
+    width: calc(100% - #{(8px * 2)});
+    margin: 0 8px;
+    &:before {
+      padding-left: #{(10px - 8px)};
+    }
+    &:after {
+      display: inline-block;
+      width: 100%;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: bold;
+      color: rgba(180, 180, 180, 1);
+    }
+
+    &:empty:after {
+      content: '還沒有任何留言。';
+    }
+
+    div {
+      @include border-radius(6px);
+      background-color: white;
+      padding: 8px 12px;
+      padding-bottom: 10px;
+      margin-top: 12px;
+      border: 1px solid rgba(232, 232, 232, 1.00);
+      border-bottom: 1px solid rgba(225, 225, 225, 1.00);
+      @include clearfix();
+      * {
+        float: left;
+        display: inline-block;
+        font-size: 14px;
+        // border: 1px solid rgba(255, 0, 0, .3);
+      }
+      b, time {
+        width: 50%;
+        height: 20px;
+        line-height: 20px;
+      }
+      time {
+        text-align: right;
+        color: rgba(150, 150, 150, 1);
+        font-size: 12px;
+      }
+      span {
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+@include keyframes(rotate) {
+  0% {
+    @include transform(translate(-50%, calc(-50% - #{(28px / 2)})) rotate(0));
+  }
+  100% {
+    @include transform(translate(-50%, calc(-50% - #{(28px / 2)})) rotate(360deg));
+  }
+}
