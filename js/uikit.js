@@ -48,7 +48,7 @@ $(function() {
   // }
 
   function Timer(func, ttl) { if (!(this instanceof Timer)) return new Timer(func, ttl);
-    let funcs = [], stop = false;
+    var funcs = [], stop = false;
 
     this.delay = function(func, ttl) {
       if (typeof func === 'function') funcs.push({ func: func, ttl: ttl});
@@ -141,7 +141,7 @@ $(function() {
          .attr(':is', 'viewController.component')
          .attr(':controller', 'viewController'));
 
-    let vue = new Vue({
+    var vue = new Vue({
       el: $el.appendTo(Window.body()).get(0),
       data: {
         display: false,
@@ -190,7 +190,7 @@ $(function() {
   ViewController.prototype = Object.create(OAUI.prototype);
   function ViewController() { if (!(this instanceof ViewController)) return new ViewController();
     OAUI.call(this, 'ViewController');
-    let navigationController = null;
+    var navigationController = null;
 
     this.title = null;
     this.component = Vue.component('view-controller');
@@ -248,7 +248,7 @@ $(function() {
   NavigationController.prototype = Object.create(ViewController.prototype);
   function NavigationController(rootViewController) { if (!(this instanceof NavigationController)) return new NavigationController(rootViewController);
     ViewController.call(this);
-    let isTransition = false;
+    var isTransition = false;
     
     this.component = Vue.component('navigation-controller');
     this.viewControllers = [];
@@ -264,7 +264,7 @@ $(function() {
       viewController.navigationBar.navigationController = this;
 
       this.viewControllers.push(viewController);
-      let lastViewController = this.lastViewController();
+      var lastViewController = this.lastViewController();
 
       lastViewController && viewController.navigationBar.left === null && viewController.navigationBar.setLeft('返回', this.pop, 'back');
       
@@ -279,8 +279,8 @@ $(function() {
     this.pop = function(completion, animate) {
       if (isTransition) return this;
 
-      let viewController = this.nowViewController();
-      let lastViewController = this.lastViewController();
+      var viewController = this.nowViewController();
+      var lastViewController = this.lastViewController();
       if (lastViewController === null) return this.dismiss(completion, animate);
       
       viewController.removeClass('push') && lastViewController.removeClass('last');
