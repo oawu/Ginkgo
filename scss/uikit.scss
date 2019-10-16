@@ -160,10 +160,416 @@
   @extend %-scroll-white;
 
   // &#{$TableView} {
-  //   background-color: rgba(238, 239, 243, 1.00);
+  //   
   //   // background-color: rgba(244, 245, 247, 1.00);
   // }
 }
+.TableView {
+  background-color: rgba(238, 239, 243, 1.00);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: 24px;
+    height: 24px;
+    @include border-radius(50%);
+    border-top: 3px solid rgba(220, 220, 220, 1.00);
+    border-right: 3px solid rgba(220, 220, 220, 1.00);
+    @include transform(translate(-50%, calc(-50% - #{(44px / 2)})));
+    @include animation(rotate 1s linear infinite);
+  }
+
+  &:after {
+    content: '讀取中，請稍候…';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    height: 24px;
+    line-height: 24px;
+
+    display: none;
+    font-size: 13px;
+    @include transform(translate(-50%, calc(-50% + #{(44px / 2)})));
+    color: rgba(154, 154, 154, 1.00);
+  }
+
+  &:empty {
+    &:before, &:after { display: inline-block; }
+    &[data-title]:not([data-title='']) {
+      &:before { display: none; }
+      &:after { content: attr(data-title); @include transform(translate(-50%, -50%)); }
+    }
+  }
+}
+.TableViewSection {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  margin: 12px 0;
+  text-align: left;
+  
+  header, footer {
+    display: inline-block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+
+    font-size: 13px;
+    padding-left: 16px;
+    color: rgba(138, 139, 144, 1.00);
+    &:empty {
+      display: none;
+    }
+    > a {
+      @extend %-ginkgo-link;
+      @extend %-user-select-none;
+      cursor: pointer;
+    }
+  }
+  header {
+    margin-bottom: 2px;
+  }
+
+  footer {
+    margin-top: 3px;
+  }
+}
+
+.TableViewCell {
+  @extend %-user-select-none;
+  position: relative;
+
+  display: inline-block;
+  width: 100%;
+  padding: 12px 12px 11px 16px;
+  background-color: white;
+
+  &.first { border-top: 1px solid rgba(222, 222, 222, 1.00); }
+  &.last { border-bottom: 1px solid rgba(218, 218, 218, 1.00); }
+  
+  b, span {
+    display: block;
+  }
+  b {
+    font-weight: normal;
+    line-height: 21px;
+    font-size: 15px;
+    color: rgba(72, 72, 72, 1.00);
+  }
+  span {
+    font-size: 11px;
+    color: rgba(142, 145, 148, 1.00);
+    line-height: 16px;
+  }
+  figure {
+    position: absolute;
+    left: 12px;
+    top: calc(50% - #{(28px / 2)});
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+    color: rgba(142, 145, 148, 1.00);
+    @include border-radius(2px);
+  }
+  &.wrap {
+    b, span {
+      @include word-break(break-all);
+    }
+  }
+  &:not(.wrap) {
+    b, span {
+      @include overflow-docx3();
+    }
+  }
+
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 14px;
+
+    display: inline-block;
+    height: 1px;
+    border-top: 1px solid rgba(220, 220, 220, 1.00);
+  }
+
+  & + .TableViewCell:after { content: ''; }
+
+  &.blue {
+    cursor: pointer;
+    $linkColor: rgba(24, 144, 255, 1.00);
+    b, span { @include transition(color .3s); }
+    b { color: $linkColor; }
+    span { color: adjust-lightness($linkColor, 16%); }
+    &:hover {
+      b { color: adjust-lightness($linkColor, -10%);}
+      span { color: adjust-lightness($linkColor, 6%); }
+    }
+    &:active {
+      b { color: adjust-lightness($linkColor, -16%);}
+      span { color: adjust-lightness($linkColor, -10%); }
+    }
+  }
+  &.red {
+    cursor: pointer;
+    $linkColor: rgba(243, 38, 38, 1.00);
+    b, span { @include transition(color .3s); }
+    b { color: $linkColor; }
+    span { color: adjust-lightness($linkColor, 16%); }
+    &:hover {
+      b { color: adjust-lightness($linkColor, -10%);}
+      span { color: adjust-lightness($linkColor, 6%); }
+    }
+    &:active {
+      b { color: adjust-lightness($linkColor, -16%);}
+      span { color: adjust-lightness($linkColor, -10%); }
+    }
+  }
+
+  &.center { b, span { text-align: center; } }
+  &.right { b, span { text-align: right; } }
+  &.subtitle { padding: 9px 12px 8px 16px; }
+  &.icon {
+    padding-left: 12px + 28px + 12px;
+    &:after { left: 12px + 28px + 10px; }
+  }
+  &.switch {
+    $switchWidth: 40px;
+    $switchHeight: 24px;
+    padding-right: 12px + $switchWidth + 12px;
+
+    label {
+      @extend %-user-select-none;
+      position: absolute;
+      right: 12px;
+      top: calc(50% - #{($switchHeight / 2)});
+      display: inline-block;
+      width: $switchWidth;
+      height: $switchHeight;
+      cursor: pointer;
+      
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        display: inline-block;
+      }
+        
+      &:before {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(228, 228, 228, 1.00);
+        @include border-radius($switchHeight / 2);
+        @include box-shadow(inset 0 1px 4px 0 rgba(0, 35, 11, .2));
+        @include transition(background-color .3s, box-shadow .3s);
+      }
+
+      &:after {
+        left: 2px;
+        top: 2px;
+        width: $switchHeight - 2px * 2;
+        height: calc(100% - #{2px * 2});
+
+        background-color: white;
+        @include opacity(1);
+        @include border-radius(50%);
+        @include transition(left .3s, box-shadow .3s);
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+      }
+    }
+    &.on label {
+      &:before {
+        background-color: rgba(37, 184, 153, 1.00);
+      }
+      &:after {
+        left: $switchWidth - ($switchHeight - 2px * 2 + 2px);
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, 0.2));
+      }
+    }
+  }
+  &.arrow, &.checkmark {
+    cursor: pointer;
+
+    figure, b, span, i {
+      @include transition(color .3s);
+    }
+    i {
+      position: absolute;
+      display: inline-block;
+      text-align: center;
+
+      &:before {
+        @extend %-icon;
+      }
+    }
+    &:not(.blue):not(.red):hover {
+      figure { color: rgba(112, 115, 118, 1.00); }
+      b { color: rgba(32, 32, 32, 1.00); }
+      span { color: rgba(112, 115, 118, 1.00); }
+    }
+  }
+  &.arrow {
+    $arrowWidth: 20px;
+    $arrowHeight: 24px;
+    padding-right: 6px + $arrowWidth + 6px;
+
+    i {
+      right: 6px;
+      top: calc(50% - #{($arrowHeight / 2)});
+      width: $arrowWidth;
+      height: $arrowHeight;
+      line-height: $arrowHeight;
+      font-size: 20px;
+      color: rgba(200, 202, 204, 1);
+
+      &:before {
+        content: '\a0008';
+      }
+    }
+    &:hover {
+      i { color: rgba(170, 172, 174, 1); }
+    }
+  }
+  &.checkmark {
+    $arrowWidth: 28px;
+    $arrowHeight: 28px;
+    padding-right: 10px + $arrowWidth + 12px;
+
+    i {
+      right: 12px;
+      top: calc(50% - #{($arrowHeight / 2)});
+      width: $arrowWidth;
+      height: $arrowHeight;
+      line-height: $arrowHeight;
+      font-size: 18px;
+      color: rgba(228, 229, 233, 1.00);
+
+      &:before {
+        content: '\a0030';
+      }
+    }
+    &:hover i { color: rgba(210, 212, 214, 1); }
+    &.on i { color: rgba(24, 144, 255, 1.00); } 
+  }
+  &.value, &.input, &.text {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    b {
+      flex-shrink: 0;
+      margin-right: 8px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    span {
+      flex-grow: 1;
+      min-width: 0;
+      max-width: 100%;
+      text-align: right;
+    }
+  }
+  // &.left {
+  //   b { font-size: 13px; color: rgba(125, 127, 130, 1.00); }
+  //   span { font-size: 15px; color: rgba(72, 72, 72, 1.00); }
+  //   &.input {
+  //     span, u, input {
+  //       text-align: left;
+  //     }
+  //   }
+  //   &.text {
+  //     span, u, textarea {
+  //       text-align: left;
+  //     }
+  //   }
+  // }
+  u {
+    display: inline-block;
+    text-decoration: none;
+    color: rgba(243, 38, 38, 1.00);
+    font-size: 10px;
+    background-color: rgba(243, 38, 38, .2);
+    @include border-radius(3px);
+    padding: 2px 8px;
+    margin-top: 4px;
+  }
+  &.input {
+    b {
+      color: rgba(95, 97, 99, 1.00);
+      + span {
+        min-height: auto;
+        input {
+          margin-top: -4px;
+        }
+      }
+    }
+    span {
+      min-height: 21px;
+    }
+    input {
+      border: 0;
+      text-align: right;
+      display: block;
+      width: 100%;
+      color: rgba(72, 72, 72, 1.00);
+      font-size: 15px;
+      height: 21px;
+
+      @include input-placeholder {
+        color: rgba(180, 180, 180, 1.00);
+        font-size: 13px;
+      }
+      &:focus {
+        outline: 0;
+      }
+
+      &[type='date']::-webkit-datetime-edit {
+        font-size: 13px;
+        color: rgba(180, 180, 180, 1.00);
+      }
+    }
+  }
+  &.text {
+    b {
+      color: rgba(95, 97, 99, 1.00);
+    }
+    textarea {
+      @extend %-scroll-white;
+      border: 0;
+      text-align: right;
+      display: block;
+      width: 100%;
+      color: rgba(72, 72, 72, 1.00);
+      font-size: 15px;
+      line-height: 21px;
+      resize: none;
+      height: 21px * 4;
+      position: relative;
+
+      @include input-placeholder {
+        color: rgba(180, 180, 180, 1.00);
+        font-size: 13px;
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+
 // .aaa-enter-active, .aaa-leave-active {
 //   // transition: all 1s;
 // }
@@ -173,3 +579,11 @@
 //   // opacity: 0;
 //   // transform: translateY(30px);
 // }
+@include keyframes(rotate) {
+  0% {
+    @include transform(translate(-50%, calc(-50% - #{(28px / 2)})) rotate(0));
+  }
+  100% {
+    @include transform(translate(-50%, calc(-50% - #{(28px / 2)})) rotate(360deg));
+  }
+}
