@@ -9,7 +9,7 @@
 #                                # 順序 hidden > includes > excludes > allowEmpty > formats > recursive
 
 - path: ''
-  formats: ['.html', '.txt']
+  formats: ['.html', '.txt', '.json']
   recursive: No
 
 - path: "js"
