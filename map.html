@@ -8,12 +8,15 @@
     <title>Ginkgo！</title>
 
     <link rel="stylesheet" type="text/css" href="css/icon.css">
-    <link rel="stylesheet" type="text/css" href="css/uikit2.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
 
     <script language="javascript" type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
     <script language="javascript" type="text/javascript" src="js/vue.min-v2.6.0-p.js"></script>
-    <script language="javascript" type="text/javascript" src="js/uikit2.js"></script>
+    <script language="javascript" type="text/javascript" src="js/map.js"></script>
   </head>
   <body>
+    <div id='app'>
+      <component :is='map.component' :map='map' />
+    </div>
   </body>
 </html>

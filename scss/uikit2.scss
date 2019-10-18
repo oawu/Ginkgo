@@ -151,46 +151,11 @@
 
   @extend %-scroll-white;
 }
+
 .TV {
   background-color: rgba(238, 239, 243, 1.00);
-
-  &:before, &:after {
-    position: absolute;
-    display: inline-block;
-    @include transition(top .3s);
-  }
-  &:before {
-    top: calc(50% - #{(24px / 2)});
-    left: calc(50% - #{(24px / 2)});
-    width: 24px;
-    height: 24px;
-    border-top: 4px solid rgba(200, 200, 200, 1.00);
-    border-right: 4px solid rgba(200, 200, 200, 1.00);
-    border-bottom: 4px solid rgba(222, 222, 222, 1.00);
-    border-left: 4px solid rgba(222, 222, 222, 1.00);
-    @include border-radius(50%);
-    @include animation(rotate 1s linear infinite);
-    
-  }
-
-  &:after {
-    top: calc(50% - #{(24px / 2)});
-    left: 50%;
-    height: 24px;
-    line-height: 24px;
-    font-size: 13px;
-    color: rgba(154, 154, 154, 1.00);
-    @include transform(translate(-50%, 0));
-  }
-
-  &:empty {
-    &:after { content: '沒有任何資料…'; }
-    &.loading {
-      &:before { top: calc(50% - #{(44px / 2)}); content: ''; }
-      &:after {  top: calc(50% + #{(44px / 2)}); content: '讀取中，請稍候…'; }
-    }
-  }
 }
+
 .TVS {
   position: relative;
   display: inline-block;
@@ -225,6 +190,7 @@
     margin-top: 3px;
   }
 }
+
 .TVCL {
   @extend %-user-select-none;
   position: relative;
@@ -243,6 +209,7 @@
   figure {
     @extend %-icon;
     @extend %-ginkgo-cover;
+
     position: absolute;
     top: calc(50% - #{(28px / 2)});
     left: 12px;
@@ -257,16 +224,6 @@
     font-size: 20px;
     @include border-radius(3px);
 
-    &:after {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(0, 0, 0, .1);
-      @include border-radius(3px);
-    }
   }
   b {
     font-weight: normal;
@@ -493,16 +450,18 @@
     &:after { left: 12px + 28px + 10px; }
   }
 
-  &.img figure:after {
-    content: '';
+  &.img figure{
+    @extend %-figure;
+    position: absolute;
+    &:after {
+      @include border-radius(3px);
+    }
   }
-
 
   &.left { b, span &.input input, textarea, &.text input, textarea { text-align: left; } }
   &.center { b, span, &.input input, textarea, &.text input, textarea { text-align: center; } }
   &.right { b, span, &.input input, textarea, &.text input, textarea { text-align: right; } }
   
-
   &.input, &.text {
     b {
       color: rgba(95, 97, 99, 1.00);
@@ -566,19 +525,16 @@
   background-color: white;
   .VC {
     top: 0;
-    left: 100%;
+    left: calc(100% + 20px);
     width: 100%;
     height: 100%;
 
-    @include opacity(.5);
-    
     &.ani {
-      @include transition(left .35s, opacity .35s);
+      @include transition(left .4s);
     }
 
     &.push {
       left: 0;
-      @include opacity(1);
 
       &.ed {
         @include box-shadow(none);
@@ -731,6 +687,696 @@
     }
   }
 }
+
+.Vl {
+  &:before, &:after {
+    position: absolute;
+    display: inline-block;
+    @include transition(top .3s);
+  }
+  &:before {
+    top: calc(50% - #{(24px / 2)});
+    left: calc(50% - #{(24px / 2)});
+    width: 24px;
+    height: 24px;
+    border-top: 4px solid rgba(200, 200, 200, 1.00);
+    border-right: 4px solid rgba(200, 200, 200, 1.00);
+    border-bottom: 4px solid rgba(222, 222, 222, 1.00);
+    border-left: 4px solid rgba(222, 222, 222, 1.00);
+    @include border-radius(50%);
+    @include animation(rotate 1s linear infinite);
+  }
+  &:after {
+    top: calc(50% - #{(24px / 2)});
+    left: 50%;
+    height: 24px;
+    line-height: 24px;
+    font-size: 13px;
+    color: rgba(154, 154, 154, 1.00);
+    @include transform(translate(-50%, 0));
+  }
+  &:empty {
+    &:after { content: '沒有任何資料…'; }
+    &.loading {
+      &:before { top: calc(50% - #{(44px / 2)}); content: ''; }
+      &:after {  top: calc(50% + #{(44px / 2)}); content: '讀取中，請稍候…'; }
+    }
+  }
+}
+
+.ATV {
+  text-align: left;
+  padding: 12px 16px;
+  @include range-width(750px) {
+    padding: 12px 24px;
+  };
+  
+  section {
+    display: inline-block;
+    width: 100%;
+    margin-top: 12px;
+    
+    + section {
+      margin-top: 24px;
+    }
+    > *:first-child {
+      margin-top: 0;
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  h1, h2 {
+    display: inline-block;
+    width: 100%;
+
+    width: 100%;
+    font-size: 20px;
+    margin: 0;
+    margin: 8px 0;
+  }
+  
+  h2 {
+    font-size: 16px;
+  }
+  
+  p {
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    margin: 6px 0;
+  }
+  
+  figure {
+    @extend %-cover;
+    @extend %-figure;
+
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 0;
+
+    margin: 6px 0;
+    padding-top: 56.25%;
+    @include border-radius(2px);
+
+    &:after {
+      @include border-radius(2px);
+    }
+    figcaption {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      display: inline-block;
+      width: 100%;
+      padding: 6px 12px;
+
+      background-color: rgba(0, 0, 0, .5);
+      color: white;
+      &:empty {
+        display: none;
+      }
+    }
+  }
+  
+  ul {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: 16px 0;
+    padding-top: 10px;
+    border-top: 1px solid rgba(210, 210, 210, 1);
+    padding-left: 0;
+    list-style-type: none;
+
+
+
+    &:before {
+      content: '以上參考';
+      display: inline-block;
+      width: 100%;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 4px;
+      color: rgba(160, 160, 160, 1.00);
+    }
+  }
+  li {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-size: 13px;
+    padding-left: 20px;
+    margin-top: 8px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background-color: rgba(210, 210, 210, 1.00);
+      @include border-radius(7px / 2);
+    }
+    a {
+      @extend %-ginkgo-link;
+      text-decoration: none;
+      &:after {
+        content: ' - ' attr(href);
+        color: rgba(155, 155, 155, 1.00);
+        font-size: 10px;
+        display: inline-block;
+        margin-top: 0;
+        margin-left: 4px;
+        padding-top: 2px;
+      }
+    }
+  }
+  
+  time {
+    display: inline-block;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(160, 160, 160, 1.00);
+    &:before {
+      content: '最後編輯日期：';
+      color: rgba(190, 190, 190, 1.00);
+      font-size: 12px;
+    }
+  }
+  
+  > * {
+    // @include opacity(0);
+    // @include transition(opacity .3s);
+  }
+}
+
+.HMV {
+  background-color: rgba(242, 241, 240, 1.00);
+
+  > .map {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    
+    .gmnoprint.gm-bundled-control, .gm-style-cc, a[href^="http://maps.google.com/maps"], a[href^="https://maps.google.com/maps"] {
+      display: none !important;
+    }
+  }
+
+  > .lengths {
+    position: absolute;
+    z-index: 2;
+    
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    text-align: left;
+    font-size: 16px;
+    color: rgba(111, 111, 111, 1.00);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+    @include border-radius(3px);
+
+    span {
+      @extend %-user-select-none;
+      display: block;
+      height: 30px;
+      line-height: 30px;
+
+      padding: 0 12px;
+      
+      &:before, &:after {
+        font-size: 12px;
+        display: inline-block;
+        line-height: 32px;
+      }
+      &:before {
+        content: '全長：';
+      }
+      &:after {
+        content: '公里';
+        margin-left: 4px;
+      }
+      &[data-title]:not([data-title='']):before {
+        content: attr(data-title) '：';
+      }
+    }
+
+    left: 16px;
+    bottom: 16px;
+    
+
+    @include range-width(0, 750px) {
+      left: 10px;
+      bottom: 10px;
+      span {
+        height: 28px;
+        line-height: 28px;
+        &:before, &:after {
+          line-height: 30px;
+        }
+      }
+
+    // }
+    // @include range-width(750px) {
+    //   @include transition(color .3s, background-color .3s);
+    //   &:hover {
+    //     color: rgba(55, 55, 55, 1);
+    //     background-color: rgba(255, 255, 255, 1);
+    //   }
+    }
+    @include range-width(750px, 1300px) {
+      left: 12px;
+      bottom: 12px;
+      span {
+        height: 28px;
+        line-height: 28px;
+        &:before, &:after {
+          line-height: 30px;
+        }
+      }
+    }
+  }
+
+  > .zoom {
+    position: absolute;
+    display: inline-block;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, .9);
+    @include border-radius(3px);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+    @include transition(background-color .3s);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      display: inline-block;
+      width: calc(100% - #{(8px * 2)});
+      height: 1px;
+      background-color: rgba(220, 220, 220, 1.00);
+      @include border-radius(1px / 2);
+    }
+
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px * 2 + 1px;
+    font-size: 26px;
+
+    &:before {
+      top: 50px;
+      left: 8px;
+      width: calc(100% - #{(8px * 2)});
+    }
+
+    @include range-width(0, 750px) {
+      bottom: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px * 2 + 1px;
+      font-size: 20px;
+
+      &:before {
+        top: 40px;
+        left: 6px;
+        width: calc(100% - #{(6px * 2)});
+      }
+    }
+
+    @include range-width(750px, 1300px) {
+      bottom: 12px;
+      right: 12px;
+      width: 44px;
+      height: 44px * 2 + 1px;
+      font-size: 22px;
+
+      &:before {
+        top: 44px;
+        left: 7px;
+        width: calc(100% - #{(7px * 2)});
+      }
+    }
+
+    label {
+      @extend %-user-select-none;
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      color: rgba(111, 111, 111, 1.00);
+
+      &:before {
+        @extend %-icon;
+        display: inline-block;
+        content: '\a0003';
+      }
+
+      @include range-width(0, 750px) {
+        height: 40px;
+        line-height: 40px;
+      }
+      @include range-width(750px) {
+        &:before {
+          @include transition(transform .15s);
+        }
+
+        &:hover {
+          color: rgba(55, 55, 55, 1);
+        }
+
+        &:active {
+          color: rgba(11, 11, 11, 1);
+          &:before {
+            @include scale(1.1);
+          }
+        }
+      }
+      @include range-width(750px, 1300px) {
+        height: 44px;
+        line-height: 44px;
+      }
+      + label {
+        margin-top: 1px;
+        &:before {
+          content: '\a0002';
+        }
+      }
+    }
+  }
+
+  > .info, > .time {
+    @extend %-user-select-none;
+    position: absolute;
+    z-index: 2;
+
+    display: inline-block;
+    padding: 0 12px;
+    height: 44px;
+    line-height: 44px;
+    cursor: pointer;
+
+    background-color: rgba(255, 255, 255, .9);
+    @include border-radius(3px);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+    $switchWidth: 40px;
+    $switchHeight: 24px;
+    padding-right: 12px + $switchWidth + 12px;
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      display: inline-block;
+    }
+      
+    &:before {
+      right: 12px;
+      top: (44px - $switchHeight) / 2;
+      width: $switchWidth;
+      height: $switchHeight;
+      background-color: rgba(228, 228, 228, 1.00);
+      @include border-radius($switchHeight / 2);
+      @include box-shadow(inset 0 1px 4px 0 rgba(0, 35, 11, .2));
+      @include transition(background-color .3s, box-shadow .3s);
+    }
+
+    &:after {
+      right: 12px + 2px;
+      top: (44px - $switchHeight) / 2 + 2px;
+      width: $switchHeight - 2px * 2;
+      height: $switchHeight - 2px * 2;
+
+      background-color: white;
+      @include opacity(1);
+      @include border-radius(50%);
+      @include transition(right .3s, box-shadow .3s);
+      @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+    }
+
+    &.on {
+      &:before {
+        background-color: rgba(37, 184, 153, 1.00);
+      }
+      &:after {
+        right: 12px + ($switchWidth - ($switchHeight - 2px * 2 + 2px));
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, 0.2));
+      }
+    }
+
+    top: 16px;
+    right: 16px;
+    @include range-width(0, 750px) {
+      top: 10px;
+      right: 10px;
+      height: 36px;
+      line-height: 36px;
+      font-size: 13px;
+      &:before { top: (36px - $switchHeight) / 2; }
+      &:after { top: (36px - $switchHeight) / 2 + 2px; }
+    }
+    @include range-width(750px, 1300px) {
+      top: 12px;
+      right: 12px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 15px;
+      &:before { top: (40px - $switchHeight) / 2; }
+      &:after { top: (40px - $switchHeight) / 2 + 2px; }
+    }
+  }
+
+  > .time {
+    top: 16px + 44px + 12px;
+    @include range-width(0, 750px) {
+      top: 10px + 36 + 8px;
+    }
+
+    @include range-width(750px, 1300px) {
+      top: 12px + 40px + 10px;
+    }
+  }
+}
+.timeMarker {
+  position: absolute;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  
+  i {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    z-index: 1;
+    @include border-radius(50%);
+  }
+
+  div {
+    position: absolute;
+    display: inline-block;
+    right: 10px + 5px;
+    top: (10px - 20px) / 2;
+    z-index: 2;
+
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    font-size: 10px;
+    background-color: white;
+    white-space: nowrap;
+    @include opacity(.85);
+    @include border-radius(2px);
+    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+    &:after, &:before {
+      position: absolute;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      border-color: transparent;
+    }
+  }
+
+  $w: 5px;
+  
+  &.left {
+    i { right: 0; }
+    div {
+      &:after, &:before { left: 100%; }
+      &:after { border-width: $w; border-left-color: white; margin-top: -$w; }
+      &:before { border-width: ($w + 1px); border-left-color: rgba(0, 0, 0, 0.1); margin-top: -($w + 1px); }
+    }
+  }
+
+  &.right {
+    i { left: 0; }
+    div {
+      left: 10px + 5px;
+      right: auto;
+      &:after, &:before { right: 100%; }
+      &:after { border-width: $w; border-right-color: white; margin-top: -$w; }
+      &:before { border-width: ($w + 1px); border-right-color: rgba(0, 0, 0, 0.1); margin-top: -($w + 1px); }
+    }
+  }
+
+  &.center {
+    i { left: 0; }
+    div {
+      left: 10px + 5px;
+      right: auto;
+      &:after, &:before { right: 100%; }
+      &:after { border-width: $w; border-right-color: white; margin-top: -$w; }
+      &:before { border-width: ($w + 1px); border-right-color: rgba(0, 0, 0, 0.1); margin-top: -($w + 1px); }
+    }
+  }
+}
+.infoMarker, .mazuMarker {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+
+  b, div {
+    position: absolute;
+    left: calc(50% - 120px / 2);
+    display: inline-block;
+    width: 120px;
+    padding: 8px;
+    text-align: center;
+    line-height: 17px;
+    background-color: rgba(252, 230, 119, 1.00);
+    z-index: 3;
+    font-size: 12px;
+    color: rgba(50, 50, 50, .8);
+    @include border-radius(3px);
+    @include box-shadow(0 1px 2px rgba(156, 31, 16, .500));
+
+    // left: 50%;
+    // max-width: 120px;
+    // @include transform(translate(-50%, 0));
+
+    $w: 5px;
+    &:after, &:before {
+      position: absolute;
+      
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+    }
+    &:after {
+      border-color: transparent;
+      border-top-color: rgba(252, 230, 119, 1.00);
+      border-width: $w;
+      margin-left: -$w;
+    }
+    &:before {
+      border-color: transparent;
+      border-top-color: rgba(156, 31, 16, .35);
+      border-width: ($w + 1px);
+      margin-left: -($w + 1px);
+    }
+  }
+}
+.infoMarker {
+  width: 10px;
+  height: 10px;
+
+  z-index: 9;
+  background-color: rgba(163, 74, 39, 1.00);
+  @include border-radius(50%);
+
+  b, div {
+    bottom: 10px;
+  }
+  b {
+    left: calc(50% - 32px / 2);
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0;
+    color: rgba(156, 31, 16, 1.00);
+    font-style: 18px;
+    @include opacity(.75);
+    @include border-radius(10px);
+  }
+}
+
+.mazuMarker {
+  width: 40px;
+  height: 70px;
+  z-index: 99999;
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+    bottom: -4px;
+    left: 0;
+    height: 10px;
+    z-index: 1;
+    @include border-radius(50%);
+  }
+  &:before {
+    background-color: rgba(39, 40, 34, .250);
+    z-index: 2;
+    @include scale(1);
+  }
+  &:after {
+    background-color: rgba(156, 31, 16, 1.00);
+    @include animation(mazu 3s infinite cubic-bezier(0.145, 0.670, 0.170, 0.890));
+  }
+
+  img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    width: 40px;
+    height: 70px;
+    z-index: 1;
+  }
+
+  div {
+    max-width: auto;
+    bottom: 70px + 5px;
+    word-wrap: break-word;
+  }
+}
+
+@include keyframes(mazu) {
+  0% {
+    background-color: rgba(156, 31, 16, 1.00);
+    @include scale(1);
+  }
+  100% {
+    background-color: rgba(156, 31, 16, .0);
+    @include scale(3);
+  }
+}
+
 
 @include keyframes(rotate) {
   0% { @include rotate(0); }

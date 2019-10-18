@@ -2,379 +2,369 @@
   "title": "功能選單",
   "sections": [
     {
-      "title": "地圖設定",
+      "header": "地圖設定",
       "rows": [
         {
+          "system": "both",
+          
           "icon": "icon-09",
-          "system": "both",
-          "type": "native",
           "title": "交通路況",
-          "nativeKey": "traffic",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "traffic"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-0a",
-          "system": "both",
-          "type": "native",
           "title": "路程紀錄",
-          "nativeKey": "pathInfo",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "pathInfo"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-0b",
-          "system": "both",
-          "type": "native",
           "title": "顯示路線",
-          "nativeKey": "pathLine",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "pathLine"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-0c",
-          "system": "both",
-          "type": "native",
           "title": "顯示時間",
-          "nativeKey": "pathTime",
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "native",
+            "key": "pathTime"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-0d",
-          "system": "both",
-          "type": "native",
           "title": "信徒分佈",
-          "nativeKey": "heatmap",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "heatmap"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-0e",
-          "system": "both",
-          "type": "native",
           "title": "開啟導航",
-          "nativeKey": "direction",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "direction"
+          }
         }
       ]
     },
     {
-      "title": "常見問答",
+      "header": "常見問答",
       "rows": [
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "article",
+
+          "icon": "icon-18",
           "title": "報馬仔何時出現？",
-          "url": "article.json",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "article",
+            "url": "article1.json"
+          }
         },
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "article",
+
+          "icon": "icon-18",
           "title": "媽祖在哪裡？",
-          "url": "article.json",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "article",
+            "url": "article.json"
+          }
         },
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "article",
+
+          "icon": "icon-18",
           "title": "進香前要注意哪些事？",
-          "url": "article.json",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "article",
+            "url": "article.json"
+          }
         },
 
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "tableView",
+
+          "icon": "icon-18",
           "title": "更多常見問答…",
-          "url": "moreQA.json",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "tableView",
+            "url": "moreQA.json"
+          }
         }
       ]
     },
     {
-      "title": "歷史路徑",
+      "header": "歷史路徑",
       "rows": [
         {
-          "icon": "icon-11",
           "system": "both",
-          "type": "histotyMap",
+
+          "icon": "icon-11",
           "title": "2017年 南下進香路線",
-          "url": "histotyMap2017.json",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "historyMap",
+            "url": "history2017.json"
+          }
         },
         {
-          "icon": "icon-11",
           "system": "both",
-          "type": "histotyMap",
+          
+          "icon": "icon-11",
           "title": "2018年 南下進香路線",
-          "url": "histotyMap2018.json",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "historyMap",
+            "url": "history2018.json"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-11",
-          "system": "both",
-          "type": "histotyMap",
           "title": "2019年 南下進香路線",
-          "url": "histotyMap2019.json",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "historyMap",
+            "url": "history2019.json"
+          }
         }
       ]
     },
     {
-      "title": "手機 App 下載",
+      "header": "手機 App 下載",
       "rows": [
         {
+          "system": "web",
+
           "icon": "icon-19",
-          "system": "web",
-          "type": "url",
           "title": "iOS 蘋果系統",
-          "url": "https://www.ioa.tw/",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "url",
+            "url": "https://www.ioa.tw/"
+          }
         },
         {
-          "icon": "icon-1a",
           "system": "web",
-          "type": "url",
+          
+          "icon": "icon-1a",
           "title": "Android 安卓系統",
-          "url": "https://www.ioa.tw/",
 
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "url",
+            "url": "https://www.ioa.tw/"
+          }
         }
       ]
     },
     {
-      "title": "幫我評分",
+      "header": "幫我評分",
       "rows": [
         {
-          "icon": "star",
           "system": "app",
-          "type": "native",
+
+          "icon": "star",
           "title": "給我五顆星吧！",
-          "nativeKey": "score",
 
-          "subtitle": null,
-          "url": null,
-          "fbType": null,
-          "fbId": null
+          "action": {
+            "type": "native",
+            "key": "score"
+          }
         }
       ]
     },
     {
-      "title": "團隊介紹",
+      "header": "團隊介紹",
       "rows": [
         {
+          "system": "both",
+
           "icon": "icon-17",
-          "system": "both",
-          "type": "fbUrl",
           "title": "洪大",
-          "subtitle": "GPS 人員管理",
-          "url": "article.json",
-          "fbType": "profile",
-          "fbId": "100000075633890",
+          "detail": "GPS 人員管理",
 
-          "nativeKey": null
+          "action": {
+            "type": "fb",
+            "url": "article.json",
+            "fbType": "profile",
+            "fbId": "100000075633890"
+          }
         },
         {
-          "icon": "icon-13",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-13",
           "title": "李永裕",
-          "subtitle": "Android App",
-          "url": "article.json",
-          "fbType": "profile",
-          "fbId": "100000075633890",
+          "detail": "Android App",
 
-          "nativeKey": null
+          "action": {
+            "type": "fb",
+            "url": "article.json",
+            "fbType": "profile",
+            "fbId": "100000075633890"
+          }
         },
         {
-          "icon": "icon-13",
           "system": "both",
-          "type": "fbUrl",
+
+          "image": "https://www.ioa.tw/img/f30d6b77ed253beb1abbc4deefde0b21.jpg",
           "title": "吳政賢",
-          "subtitle": "系統規劃、網站、iOS App",
-          "url": "article.json",
-          "fbType": "profile",
-          "fbId": "100000075633890",
+          "detail": "系統規劃、網站、iOS App",
 
-          "nativeKey": null
+          "action": {
+            "type": "fb",
+            "url": "article.json",
+            "fbType": "profile",
+            "fbId": "100000075633890"
+          }
         },
         {
+          "system": "both",
+
           "icon": "icon-2a",
-          "system": "both",
-          "type": "tableView",
           "title": "全部工作人員",
-          "url": "works.json",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "tableView",
+            "url": "works.json"
+          }
         }
       ]
     },
     {
-      "title": "授權聲明與條款",
+      "header": "授權聲明與條款",
       "rows": [
         {
+          "system": "both",
+
           "icon": "icon-12",
-          "system": "both",
-          "type": "article",
           "title": "白沙屯媽祖 GPS 授權聲明",
-          "url": "works.json",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "article",
+            "url": "works.json"
+          }
         },
 
         {
-          "icon": "icon-0f",
           "system": "both",
-          "type": "url",
+
+          "icon": "icon-0f",
           "title": "Google 地圖使用條款",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          
-          "subtitle": null,
-          "nativeKey": null,
-          "fbType": null,
-          "fbId": null
+
+          "action": {
+            "type": "url",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html"
+          }
         }
       ]
     },
     {
-      "title": "其他網路資源",
+      "header": "其他網路資源",
       "rows": [
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-18",
           "title": "拱天宮 官方網站",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
 
-          "subtitle": null,
-          "nativeKey": null
+          "action": {
+            "type": "url",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html"
+          }
         },
-
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+          
+          "icon": "icon-18",
           "title": "拱天宮 官方粉絲專頁",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
-          "subtitle": null,
-          "nativeKey": null
-        },
 
+          "action": {
+            "type": "fb",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
+            "fbType": "page",
+            "fbId": "214075922281170"
+          }
+        },
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-18",
           "title": "北港朝天宮 官方網站",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
-          "subtitle": null,
-          "nativeKey": null
-        },
 
+          "action": {
+            "type": "url",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html"
+          }
+        },
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-18",
           "title": "北港朝天宮 官方粉絲專頁",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
-          "subtitle": null,
-          "nativeKey": null
+          
+          "action": {
+            "type": "fb",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
+            "fbType": "page",
+            "fbId": "214075922281170"
+          }
         },
-
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-18",
           "title": "白沙屯媽祖在哪裡？",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
-          "subtitle": null,
-          "nativeKey": null
+          
+          "action": {
+            "type": "fb",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
+            "fbType": "page",
+            "fbId": "214075922281170"
+          }
         },
-
         {
-          "icon": "icon-18",
           "system": "both",
-          "type": "fbUrl",
+
+          "icon": "icon-18",
           "title": "白沙屯媽祖北港進香gps",
-          "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
-          "fbType": "page",
-          "fbId": "214075922281170",
-          "subtitle": null,
-          "nativeKey": null
+          
+          "action": {
+            "type": "fb",
+            "url": "https://www.google.com/intl/zh-TW_tw/help/terms_maps.html",
+            "fbType": "page",
+            "fbId": "214075922281170"
+          }
         }
       ]
     }

@@ -1,0 +1,43 @@
+{
+  "title": "更多常見問答",
+  "sections": [
+    {
+      "header": "常見問答",
+      "rows": [
+        {
+          "system": "both",
+
+          "icon": "icon-18",
+          "title": "報馬仔何時出現？",
+
+          "action": {
+            "type": "article",
+            "url": "article.json"
+          }
+        },
+        {
+          "system": "both",
+
+          "icon": "icon-18",
+          "title": "媽祖在哪裡？",
+
+          "action": {
+            "type": "article",
+            "url": "article.json"
+          }
+        },
+        {
+          "system": "both",
+
+          "icon": "icon-18",
+          "title": "進香前要注意哪些事？",
+
+          "action": {
+            "type": "article",
+            "url": "article.json"
+          }
+        }
+      ]
+    }
+  ]
+}
