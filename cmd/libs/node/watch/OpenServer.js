@@ -36,6 +36,19 @@ const html404 = message => {
   }
 }
 
+const addSocket = data => {
+  var tokens = data.split('</head>').filter(t => t.length)
+  if (!tokens.length) return data
+  
+  var tmps = [tokens.shift()]
+  tokens = tokens.join('</head>')
+
+  tmps.push('<script src="/socket.io/socket.io.js"></script><script type="text/javascript">var socket = io.connect();socket.on("action", function(data) { if (data === "reload") location.reload(true); });</script>')
+  tmps.push('</head>')
+  tmps.push(tokens)
+  return tmps.join('')
+}
+
 const openServer = (closure, port) => {
   Display.lines('開啟伺服器',
     ['主要語法', 'run http.createServer:' + port])
@@ -65,12 +78,8 @@ const openServer = (closure, port) => {
     let ext = Mime.getExtension(Mime.getType(path))
     if (ext === 'php' && CmdExists('php'))
       return Exec('php ' + path, (error, stdout, stderr) => {
-        const $ = require('cheerio').load(stdout)
-        $('head').append($('<script />').attr('src', '/socket.io/socket.io.js'))
-                 .append($('<script />').attr('type', 'text/javascript').html('var socket = io.connect();socket.on("action", function(data) { if (data === "reload") location.reload(true); });'))
-
         response.writeHead(error ? 400 : 200, {'Content-Type': 'text/html; charset=UTF-8'})
-        response.write($.html())
+        response.write(addSocket(stdout))
         response.end()
         return;
       })
@@ -81,14 +90,7 @@ const openServer = (closure, port) => {
         response.write(html404('錯誤原因：' + Xterm.color.gray(error, true).dim().italic()))
       } else {
         response.writeHead(200, {'Content-Type': Mime.getType(path) + '; charset=UTF-8'})
-        if (ext != 'html') {
-          response.write(data)
-        } else {
-          const $ = require('cheerio').load(data)
-          $('head').append($('<script />').attr('src', '/socket.io/socket.io.js'))
-                   .append($('<script />').attr('type', 'text/javascript').html('var socket = io.connect();socket.on("action", function(data) { if (data === "reload") location.reload(true); });'))
-          response.write($.html())
-        }
+        response.write(ext == 'html' ? addSocket(data.toString('utf8')) : data)
       }
       response.end()
     })
