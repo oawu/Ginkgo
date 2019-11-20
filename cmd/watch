@@ -14,6 +14,7 @@ Path.icon     = Path.root + 'font' + Path.sep
 Path.scss     = Path.root + 'scss' + Path.sep
 Path.css      = Path.root + 'css'  + Path.sep
 Path.iconHtml = Path.cmd  + 'libs' + Path.sep + 'node'  + Path.sep + 'watch'  + Path.sep + 'icon.html'
+Path.iconByGinkgo = false
 
 const Loader = require('./libs/node/Ginkgo').load
 const Load   = Loader('Ginkgo').loadWatch

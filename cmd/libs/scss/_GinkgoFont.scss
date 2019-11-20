@@ -21,7 +21,7 @@
 }
 
 @function font-files($files...) {
-  $srcs: null;
+  $srcs: '';
 
   $formats: (
     eot: 'embedded-opentype',
@@ -35,16 +35,16 @@
   );
 
   @if(length($files) >= 1) {
-    $srcs: append($srcs, url(quote(nth($files, 1) + '?' + unique-id())));
+    $srcs: if($srcs == '', '', $srcs + ", ") + url(quote(nth($files, 1) + '?' + unique-id()));
   }
 
   @each $file in $files {
     $ext: str-slice($file, str-last-index($file, '.') + 1);
     $format: if(map-has-key($formats, $ext), map-get($formats, $ext), '');
     @if ($ext == 'eot') {
-      $srcs: append($srcs, url(quote($file + '?' + unique-id() + '#iefix')) if($format == '', null, format(quote($format))));
+      $srcs: if($srcs == '', '', $srcs + ", ") + url(quote($file + '?' + unique-id() + '#iefix')) + if($format == '', '', ' ' + format(quote($format)));
     } @else {
-      $srcs: append($srcs, url(quote($file + '?' + unique-id())) if($format == '', null, format(quote($format))));
+      $srcs: if($srcs == '', '', $srcs + ", ") + url(quote($file + '?' + unique-id())) + if($format == '', '', ' ' + format(quote($format)));
     }
   }
 
@@ -54,6 +54,6 @@
 @mixin font-face($name, $srcs) {
   @font-face {
     font-family: quote($name);
-    src: $srcs;
+    src: #{$srcs};
   }
 }
