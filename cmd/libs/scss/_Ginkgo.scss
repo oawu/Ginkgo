@@ -6,6 +6,7 @@
 //
 
 @import "GinkgoMixin";
+@import "GinkgoExtend";
 
 $_InitGinkgo: false !global;
 
@@ -21,7 +22,5 @@ $_InitGinkgo: false !global;
     }
   }
 }
-
-@include init-ginkgo;
 
 @import "GinkgoUi";

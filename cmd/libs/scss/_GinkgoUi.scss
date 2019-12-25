@@ -325,7 +325,8 @@ $linkColor: rgba(24, 144, 255, 1.00);
       padding-left: 16px;
       &:before {
         width: 16px !important;
-        @include animation(rotate 1s linear infinite);
+        @include animation(rotate 1s linear infinite forwards);
+        @include animation-delay(.75s);
         @include background-image(linear-gradient(rgba(184, 241, 148, 1.00) 0%, rgba(89, 178, 169, 1.00) 100%));
       }
     }
