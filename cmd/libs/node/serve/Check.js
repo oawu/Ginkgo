@@ -21,7 +21,7 @@ const checkConfig = _ => {
   Config.server  = Config.server  || {}
   Config.compass = Config.compass || {}
 
-  Config.dir.view             = Config.dir.view             || 'view'
+  Config.dir.src              = Config.dir.src              || 'src'
 
   Config.dirName.iconDir      = Config.dirName.iconDir      || 'icon'
   Config.dirName.scssDir      = Config.dirName.scssDir      || 'scss'
@@ -58,11 +58,11 @@ const checkConfig = _ => {
   Config.compass.imports      = Config.compass.imports      || []
   Config.compass.uri          = Config.compass.uri          || Path.basename(Path.root)
 
-  Path.view = Path.root + Config.dir.view.trim(Path.sep) + Path.sep
-  Path.icon = Path.view + Config.dirName.iconDir + Path.sep
-  Path.scss = Path.view + Config.dirName.scssDir + Path.sep
-  Path.css  = Path.view + Config.dirName.cssDir  + Path.sep
-  delete Config.dir.view
+  Path.src  = Path.root + Config.dir.src.trim(Path.sep) + Path.sep
+  Path.icon = Path.src + Config.dirName.iconDir + Path.sep
+  Path.scss = Path.src + Config.dirName.scssDir + Path.sep
+  Path.css  = Path.src + Config.dirName.cssDir  + Path.sep
+  delete Config.dir.src
 
   if (Config.server.https.enable) {
     try {
@@ -82,7 +82,7 @@ const checkCompass = _ => {
     return true
 
   const Config = require(Path.config)
-  const relative = Path.relative(Path.compass, Path.view) + Path.sep
+  const relative = Path.relative(Path.compass, Path.src) + Path.sep
   
   let content = ""
   content += "#" + Display.LN
@@ -184,8 +184,8 @@ module.exports = closure => {
     ? Display.line(true)
     : Display.line(false, '確認開發設定檔失敗！')
 
-  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.view) + Path.sep + ' is exists')
-  Exists(Path.view)
+  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.src) + Path.sep + ' is exists')
+  Exists(Path.src)
     ? Display.line(true, '存在')
     : Display.line(false, '開發目錄不存在！')
 

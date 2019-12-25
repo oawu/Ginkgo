@@ -128,19 +128,19 @@ const FileAction = function(type, filepath) {
   this.run = closure => {
     switch (this.type()) {
       case Actions.rebuild:
-        readied && Display.linesM('更新檔案', ['檔案路徑', this.filepath().replace(Path.view, '')], ['執行動作', 'load page'])
+        readied && Display.linesM('更新檔案', ['檔案路徑', this.filepath().replace(Path.src, '')], ['執行動作', 'load page'])
         return Bus.has('reload')
           ? Bus.emit('reload', _ => done(closure))
           : done(closure)
 
       case Actions.create:
-        readied && Display.linesM('新增檔案', ['檔案路徑', this.filepath().replace(Path.view, '')], ['執行動作', 'load page'])
+        readied && Display.linesM('新增檔案', ['檔案路徑', this.filepath().replace(Path.src, '')], ['執行動作', 'load page'])
         return Bus.has('reload')
           ? Bus.emit('reload', _ => done(closure))
           : done(closure)
 
       case Actions.remove:
-        readied && Display.linesM('移除檔案', ['檔案路徑', this.filepath().replace(Path.view, '')], ['執行動作', 'load page'])
+        readied && Display.linesM('移除檔案', ['檔案路徑', this.filepath().replace(Path.src, '')], ['執行動作', 'load page'])
         return Bus.has('reload')
           ? Bus.emit('reload', _ => done(closure))
           : done(closure)
@@ -153,7 +153,7 @@ const FileAction = function(type, filepath) {
   this.type     = type     => Actions.types.indexOf(type) != -1 ? (_type = type, this) : _type
   this.filepath = filepath => filepath ? (_filepath = filepath, this) : _filepath
   
-  let tokens = filepath.replace(Path.view, '').split(Path.sep).map(t => t.trim()).filter(v => v.length)
+  let tokens = filepath.replace(Path.src, '').split(Path.sep).map(t => t.trim()).filter(v => v.length)
   Config.watch.ignoreDirs.indexOf(tokens.shift()) == -1 && Actions.push(this.type(type).filepath(filepath))
 }
 
@@ -175,7 +175,7 @@ const watchScss = closure => Display.lines('啟動 SCSS 功能', '執行動作',
 
 const watchFile = closure => Display.lines('監控 FILE 檔案', '執行動作', 'watch ' + Config.watch.formats.join('、') + ' 檔案') &&
   Promise.all(Config.watch.formats.map(format => new Promise((resolve, reject) => require('chokidar')
-    .watch(require('../WindowPath')(Path.view + '**' + Path.sep + '*' + format))
+    .watch(require('../WindowPath')(Path.src + '**' + Path.sep + '*' + format))
     .on('change', file  => Path.extname(file) == format && FileAction(Actions.rebuild, file))
     .on('add',    file  => Path.extname(file) == format && FileAction(Actions.create, file))
     .on('unlink', file  => Path.extname(file) == format && FileAction(Actions.remove, file))
@@ -186,7 +186,8 @@ const watchFile = closure => Display.lines('監控 FILE 檔案', '執行動作',
 
 Bus.on('readied', status => readied = status)
 
-module.exports = closure => Display.title('啟動專案') && Actions.run() &&
+module.exports = closure =>
+  Display.title('啟動專案') && Actions.run() &&
   watchIcon(_ =>
     watchScss(_ =>
       watchFile(

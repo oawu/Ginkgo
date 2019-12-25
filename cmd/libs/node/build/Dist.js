@@ -25,7 +25,8 @@ const OAMkdir = dir => {
   return !!Exists(dir)
 }
 
-const distExist = _ => Display.lines('檢查 Dist 目錄是否存在', '執行動作', 'check dist is exist') &&
+const distExist = _ =>
+  Display.lines('檢查 Dist 目錄是否存在', '執行動作', 'check dist is exist') &&
   OAMkdir(Path.dist)
     ? Display.line(true)
     : Display.line(false, '新增失敗，請檢查目錄是否可以寫入！')
@@ -59,7 +60,7 @@ const getContent = (file) => {
     try { return {
       str: Exec('php ' + Path.phpEntry + ' --path ' + file.src + (Config.argvs.length ? ' ' + Config.argvs.join(' ') : ''), { maxBuffer: 1024 * 500 , stdio: 'pipe', encoding: 'utf8' }).toString(),
       encoding: 'utf8'
-    }} catch (e) { return ['編譯 PHP「' + file.src.substr(Path.view.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout] }
+    }} catch (e) { return ['編譯 PHP「' + file.src.substr(Path.src.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout] }
   }
 
   try { return {
@@ -69,16 +70,24 @@ const getContent = (file) => {
 }
 
 const distBuild = _ => {
-  Display.lines('掃描 view 目錄', '執行動作', 'scan view dir')
-  let files = ScanDir(Path.view).map(file => ({ dist: Path.normalize(Path.dist + Path.dirname(file).substr(Path.view.length) + Path.sep + Path.basename(file, '.php') + (Path.extname(file) === '.php' ? '.html' : '')), src: file }))
+  Display.lines('掃描 src 目錄', '執行動作', 'scan ' + Path.relative(Path.root, Path.src) + ' dir')
+  let files = ScanDir(Path.src).map(file => ({ dist: Path.normalize(Path.dist + Path.dirname(file).substr(Path.src.length) + Path.sep + Path.basename(file, '.php') + (Path.extname(file) === '.php' ? '.html' : '')), src: file }))
   Display.line(files.length)
   Display.line(true)
   
-  Display.lines('搬移與編譯 View 目錄', '執行動作', 'copy & build view dir')
-  Display.line(files.length + 1)
+  Display.lines('搬移與編譯 View 目錄', '執行動作', 'copy & build ' + Path.relative(Path.root, Path.src) + ' dir')
+  const gitignoreExists = Exists(Path.dist + '.gitignore')
+
+  Display.line(files.length + (!gitignoreExists ? 2 : 1))
 
   OAMkdir(Path.dist) || Display.line(false, '無法在 Dist 建立目錄「' + Path.dist + '」！')
   Display.line()
+
+  if (!gitignoreExists) {
+    try { FileWrite(Path.dist + '.gitignore', '*' + Display.LN, 'utf8') }
+    catch (e) { Display.line(false, ['寫入「' + Path.dist + '.gitignore」時發生錯誤！', e]) }
+    Display.line()
+  }
 
   files = files.map(file => {
     let content = getContent(file)

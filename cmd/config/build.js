@@ -8,7 +8,7 @@
 module.exports = {
   dir: {
     dist: 'dist',
-    view: 'view'
+    src: 'src'
   },
   ignorePermission: false,
   allowExts: [

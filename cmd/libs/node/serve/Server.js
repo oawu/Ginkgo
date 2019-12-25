@@ -91,7 +91,7 @@ const showError = (response, message) => {
 
 const showFile = (response, file, ext) => {
   return FileRead(file, { encoding: ext && Config.server.utf8Exts.indexOf('.' + ext) != -1 ? 'utf8' : null }, (error, data) => {
-    if (error) return showError(response, '讀取檔案 ' + file.replace(Path.view, '') + ' 發生錯誤！')
+    if (error) return showError(response, '讀取檔案 ' + file.replace(Path.src, '') + ' 發生錯誤！')
     const Mime = require('mime')
     response.writeHead(200, {'Content-Type': Mime.getType(file) + '; charset=UTF-8'})
     response.write(data)
@@ -118,7 +118,7 @@ const createServer = (port, request, response) => {
 
   const Mime = require('mime')
   let ext = Mime.getExtension(Mime.getType(path))
-  let file = Path.view + path.replace('/', Path.sep)
+  let file = Path.src + path.replace('/', Path.sep)
 
   if (Exists(file))
     return ext !== 'php'
@@ -163,5 +163,6 @@ const openServer = (port, closure) => {
   return Bus.on('reload', Reload) && typeof closure == 'function' && closure()
 }
 
-module.exports = closure => Display.title('啟動開發伺服器')
+module.exports = closure =>
+  Display.title('啟動開發伺服器')
   && testPort(Config.server.minPort, Config.server.maxPort, port => openServer(port, closure))

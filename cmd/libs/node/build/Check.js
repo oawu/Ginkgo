@@ -24,7 +24,7 @@ const checkConfig = _ => {
 
   Config.dir = Config.dir || {}
   Config.dir.dist = Config.dir.dist || 'dist'
-  Config.dir.view = Config.dir.view || 'view'
+  Config.dir.src  = Config.dir.src  || 'src'
 
   Config.allowExts = Config.allowExts || []
   Config.ignorePermission = Config.ignorePermission || false
@@ -33,8 +33,8 @@ const checkConfig = _ => {
   Path.dist = Path.root + Config.dir.dist.trim(Path.sep) + Path.sep
   delete Config.dir.dist
 
-  Path.view = Path.root + Config.dir.view.trim(Path.sep) + Path.sep
-  delete Config.dir.view
+  Path.src = Path.root + Config.dir.src.trim(Path.sep) + Path.sep
+  delete Config.dir.src
 
   return errors
 }
@@ -70,8 +70,8 @@ module.exports = closure => {
     ? Display.line(false, ['確認設定檔失敗！'].concat(error))
     : Display.line(true)
 
-  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.view) + Path.sep + ' is exists')
-  Exists(Path.view)
+  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.src) + Path.sep + ' is exists')
+  Exists(Path.src)
     ? Display.line(true, '存在')
     : Display.line(false, '開發目錄不存在！')
 

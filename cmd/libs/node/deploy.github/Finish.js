@@ -12,7 +12,8 @@ const Xterm    = require('../Xterm')
 const Print    = require('../Print')
 const Config   = require(Path.config)
 
-module.exports = closure => Display.title('部署完成') &&
+module.exports = closure =>
+  Display.title('部署完成') &&
   Print(' '.repeat(3) + '🎉 太棒惹，已經完成部署囉，趕緊去看最新版的吧！' + Display.LN) &&
   Print(' '.repeat(3) + '❗️ 若有設定 CDN 快取的話，請等 Timeout 後再試。' + Display.LN) &&
   Print(' '.repeat(3) + '⏰ 部署耗費時間' + Display.markSemicolon() + Xterm.color.gray(TimeUnit(Config.startAt), true) + Display.LN) &&

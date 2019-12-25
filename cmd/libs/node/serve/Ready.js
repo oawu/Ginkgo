@@ -8,7 +8,8 @@
 const Display = require('../Display')
 const Print   = require('../Print')
 
-module.exports = closure => Display.title('準備開發') &&
+module.exports = closure =>
+  Display.title('準備開發') &&
   Print(' '.repeat(3) + '🎉 Yes! 環境已經就緒惹！' + Display.LN) &&
   Print(' '.repeat(3) + '🚀 Go! Go! Go! 趕緊來開發囉！' + Display.LN) &&
   Display.title('以下為紀錄') &&

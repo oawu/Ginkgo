@@ -7,7 +7,7 @@
 
 module.exports = {
   dir: {
-    src: 'view'
+    src: 'src'
   },
   dirName: { // View 內的目錄名稱
     iconDir: 'icon', // 圖示
