@@ -1,0 +1,373 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+$linkColor: rgba(24, 144, 255, 1.00);
+
+%-ginkgo-scrolling {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(146, 149, 153, 1.00);
+    border: 1px solid rgba(38, 43, 51, 1.00);
+    @include border-radius(4px);  
+  }
+  &::-webkit-scrollbar {
+    background-color: rgba(41, 55, 70, 1.00);
+    width: 8px;
+    @include box-shadow(inset -3px 0 3px rgba(39, 40, 34, 1.00));
+  }
+}
+
+%-ginkgo-cover {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  > img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    @include opacity(0);
+  }
+}
+
+%-ginkgo-link {
+
+  color: $linkColor;
+
+  @include transition(color .3s);
+ 
+  &:hover {
+    color: adjust-lightness($linkColor, -10%);
+  }
+}
+
+%-ginkgo-select {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    right: 12px;
+    top: calc(50% - #{(8px / 2) + 1px});
+    z-index: 1;
+
+    display: inline-block;
+
+    width: 8px;
+    height: 8px;
+    
+    color: rgba(190, 190, 190, 1);
+    border-left: 2px solid rgba(190, 190, 190, 1);
+    border-bottom: 2px solid rgba(190, 190, 190, 1);
+    cursor: pointer;
+
+    @include border-bottom-left-radius(3px);
+    @include rotate(-45deg);
+  }
+
+  select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 2;
+
+    color: rgba(75, 75, 75, 1);
+    padding: 0 8px;
+    padding-right: 20px + 4px;
+    border: 1px solid rgba(210, 210, 210, 1.00);
+    color: rgba(100, 100, 100, 1.00);
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    &::-ms-expand { display: none; }
+    @include overflow-docx3();
+    @include border-radius(4px);
+    @include transition(border-color .3s, box-shadow .3s);
+    
+    &:hover {
+      border-color: rgba(63, 169, 255, 1.00);
+    }
+    &:focus {
+      outline: 0;
+      border-color: rgba(63, 169, 255, 1.00);
+      @include box-shadow(0 0 0 2px rgba(24, 144, 255, .2));
+    }
+  }
+}
+
+%-ginkgo-checkbox, %-ginkgo-radio, %-ginkgo-switch {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  height: 18px;
+  line-height: 18px;
+
+  input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    @include opacity(0);
+    @include scale(0);
+
+    &:checked + span {
+      &:before {
+        background-color: $linkColor;
+      }
+    }
+
+    &:focus + span:before {
+      @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(24, 144, 255, .2));
+    }
+
+    &[disabled]:checked + span:before {
+      background-color: adjust-lightness($linkColor, 25%);
+    }
+  }
+
+  span {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    height: 16px;
+    line-height: 16px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: inline-block;
+    }
+  }
+}
+
+%-ginkgo-checkbox, %-ginkgo-radio {
+  cursor: pointer;
+
+  input {
+    &:checked + span {
+      &:before {
+        border: 0;
+      }
+      &:after {
+        @include opacity(1);
+      }
+
+      &[disabled] + span {
+        cursor: not-allowed;
+        
+        &:before {
+          background-color: rgba(245, 245, 245, 1.00);
+        }
+      }
+    }
+    &:focus + span:before {
+      border-color: $linkColor;
+    }
+  }
+
+  span {
+    padding-left: 16px + 4px;
+
+    &:after {
+      @include opacity(0);
+    }
+    &:before {
+      width: 16px;
+      background-color: white;
+      border: 1px solid rgba(210, 210, 210, 1.00);
+      @include transition(box-shadow .3s, background-color .3s, border .3s);
+    }
+  }
+}
+
+%-ginkgo-checkbox {
+  input {
+    &:checked + span:after {
+      @include transform(scale(1.1) rotate(45deg) translate(-50%, -50%));
+    }
+  }
+
+  span {
+    &:before {
+      @include border-radius(2px);
+    }
+    &:after {
+      left: 4px;
+      top: 7.5px;
+      width: 5px;
+      height: 9px;
+
+      border: 2px solid white;
+      border-top: 0;
+      border-left: 0;
+      
+      @include border-bottom-right-radius(1px);
+      @include transform(scale(0) rotate(0) translate(-50%, -50%));
+      @include transition(transform .3s cubic-bezier(.12, .4, .29, 1.45), opacity .13s);
+    }
+  }
+}
+
+%-ginkgo-radio {
+  input {
+    &:checked + span:after {
+      @include transform(scale(1.1));
+      @include box-shadow(1px 1px 1px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  span {
+    &:before {
+      @include border-radius(50%);
+    }
+    &:after {
+      left: 5px;
+      top: 5px;
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      @include border-radius(50%);
+      @include transform(scale(0));
+      @include transition(transform .3s cubic-bezier(.12, .4, .29, 1.45), opacity .13s, box-shadow .3s);
+    }
+  }
+}
+
+%-ginkgo-switch {
+  input {
+    &:checked + span {
+      &:after {
+        left: 30px - (16px - 2px * 2 + 2px);
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+      }
+    }
+    &[disabled] + span {
+      cursor: not-allowed;
+
+      &:before {
+        background-color: rgba(229, 229, 229, 1.00);
+        @include box-shadow(none);
+      }
+    }
+    &[disabled]:checked + span {
+      &:before {
+        background-color: adjust-lightness($linkColor, 25%);
+      }
+    }
+  }
+
+  span {
+    padding-left: 30px;
+
+    &:before {
+      width: 30px !important;
+      background-color: rgba(205, 205, 205, 1.00);
+      @include border-radius(16px / 2);
+      @include box-shadow(inset 0 1px 4px 0 rgba(0, 35, 11, .2));
+      @include transition(background-color .3s, box-shadow .3s);
+    }
+
+    &:after {
+      background-color: white;
+      left: 2px;
+      top: 2px;
+      width: 16px - 2px * 2;
+      height: calc(100% - #{2px * 2});
+      @include opacity(1);
+      @include border-radius(50%);
+      @include transition(left .3s cubic-bezier(0.970, -0.495, 0.255, 1.650), box-shadow .3s);
+      @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+    }
+  }
+
+  &.loading {
+    cursor: not-allowed;
+    
+    input {
+      &:focus + span:before {
+        @include box-shadow(none);
+      }
+      &:checked + span:after {
+        left: 2px;
+        @include box-shadow(0 1px 4px 0 rgba(0, 35, 11, .2));
+      }
+    }
+
+    span {
+      padding-left: 16px;
+      &:before {
+        width: 16px !important;
+        @include animation(rotate 1s linear infinite forwards);
+        @include animation-delay(.75s);
+        @include background-image(linear-gradient(rgba(184, 241, 148, 1.00) 0%, rgba(89, 178, 169, 1.00) 100%));
+      }
+    }
+  }
+}
+
+%-ginkgo-text-input {
+  display: inline-block;
+  color: rgba(0, 0, 0, .65);
+  font-size: 14px;
+  border: 1px solid rgba(217, 217, 217, 1.00);
+  background-color: rgba(250, 250, 250, 1.00);
+  @include transition(box-shadow .3s, border-color .3s);
+  @include border-radius(3px);
+  
+  @include input-placeholder {
+    color: rgba(191, 191, 191, 1.00);
+  }
+
+  &:focus {
+    outline: 0;
+    border-color: rgba(63, 169, 255, 1.00);
+    @include box-shadow(0 0 0 2px rgba(24, 144, 255, .2));
+  }
+
+  &[readonly] {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, .25);
+    background-color: rgba(245, 245, 245, 1.00);
+    border-color: rgb(217, 217, 217);
+    @include box-shadow(none);
+  }
+}
+
+%-ginkgo-input {
+  @extend %-ginkgo-text-input;
+  padding: 0 11px;
+}
+
+%-ginkgo-textarea {
+  @extend %-ginkgo-text-input;
+  padding: 7px 11px;
+  resize: none;
+}

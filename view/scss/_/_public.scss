@@ -1,0 +1,39 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+%-scroll-white {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(175, 175, 175, 1.00);
+    @include border-radius(4px);  
+  }
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+}
+
+%-scrolling-black {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(146, 149, 153, 1.00);
+    border: 1px solid rgba(38, 43, 51, 1.00);
+    @include border-radius(4px);  
+  }
+  &::-webkit-scrollbar {
+    background-color: rgba(41, 55, 70, 1.00);
+    width: 8px;
+    @include box-shadow(inset -3px 0 3px rgba(39, 40, 34, 1.00));
+  }
+}
