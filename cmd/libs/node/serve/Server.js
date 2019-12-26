@@ -94,16 +94,30 @@ const showFile = (response, file, ext) => {
     if (error) return showError(response, '讀取檔案 ' + file.replace(Path.entry, '') + ' 發生錯誤！')
     const Mime = require('mime')
     response.writeHead(200, {'Content-Type': Mime.getType(file) + '; charset=UTF-8'})
-    response.write(data)
+    response.write('.' + ext == '.html' ? addSocket(data) : data)
     response.end()
   })
 }
+
+const addSocket = data => {
+  var tokens = data.split('</head>').filter(t => t.length)
+  if (!tokens.length) return data
+  
+  var tmps = [tokens.shift()]
+  tokens = tokens.join('</head>')
+
+  tmps.push('<script src="/socket.io/socket.io.js"></script><script type="text/javascript">var socket = io.connect();socket.on("action", function(data) { if (data === "reload") location.reload(true); });</script>')
+  tmps.push('</head>')
+  tmps.push(tokens)
+  return tmps.join('')
+}
+
 const showPHP = (response, port, file) => Exec('php ' + Path.phpEntry +
   ' --path ' + file +
   ' --env Development' +
   ' --base-url ' + (Config.server.https.enable ? 'https' : 'http') + '://' + Config.server.domain + ':' + port + '/', { maxBuffer: 1024 * 500 }, (error, stdout, stderr) => {
   response.writeHead(error ? 400 : 200, {'Content-Type': 'text/html; charset=UTF-8'})
-  response.write(stdout)
+  response.write(addSocket(stdout))
   response.end()
   return
 })
