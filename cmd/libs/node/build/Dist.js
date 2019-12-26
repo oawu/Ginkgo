@@ -15,6 +15,7 @@ const FileSystem  = require('fs')
   const FileCopy  = FileSystem.copyFileSync
   const FileRead  = FileSystem.readFileSync
   const FileWrite = FileSystem.writeFileSync
+  const CopyFile  = FileSystem.copyFileSync
   const Access    = FileSystem.accessSync
   const WriteAble = FileSystem.constants.W_OK
   const ReadAble  = FileSystem.constants.R_OK
@@ -45,30 +46,6 @@ const distClean = _ => {
   return Display.line(true)
 }
 
-const getContent = (file) => {
-  const Config = require(Path.config)
-  const ext = Path.extname(file.src)
-  const utf8Exts = ['.html', '.css', '.js', '.txt']
-  
-  if (Config.allowExts.length && Config.allowExts.indexOf(ext) == -1)
-    return true
-
-  try { Access(file.src, ReadAble) }
-  catch (e) { return Config.ignorePermission || ['檔案不可讀取，請檢查目錄權限！', '檔案：' + file.src.replace(Path.root, ''), e.message] }
-
-  if (ext === '.php') {
-    try { return {
-      str: Exec('php ' + Path.phpEntry + ' --path ' + file.src + (Config.argvs.length ? ' ' + Config.argvs.join(' ') : ''), { maxBuffer: 1024 * 500 , stdio: 'pipe', encoding: 'utf8' }).toString(),
-      encoding: 'utf8'
-    }} catch (e) { return ['編譯 PHP「' + file.src.substr(Path.src.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout] }
-  }
-
-  try { return {
-    str: FileRead(file.src, { encoding: utf8Exts.indexOf(ext) != -1 ? 'utf8' : null }),
-    encoding: utf8Exts.indexOf(ext) != -1 ? 'utf8' : null
-  }} catch (e) { return ['讀取檔案' + file.src + '」時失敗！', e.message] }
-}
-
 const distBuild = _ => {
   Display.lines('掃描 src 目錄', '執行動作', 'scan ' + Path.relative(Path.root, Path.src) + ' dir')
   let files = ScanDir(Path.src).map(file => ({ dist: Path.normalize(Path.dist + Path.dirname(file).substr(Path.src.length) + Path.sep + Path.basename(file, '.php') + (Path.extname(file) === '.php' ? '.html' : '')), src: file }))
@@ -89,22 +66,64 @@ const distBuild = _ => {
     Display.line()
   }
 
+  const Babel = require("@babel/core");
+  const MinifyHTML = require('html-minifier').minify
+  const CleanCSS = require('clean-css')
+
   files = files.map(file => {
-    let content = getContent(file)
-    
-    if (content === true)
-      return Display.line()
+    const Config = require(Path.config)
+    const ext = Path.extname(file.src)
 
-    if (Array.isArray(content))
-      return Display.line(false, content)
-
+    let content = ''
     let dist = Path.dirname(file.dist) + Path.sep
     OAMkdir(dist) || Display.line(false, '無法在 Dist 建立目錄「' + dist + '」！')
 
-    try { FileWrite(file.dist, content.str, { encoding: content.encoding }) }
-    catch (e) { Display.line(false, ['寫入「' + file.dist + '」時發生錯誤！', e]) }
+    try { Access(file.src, ReadAble) }
+    catch (e) { return Config.ignorePermission || Display.line(false, ['檔案不可讀取，請檢查目錄權限！', '檔案：' + file.src.replace(Path.root, ''), e.message]) }
 
-    Display.line()
+    switch (ext) {
+      case '.php':
+        try { content = Exec('php ' + Path.phpEntry + ' --path ' + file.src + (Config.argvs.length ? ' ' + Config.argvs.join(' ') : ''), { maxBuffer: 1024 * 500 , stdio: 'pipe', encoding: 'utf8' }).toString() } catch (e) { return ['編譯 PHP「' + file.src.substr(Path.src.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout] }
+        if (Config.minify) {
+          try { content = MinifyHTML(content, { collapseWhitespace: true, continueOnParseError: false }) } catch (e) { return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+          if (content === null) return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.src.length) + '」時失敗！'])
+        }
+        try { FileWrite(file.dist, content, 'utf8') } catch (e) { return Display.line(false, ['寫入檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        return Display.line()
+
+      case '.html':
+        try { content = FileRead(file.src, 'utf8') } catch (e) { return Display.line(false, ['讀取檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        if (Config.minify) {
+          try { content = MinifyHTML(content, { collapseWhitespace: true, continueOnParseError: false }) } catch (e) { return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+          if (content === null) return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.src.length) + '」時失敗！'])
+        }
+        try { FileWrite(file.dist, content, 'utf8') } catch (e) { return Display.line(false, ['寫入檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        return Display.line()
+
+      case '.js':
+        try { content = FileRead(file.src, 'utf8') } catch (e) { return Display.line(false, ['讀取檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        if (Config.minify) {
+          if (!/\.min$/.test(Path.basename(file.src, '.js'))) {
+            try { content = Babel.transformSync(content, { presets: ['@babel/preset-env', 'minify'] }).code } catch (e) { return Display.line(false, ['轉換、轉換檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+          }
+        }
+        try { FileWrite(file.dist, content, 'utf8') } catch (e) { return Display.line(false, ['寫入檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        return Display.line()
+
+      case '.css':
+        try { content = FileRead(file.src, 'utf8') } catch (e) { return Display.line(false, ['讀取檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        if (Config.minify) {
+          try { content = new CleanCSS({}).minify(content.replace(/\}\n+/gm, '}')).styles } catch (e) { return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        }
+        try { FileWrite(file.dist, content, 'utf8') } catch (e) { return Display.line(false, ['寫入檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        return Display.line()
+
+      default:
+        try { CopyFile(file.src, file.dist) } catch (e) { return Display.line(false, ['搬移檔案「' + file.src.substr(Path.src.length) + '」時失敗！', '錯誤原因：' + e.message]) }
+        return Display.line()
+    }
+
+    return Display.line()
   })
 
   return Display.line(true)

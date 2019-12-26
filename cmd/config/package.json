@@ -29,6 +29,11 @@
     "node-notifier": "^5.4.3",
     "aws-sdk": "^2.515.0",
     "command-exists": "^1.2.8",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-preset-minify": "^0.5.1",
+    "html-minifier": "^4.0.0",
+    "clean-css": "^4.2.1",
     "md5-file": "^4.0.0"
   }
 }

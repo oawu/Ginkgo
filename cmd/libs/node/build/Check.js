@@ -26,6 +26,7 @@ const checkConfig = _ => {
   Config.dir.dist = Config.dir.dist || 'dist'
   Config.dir.src  = Config.dir.src  || 'src'
 
+  Config.minify = typeof Config.minify == 'boolean' ? Config.minify : true
   Config.allowExts = Config.allowExts || []
   Config.ignorePermission = Config.ignorePermission || false
   Config.startAt = new Date().getTime()

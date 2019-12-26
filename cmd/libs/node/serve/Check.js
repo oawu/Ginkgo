@@ -54,7 +54,7 @@ const checkConfig = _ => {
 
   Config.compass.outputStyle  = Config.compass.outputStyle  || 'compact'
   Config.compass.lineComments = Config.compass.lineComments || false
-  Config.compass.relative     = Config.compass.relative     || true
+  Config.compass.relative     = typeof Config.compass.relative == 'boolean' ? Config.compass.relative : true
   Config.compass.imports      = Config.compass.imports      || []
   Config.compass.uri          = Config.compass.uri          || Path.basename(Path.root)
 
