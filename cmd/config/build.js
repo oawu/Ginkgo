@@ -7,8 +7,8 @@
 
 module.exports = {
   dir: {
-    dist: 'dist',
-    src: 'src'
+    dest: 'dist',
+    entry: 'src'
   },
   minify: false,
   ignorePermission: false,

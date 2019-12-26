@@ -23,19 +23,19 @@ const checkConfig = _ => {
   const Config = require(Path.config)
 
   Config.dir = Config.dir || {}
-  Config.dir.dist = Config.dir.dist || 'dist'
-  Config.dir.src  = Config.dir.src  || 'src'
+  Config.dir.dest  = Config.dir.dest  || 'dist'
+  Config.dir.entry = Config.dir.entry || 'src'
 
   Config.minify = typeof Config.minify == 'boolean' ? Config.minify : true
   Config.allowExts = Config.allowExts || []
   Config.ignorePermission = Config.ignorePermission || false
   Config.startAt = new Date().getTime()
 
-  Path.dist = Path.root + Config.dir.dist.trim(Path.sep) + Path.sep
-  delete Config.dir.dist
+  Path.dest = Path.root + Config.dir.dest.trim(Path.sep) + Path.sep
+  delete Config.dir.dest
 
-  Path.src = Path.root + Config.dir.src.trim(Path.sep) + Path.sep
-  delete Config.dir.src
+  Path.entry = Path.root + Config.dir.entry.trim(Path.sep) + Path.sep
+  delete Config.dir.entry
 
   return errors
 }
@@ -71,8 +71,8 @@ module.exports = closure => {
     ? Display.line(false, ['確認設定檔失敗！'].concat(error))
     : Display.line(true)
 
-  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.src) + Path.sep + ' is exists')
-  Exists(Path.src)
+  Display.lines('檢查開發目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.entry) + Path.sep + ' is exists')
+  Exists(Path.entry)
     ? Display.line(true, '存在')
     : Display.line(false, '開發目錄不存在！')
 

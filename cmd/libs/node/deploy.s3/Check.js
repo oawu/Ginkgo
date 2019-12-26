@@ -18,7 +18,7 @@ const checkConfig = _ => {
   const Config = require(Path.config)
 
   Config.dir = Config.dir || {}
-  Config.dir.dist = Config.dir.dist || 'dist'
+  Config.dir.dest = Config.dir.dest || 'dest'
 
   Config.s3 = Config.s3 || {}
   Config.s3.object = Config.s3.object || null
@@ -35,8 +35,8 @@ const checkConfig = _ => {
 
   Config.startAt = new Date().getTime()
   
-  Path.dist = Path.root + Config.dir.dist.trim(Path.sep) + Path.sep
-  delete Config.dir.dist
+  Path.dest = Path.root + Config.dir.dest.trim(Path.sep) + Path.sep
+  delete Config.dir.dest
   
   return errors
 }
@@ -50,7 +50,7 @@ const getEnv = argvs => {
 }
 
 const removeDistGit = _ => {
-  try { Exec('cd ' + Path.dist + ' && rm -rf ' + Path.dist + '.git', { stdio: 'pipe' }).toString() }
+  try { Exec('cd ' + Path.dest + ' && rm -rf ' + Path.dest + '.git', { stdio: 'pipe' }).toString() }
   catch(e) { return false }
   return true
 }
@@ -66,7 +66,7 @@ const getConfig = _ => {
   content += "" + Display.LN
   content += "module.exports = {" + Display.LN
   content += "  dir: {" + Display.LN
-  content += "    dist: 'dist'" + Display.LN
+  content += "    dest: 'dist'" + Display.LN
   content += "  }," + Display.LN
   content += "  s3: {" + Display.LN
   content += "    domain: null," + Display.LN
@@ -97,17 +97,17 @@ module.exports = closure => {
     ? Display.line(false, ['確認設定檔失敗！'].concat(error))
     : Display.line(true)
 
-  Display.lines('檢查部署目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.dist) + Path.sep + ' is exists')
-  Exists(Path.dist)
+  Display.lines('檢查部署目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.dest) + Path.sep + ' is exists')
+  Exists(Path.dest)
     ? Display.line(true, '存在')
     : Display.line(false, '部署目錄不存在！')
 
-  Display.lines('檢查部署目錄是否有 .git 檔案', '執行動作', 'check ' + Path.relative(Path.root, Path.dist) + Path.sep + '.git is exists')
-  Exists(Path.dist + '.git')
+  Display.lines('檢查部署目錄是否有 .git 檔案', '執行動作', 'check ' + Path.relative(Path.root, Path.dest) + Path.sep + '.git is exists')
+  Exists(Path.dest + '.git')
     ? Display.line(false)
     : Display.line(true, '不存在')
 
-  Display.lines('移除部署目錄內的 .git 目錄', '執行動作', 'remove ' + Path.relative(Path.root, Path.dist) + Path.sep + '.git')
+  Display.lines('移除部署目錄內的 .git 目錄', '執行動作', 'remove ' + Path.relative(Path.root, Path.dest) + Path.sep + '.git')
   removeDistGit()
     ? Display.line(true)
     : Display.line(false, '移除部署目錄內的 .git 目錄失敗！')

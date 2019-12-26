@@ -17,7 +17,7 @@ module.exports = closure =>
   Print(' '.repeat(3) + '🎉 太棒惹，已經完成編譯囉，趕緊去看最新版的吧！' + Display.LN) &&
   Print(' '.repeat(3) + '❗️ 若有設定 CDN 快取的話，請等 Timeout 後再試。' + Display.LN) &&
   Print(' '.repeat(3) + '⏰ 編譯耗費時間' + Display.markSemicolon() + Xterm.color.gray(TimeUnit(Config.startAt), true) + Display.LN) &&
-  Print(' '.repeat(3) + '🚀 編譯完後的目錄在專案下的 ' + Xterm.color.gray(Path.dist.replace(Path.root, ''), true) + Display.LN) &&
+  Print(' '.repeat(3) + '🚀 編譯完後的目錄在專案下的 ' + Xterm.color.gray(Path.dest.replace(Path.root, ''), true) + Display.LN) &&
   Print(Display.LN + Display.LN) &&
   typeof closure == 'function' &&
   closure()

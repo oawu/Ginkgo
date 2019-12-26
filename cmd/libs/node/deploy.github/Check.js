@@ -14,7 +14,7 @@ const checkConfig = _ => {
   const Config = require(Path.config)
 
   Config.dir = Config.dir || {}
-  Config.dir.dist = Config.dir.dist || 'dist'
+  Config.dir.dest = Config.dir.dest || 'dest'
 
   Config.github = Config.github || {}
   Config.github.account       = Config.github.account       || ''
@@ -27,8 +27,8 @@ const checkConfig = _ => {
 
   Config.startAt = new Date().getTime()
   
-  Path.dist = Path.root + Config.dir.dist.trim(Path.sep) + Path.sep
-  delete Config.dir.dist
+  Path.dest = Path.root + Config.dir.dest.trim(Path.sep) + Path.sep
+  delete Config.dir.dest
   
 
   if (!errors.length && Config.github.account && Config.github.repository)
@@ -76,8 +76,8 @@ module.exports = closure => {
     ? Display.line(false, ['確認設定檔失敗！'].concat(error))
     : Display.line(true)
 
-  Display.lines('檢查部署目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.dist) + Path.sep + ' is exists')
-  Exists(Path.dist)
+  Display.lines('檢查部署目錄是否存在', '執行動作', 'check ' + Path.relative(Path.root, Path.dest) + Path.sep + ' is exists')
+  Exists(Path.dest)
     ? Display.line(true, '存在')
     : Display.line(false, '部署目錄不存在！')
 

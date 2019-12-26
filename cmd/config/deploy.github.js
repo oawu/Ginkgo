@@ -7,7 +7,7 @@
 
 module.exports = {
   dir: {
-    dist: 'dist'
+    dest: 'dist'
   },
   github: {
     account: null,
