@@ -146,8 +146,9 @@ if (!function_exists('definePATH')) {
     define('PATH_CMD_LIB', dirname(PATH_CMD_LIB_PHP) . DIRECTORY_SEPARATOR);
     define('PATH_CMD', dirname(PATH_CMD_LIB) . DIRECTORY_SEPARATOR);
     define('PATH', dirname(PATH_CMD) . DIRECTORY_SEPARATOR);
-    define('PATH_JS', PATH . 'js' . DIRECTORY_SEPARATOR);
-    define('PATH_CSS', PATH . 'CSS' . DIRECTORY_SEPARATOR);
+    define('PATH_ENTRY', PATH . 'src' . DIRECTORY_SEPARATOR);
+    define('PATH_JS', PATH_ENTRY . 'js' . DIRECTORY_SEPARATOR);
+    define('PATH_CSS', PATH_ENTRY . 'CSS' . DIRECTORY_SEPARATOR);
   }
 }
 

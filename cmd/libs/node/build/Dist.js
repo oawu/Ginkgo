@@ -83,7 +83,7 @@ const destBuild = _ => {
 
     switch (ext) {
       case '.php':
-        try { content = Exec('php ' + Path.phpEntry + ' --path ' + file.src + (Config.argvs.length ? ' ' + Config.argvs.join(' ') : ''), { maxBuffer: 1024 * 500 , stdio: 'pipe', encoding: 'utf8' }).toString() } catch (e) { return ['編譯 PHP「' + file.src.substr(Path.entry.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout] }
+        try { content = Exec('php ' + Path.phpEntry + ' --path ' + file.src + (Config.argvs.length ? ' ' + Config.argvs.join(' ') : ''), { maxBuffer: 1024 * 500 , stdio: 'pipe', encoding: 'utf8' }).toString() } catch (e) { return Display.line(false, ['編譯 PHP「' + file.src.substr(Path.entry.length) + '」時發生錯誤！', '錯誤原因：' + e.stdout]) }
         if (Config.minify) {
           try { content = MinifyHTML(content, { collapseWhitespace: true, continueOnParseError: false }) } catch (e) { return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.entry.length) + '」時失敗！', '錯誤原因：' + e.message]) }
           if (content === null) return Display.line(false, ['壓縮檔案「' + file.src.substr(Path.entry.length) + '」時失敗！'])
