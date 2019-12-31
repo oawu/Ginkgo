@@ -13,7 +13,8 @@ const FileSystem  = require('fs')
   const Exists    = FileSystem.existsSync
   const Unlink    = FileSystem.unlink
   const FileWrite = FileSystem.writeFile
-  const FileRead  = FileSystem.readFileSync
+  const FileReadSync  = FileSystem.readFileSync
+  const FileRead      = FileSystem.readFile
 
 let gitignore = null
 
@@ -48,7 +49,7 @@ const localFiles = closure => {
   let localFiles = ScanDir(Path.dest)
   Display.line(localFiles.length)
   localFiles = localFiles.map(file => ({
-    name: file.replace(Path.dest, ''),
+    name: (Config.prefix ? Config.prefix + '/' : '') + file.replace(Path.dest, ''),
     hash: Display.line() && md5File.sync(file),
     path: file }))
   Display.line(true)
@@ -90,7 +91,7 @@ const uploadFiles = (files, closure) => {
         Config.object.putObject({
           Bucket: Config.bucket,
           Key: file.name,
-          Body: FileRead(file.path),
+          Body: FileReadSync(file.path),
           ContentType: Mime.getType(file.path) || 'text/plain',
           ...putS3Options },
           (error, data) => error
