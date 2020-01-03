@@ -140,9 +140,16 @@ const createServer = (port, request, response) => {
         ? showFile(response, file, ext)
         : showHTML(response, file)
       : showPHP(response, port, file)
-  
-  if (ext === null)
-    return !Exists(file + '.php') ? !Exists(file + '.html') ? show404(response) : showHTML(response, file + '.html') : showPHP(response, port, file + '.php')
+  else if (ext)
+    return ext == 'html' && Exists(Path.entry + Path.basename(path, '.html') + '.php')
+      ? showPHP(response, port, Path.entry + Path.basename(path, '.html') + '.php')
+      : show404(response)
+  else
+    return !Exists(file + '.php')
+      ? !Exists(file + '.html')
+        ? show404(response)
+        : showHTML(response, file + '.html')
+      : showPHP(response, port, file + '.php')
 
   return show404(response)
 }
