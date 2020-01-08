@@ -45,6 +45,7 @@ const checkConfig = _ => {
   Config.server.domain        = Config.server.domain        || '127.0.0.1'
   Config.server.minPort       = Config.server.minPort       || 8000
   Config.server.maxPort       = Config.server.maxPort       || 8999
+  Config.server.defaultPort   = Config.server.defaultPort   || null
   Config.server.utf8Exts      = Config.server.utf8Exts      || ['.html', '.css', '.js', '.json', '.text']
 
   if (Config.server.maxPort < Config.server.minPort) {

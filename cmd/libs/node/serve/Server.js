@@ -30,6 +30,12 @@ const isPortUsed = (port, closure) => {
     .listen(port)
 }
 
+const testDefaultPort = (port, success) => Display.lines('檢查 Server Port ' + port, '執行動作', 'listening ' + port) && isPortUsed(port, (error, isUsed) => error !== null || isUsed
+  ? Display.line(false) || (error !== null
+    ? Display.line(false, error.message)
+    : Display.error(['啟動開發伺服器失敗！', '請檢查是否有其他的服務使用了 ' + Xterm.color.gray(port, true) + ' 的 Port！']))
+  : Display.line(true) && typeof success == 'function' && success(start))
+
 const testPort = (start, end, success) => start <= end
   ? Display.lines('檢查 Server Port ' + start, '執行動作', 'listening ' + start) && isPortUsed(start, (error, isUsed) => error !== null || isUsed
     ? Display.line(false) || (error !== null
@@ -186,4 +192,6 @@ const openServer = (port, closure) => {
 
 module.exports = closure =>
   Display.title('啟動開發伺服器')
-  && testPort(Config.server.minPort, Config.server.maxPort, port => openServer(port, closure))
+  && (Config.server.defaultPort
+    ? testDefaultPort(Config.server.defaultPort, port => openServer(port, closure))
+    : testPort(Config.server.minPort, Config.server.maxPort, port => openServer(port, closure)))
