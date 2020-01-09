@@ -34,7 +34,7 @@ const testDefaultPort = (port, success) => Display.lines('檢查 Server Port ' +
   ? Display.line(false) || (error !== null
     ? Display.line(false, error.message)
     : Display.error(['啟動開發伺服器失敗！', '請檢查是否有其他的服務使用了 ' + Xterm.color.gray(port, true) + ' 的 Port！']))
-  : Display.line(true) && typeof success == 'function' && success(start))
+  : Display.line(true) && typeof success == 'function' && success(port))
 
 const testPort = (start, end, success) => start <= end
   ? Display.lines('檢查 Server Port ' + start, '執行動作', 'listening ' + start) && isPortUsed(start, (error, isUsed) => error !== null || isUsed
