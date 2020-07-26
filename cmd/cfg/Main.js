@@ -75,6 +75,9 @@ module.exports = {
     ]
   },
   deploy: {
+    github: {
+      commitMessage: '🚀 部署！'
+    },
     s3: {
       prefix: null,
       ignoreDirs: [], // 忽略的目錄

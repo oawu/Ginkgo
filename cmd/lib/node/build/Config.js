@@ -6,9 +6,7 @@
  */
 
 let App      = null
-let Color    = null
 let Path     = null
-let Sep      = null
 let Progress = null
 
 const getArgv = keys => {
@@ -21,23 +19,21 @@ const getArgv = keys => {
 }
 
 module.exports = (app, closure) => {
-  App = app,
-    Color = App.color,
-    Progress = App.progress,
-    Path = App.path('$'),
-      Sep = Path.sep
+  App = app
+  Progress = App.progress
+  Path = App.path('$')
 
   const CmdExists = require('command-exists').sync
   const FileSystem = require('fs')
 
-  process.stdout.write("\n" + ' ' + Color.yellow('【檢查編譯環境】') + "\n")
+  process.stdout.write("\n" + ' ' + App.color.yellow('【檢查編譯環境】') + "\n")
 
   const queue = new App.queue()
 
   queue.enqueue(next => Progress.block('檢查設定檔是否存在', Progress.cmd('執行動作', 'check ' + Path.relative(App.path('root'), App.path('cfg-main')) + ' is exists'))
     .doing(progress => FileSystem.existsSync(App.path('cfg-main'))
       ? progress.success('存在')
-      : progress.failure(null, '尚未設定 ' + Color.lGray('Serve') + ' 設定檔！'))
+      : progress.failure(null, '尚未設定 ' + App.color.lGray('Serve') + ' 設定檔！'))
     .go(next))
 
   queue.enqueue(next => Progress.block('取得設定檔', Progress.cmd('執行動作', 'get ' + Path.relative(App.path('root'), App.path('cfg-main')) + ' file'))
@@ -54,7 +50,7 @@ module.exports = (app, closure) => {
 
       App.config.build.ignoreDirs = App.config.build.ignoreDirs
         .reduce((a, b) => a.indexOf(b) == -1 ? (a.push(b), a) : a, [])
-        .map(dir => new RegExp('^' + Path.normalize(App.path('entry') + dir + Sep), 'gm'))
+        .map(dir => new RegExp('^' + Path.normalize(App.path('entry') + dir + Path.sep), 'gm'))
       progress.counter
 
       App.config.build.exts = App.config.build.exts.map(ext => ext.toLowerCase())
@@ -95,7 +91,7 @@ module.exports = (app, closure) => {
   queue.enqueue(next => Progress.block('檢查 PHP 主要檔案是否存在', Progress.cmd('執行動作', 'check ' + Path.relative(App.path('root'), App.path('lib-php-main')) + ' is exists'))
     .doing(progress => FileSystem.existsSync(App.path('lib-php-main'))
       ? progress.success('存在')
-      : progress.failure(null, 'PHP 主要檔案 ' + Color.lGray(Path.relative(App.path('root'), App.path('lib-php-main'))) + ' 不存在！'))
+      : progress.failure(null, 'PHP 主要檔案 ' + App.color.lGray(Path.relative(App.path('root'), App.path('lib-php-main'))) + ' 不存在！'))
     .go(next))
 
   return queue.enqueue(next => closure(App.config))

@@ -10,7 +10,6 @@ const Exec    = require('child_process').exec
 const ExecSync        = require('child_process').execSync
 
 let App      = null
-let Color    = null
 let Path     = null
 let Sep      = null
 let Progress = null
@@ -44,13 +43,12 @@ const filesDir = (progress, files, minify, copy) => {
 }
 
 module.exports = (app, closure) => {
-  App = app,
-    Color = App.color,
-    Progress = App.progress,
-    Path = App.path('$'),
-      Sep = Path.sep
+  App = app
+  Progress = App.progress
+  Path = App.path('$')
+  Sep = Path.sep
 
-  process.stdout.write("\n" + ' ' + Color.yellow('【編譯並輸出目錄】') + "\n")
+  process.stdout.write("\n" + ' ' + App.color.yellow('【編譯並輸出目錄】') + "\n")
 
   const queue = new App.queue()
 

@@ -267,7 +267,11 @@ const openHttpServer = closure => {
 }
 
 module.exports = (app, closure) => {
-  App = app, Color = app.color, Path = App.path('$'), Sep = Path.sep, Progress = App.progress
+  App = app
+  Color = app.color
+  Path = App.path('$')
+  Sep = Path.sep
+  Progress = App.progress
 
   process.stdout.write("\n" + ' ' + Color.yellow('【啟動開發伺服器】') + "\n")
 

@@ -264,11 +264,11 @@ const watchFile = function(closure) {
 
 module.exports = (app, closure) => {
   App = app
-    Color = App.color
-    Progress = App.progress
-    queue = new App.queue()
-    Path = App.path('$')
-      Sep = Path.sep
+  Color = App.color
+  Progress = App.progress
+  queue = new App.queue()
+  Path = App.path('$')
+  Sep = Path.sep
 
   process.stdout.write("\n" + ' ' + Color.yellow('【啟動專案】') + "\n")
 

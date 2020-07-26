@@ -6,7 +6,6 @@
  */
 
 let App      = null
-let Color    = null
 let Path     = null
 let Sep      = null
 let Progress = null
@@ -18,12 +17,11 @@ const ScanDir = dir => FileSystem.existsSync(dir) ? FileSystem.readdirSync(dir).
 
 module.exports = (app, closure) => {
   App = app
-    Color = App.color
-    Progress = App.progress
-    Path = App.path('$')
-      Sep = Path.sep
+  Progress = App.progress
+  Path = App.path('$')
+  Sep = Path.sep
 
-  process.stdout.write("\n" + ' ' + Color.yellow('【部署至 AWS S3】') + "\n")
+  process.stdout.write("\n" + ' ' + App.color.yellow('【部署至 AWS S3】') + "\n")
 
   const Mime = require('mime')
   const md5File = require('md5-file')
@@ -56,7 +54,7 @@ module.exports = (app, closure) => {
         }
       })).success()
     })
-    .go((isSuccess, localFiles) => next({ localFiles })))
+    .go((_, localFiles) => next({ localFiles })))
   
   queue.enqueue((next, files) => Progress.block('取得 S3 上檔案')
     .doing(progress => listObjects({
@@ -67,7 +65,7 @@ module.exports = (app, closure) => {
       files.s3Files = s3Files.filter(file => (progress.counter, !App.config.deploy.s3.ignoreDirs.filter(dir => file.name.match(dir.s3)).length))
       progress.result(files).success()
     }))
-    .go((isSuccess, files) => next(files)))
+    .go((_, files) => next(files)))
 
   queue.enqueue((next, files) => Progress.block('過濾上傳的檔案')
     .total(files.localFiles.length)
@@ -81,7 +79,7 @@ module.exports = (app, closure) => {
       })
       progress.result(files).success()
     })
-    .go((isSuccess, files) => next(files)))
+    .go((_, files) => next(files)))
 
   queue.enqueue((next, files) => Progress.block('過濾刪除的檔案')
     .total(files.s3Files.length)
@@ -95,7 +93,7 @@ module.exports = (app, closure) => {
       })
       progress.result(files).success()
     })
-    .go((isSuccess, files) => next(files)))
+    .go((_, files) => next(files)))
 
   queue.enqueue((next, files) => Progress.block('上傳檔案至 S3 ')
     .total(files.uploadFiles.length)

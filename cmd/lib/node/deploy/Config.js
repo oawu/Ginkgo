@@ -82,13 +82,43 @@ module.exports = (app, closure) => {
     .go(next))
   
   queue.enqueue(next => App.config.argvs['--goal'] != 's3'
-    ? next()
+    ? Progress.block('檢查 GitHub 參數', Progress.cmd('執行動作', 'check GitHub argvs'))
+      .total(6)
+      .doing(progress => {
+        try {
+          const output = require('child_process').execSync('git remote get-url origin', { stdio: 'pipe' }).toString()
+          const match = /^git@github\.com:(?<account>.*)\/(?<repository>.*)\.git/gi.exec(output) || /^https:\/\/github\.com\/(?<account>.*)\/(?<repository>.*)\.git/gi.exec(output)
+          if (!match) throw new Error('此專案非 Github 並且沒有設定資訊');
+          App.config.deploy.github.account    = match.groups.account
+          App.config.deploy.github.repository = match.groups.repository
+        } catch(e) {
+          App.config.deploy.github.account = null
+          App.config.deploy.github.repository = null
+        }
+
+        const account    = getArgv(['-A', '--account'])
+        const repository = getArgv(['-R', '--repository'])
+        const branch     = getArgv(['-B', '--branch'])
+        const message    = getArgv(['-M', '--message'])
+        
+        App.config.deploy.github.account = account === null ? App.config.deploy.github.account : account, progress.counter
+        App.config.deploy.github.repository = repository === null ? App.config.deploy.github.repository : repository, progress.counter
+        App.config.deploy.github.branch = branch === null ? 'gh-pages' : branch, progress.counter
+        App.config.deploy.github.commitMessage = message === null || message === '' ? App.config.deploy.github.commitMessage : message
+
+        App.config.deploy.github.account === null ? progress.failure(null, '部署至 GitHub 需給予正確的 ' + Color.lGray('--account') + ' 參數') : progress.counter
+        App.config.deploy.github.repository === null ? progress.failure(null, '部署至 GitHub 需給予正確的 ' + Color.lGray('--repository') + ' 參數') : progress.counter
+
+        progress.success()
+      })
+      .go(next)
     : Progress.block('檢查 S3 參數與功能', Progress.cmd('執行動作', 'check S3 argvs、features'))
       .total(8)
       .doing(progress => {
         const bucket = getArgv(['-B', '--bucket'])
         const access = getArgv(['-A', '--access'])
         const secret = getArgv(['-S', '--secret'])
+
         bucket === null ? progress.failure(null, '部署至 S3 需給予正確的 ' + Color.lGray('--bucket') + ' 參數') : progress.counter
         access === null ? progress.failure(null, '部署至 S3 需給予正確的 ' + Color.lGray('--access') + ' 參數') : progress.counter
         secret === null ? progress.failure(null, '部署至 S3 需給予正確的 ' + Color.lGray('--secret') + ' 參數') : progress.counter
@@ -117,7 +147,6 @@ module.exports = (app, closure) => {
             ? progress.failure(null, '您這組 ' + Color.gray('access') + '、' + Color.gray('secret') + ' 無法操作 ' + Color.lGray(Config.bucket) + ' 此 Bucket！')
             : progress.success()
           : progress.failure(null, error))
-
       })
       .go(next))
 

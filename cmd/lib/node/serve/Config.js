@@ -8,10 +8,8 @@
 const FileSystem = require('fs')
 
 let App      = null
-let Color    = null
 let Progress = null
 let Path     = null
-let Sep      = null
 
 const getArgv = keys => {
   const argvs = process.argv.slice(2)
@@ -26,7 +24,7 @@ const checkCompass = _ => {
   if (FileSystem.existsSync(App.path('lib-scss') + 'config.rb'))
     return true
 
-  const relative = Path.relative(App.path('lib-scss'), App.path('entry')) + Sep
+  const relative = Path.relative(App.path('lib-scss'), App.path('entry')) + Path.sep
   const contents = []
 
   contents.push('#')
@@ -62,7 +60,7 @@ const checkCompass = _ => {
   contents.push('')
   contents.push('# 其他要匯入的資源')
   contents.push('  # add_import_path = "./libs"')
-  contents.push('additional_import_paths = [' + ['.' + Sep, relative + 'scss'].concat(App.config.serve.compass.imports).map(t => '"' + t + '"').join(', ') + ']')
+  contents.push('additional_import_paths = [' + ['.' + Path.sep, relative + 'scss'].concat(App.config.serve.compass.imports).map(t => '"' + t + '"').join(', ') + ']')
   contents.push('')
   contents.push('# 選擇輸出的 css 類型，:expanded or :nested or :compact or :compressed')
   contents.push('  # nested     有縮排 沒壓縮，會有 @charset "UTF-8";')
@@ -87,14 +85,12 @@ const checkCompass = _ => {
 
 module.exports = (app, closure) => {
   App = app
-    Color = App.color
-    Progress = App.progress
-    Path = App.path('$')
-      Sep = Path.sep
+  Progress = App.progress
+  Path = App.path('$')
 
   const CmdExists = require('command-exists').sync
 
-  process.stdout.write("\n" + ' ' + Color.yellow('【檢查開發環境】') + "\n")
+  process.stdout.write("\n" + ' ' + App.color.yellow('【檢查開發環境】') + "\n")
 
   const queue = new App.queue()
 
@@ -107,13 +103,13 @@ module.exports = (app, closure) => {
   queue.enqueue(next => Progress.block('檢查設定檔是否存在', Progress.cmd('執行動作', 'check ' + Path.relative(App.path('root'), App.path('cfg-main')) + ' is exists'))
     .doing(progress => FileSystem.existsSync(App.path('cfg-main'))
       ? progress.success('存在')
-      : progress.failure(null, '尚未設定 ' + Color.lGray('Serve') + ' 設定檔！'))
+      : progress.failure(null, '尚未設定 ' + App.color.lGray('Serve') + ' 設定檔！'))
     .go(next))
 
   queue.enqueue(next => Progress.block('檢查 compass 目錄是否存在', Progress.cmd('執行動作', 'check ' + Path.relative(App.path('root'), App.path('lib-scss')) + ' is exists'))
     .doing(progress => FileSystem.existsSync(App.path('lib-scss'))
       ? progress.success('存在')
-      : progress.failure(null, 'compass 目錄 ' + Color.lGray(Path.relative(App.path('root'), App.path('lib-scss'))) + ' 不存在！'))
+      : progress.failure(null, 'compass 目錄 ' + App.color.lGray(Path.relative(App.path('root'), App.path('lib-scss'))) + ' 不存在！'))
     .go(next))
 
   queue.enqueue(next => Progress.block('取得設定檔', Progress.cmd('執行動作', 'get ' + Path.relative(App.path('root'), App.path('cfg-main')) + ' file'))
@@ -198,7 +194,7 @@ module.exports = (app, closure) => {
   queue.enqueue(next => Progress.block('檢查 PHP 主要檔案是否存在', Progress.cmd('執行動作', 'check ' + Path.relative(App.path('root'), App.path('lib-php-main')) + ' is exists'))
     .doing(progress => FileSystem.existsSync(App.path('lib-php-main'))
       ? progress.success('存在')
-      : progress.failure(null, 'PHP 主要檔案 ' + Color.lGray(Path.relative(App.path('root'), App.path('lib-php-main'))) + ' 不存在！'))
+      : progress.failure(null, 'PHP 主要檔案 ' + App.color.lGray(Path.relative(App.path('root'), App.path('lib-php-main'))) + ' 不存在！'))
     .go(next))
 
   return queue.enqueue(next => closure(App.config))
