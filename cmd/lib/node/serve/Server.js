@@ -1,6 +1,6 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2015 - 2019, Ginkgo
+ * @copyright   Copyright (c) 2015 - 2020, Ginkgo
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
@@ -234,7 +234,6 @@ const openWebSocketServer = (server, closure) => {
 const openHttpsServer = closure => {
   Progress.doing('開啟 ' + Color.lCyan('https') + ' 伺服器', Progress.cmd('執行動作', 'run https Server, port:' + App.config.serve.server.port)), Progress.total(1)
   try {
-    
     const https = require('https').Server(App.config.serve.server.ssl)
     Progress.do()
     https.on('error', e => Progress.doing(Color.lCyan('https') + ' 發生錯誤', Progress.cmd('錯誤原因', e.message)) && Progress.failure())

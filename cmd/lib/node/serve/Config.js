@@ -1,6 +1,6 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2015 - 2019, Maple ApiDoc
+ * @copyright   Copyright (c) 2015 - 2020, Ginkgo
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
@@ -29,7 +29,7 @@ const checkCompass = _ => {
 
   contents.push('#')
   contents.push('# @author      OA Wu <comdan66@gmail.com>')
-  contents.push('# @copyright   Copyright (c) 2015 - 2019, Ginkgo')
+  contents.push('# @copyright   Copyright (c) 2015 - 2020, Ginkgo')
   contents.push('# @license     http://opensource.org/licenses/MIT  MIT License')
   contents.push('# @link        https://www.ioa.tw/')
   contents.push('#')

@@ -1,6 +1,6 @@
 //
 // @author      OA Wu <comdan66@gmail.com>
-// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @copyright   Copyright (c) 2015 - 2020, Ginkgo
 // @license     http://opensource.org/licenses/MIT  MIT License
 // @link        https://www.ioa.tw/
 //
@@ -25,5 +25,6 @@ body {
   // 文字染色，背景色、文字色
   @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
 
-  background-color: rgba(244, 245, 247, 1.00);
+  // background-color: rgba(244, 245, 247, 1.00);
+  background-color: rgba(255, 255, 255, 1.00);
 }
