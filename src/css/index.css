@@ -1,6 +1,13 @@
 @charset "UTF-8";
+@font-face { font-family: "icon"; src: url('../icon/icomoon/fonts/icomoon.eot?1578659854') format('embedded-opentype'), url('../icon/icomoon/fonts/icomoon.woff?1578659854') format('woff'), url('../icon/icomoon/fonts/icomoon.ttf?1578659854') format('truetype'), url('../icon/icomoon/fonts/icomoon.svg?1578659854') format('svg'); }
 *, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
 
-body { position: relative; display: inline-block; width: 100%; margin: 0; padding: 0; color: #5a5a5a; font-size: medium; text-align: center; font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; background-color: #f4f5f7; }
+@-moz-keyframes rotate { 0% { -moz-transform: rotate(0); transform: rotate(0); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); } }
+@-webkit-keyframes rotate { 0% { -webkit-transform: rotate(0); transform: rotate(0); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
+@keyframes rotate { 0% { -moz-transform: rotate(0); -ms-transform: rotate(0); -webkit-transform: rotate(0); transform: rotate(0); }
+  100% { -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
+body { position: relative; display: inline-block; width: 100%; margin: 0; padding: 0; color: #5a5a5a; font-size: medium; text-align: center; font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; background-color: white; }
 body::-moz-selection { color: white; background-color: #78baff; }
 body::selection { color: white; background-color: #78baff; }

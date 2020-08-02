@@ -1,0 +1,35 @@
+{
+  "author": "OA Wu",
+  "license": "MIT",
+  "name": "Ginkgo",
+  "version": "5.2.0",
+  "private": true,
+
+  "description": "這是一套 OA Wu 所製作的個人網頁前端框架！",
+  "keywords": ["html", "scss", "css", "JavaScript", "compass", "vue", "node"],
+  "repository": { "type": "git", "url": "https://github.com/comdan66/Ginkgo" },
+  
+  "scripts": {
+    "serve": "node serve.js",
+    "build": "node Build.js",
+    "deploy": "node Deploy.js"
+  },
+
+  "dependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.7.7",
+    "babel-preset-minify": "^0.5.1",
+    "aws-sdk": "^2.715.0",
+    "chokidar": "^3.4.1",
+    "clean-css": "^4.2.3",
+    "html-minifier": "^4.0.0",
+    "command-exists": "^1.2.9",
+    "mime": "^2.4.6",
+    "md5-file": "^5.0.0",
+    "node-notifier": "^7.0.2",
+    "open": "^7.1.0",
+    "rxjs": "^6.6.0",
+    "aws-sdk": "^2.715.0",
+    "socket.io": "^2.3.0"
+  }
+}
