@@ -2,10 +2,19 @@
 
 版本：5.2.0
 
+用自己做出來的工具開發，就想再品嚐自己做的一道菜，美味自己知道，歡迎大家來品嚐這道美味的銀杏大餐！
+
+## 說明
+這是一套 [OA Wu](https://www.ioa.tw/) 所製作的個人網頁前端框架，主功能是快速編寫網頁，主要語言為 [HTML](https://zh.wikipedia.org/zh-tw/HTML)、[SCSS](https://sass-lang.com/guide)、[JsvaScript](https://zh.wikipedia.org/wiki/JavaScript) 的框架，並寫在 `cmd` 目錄可使用 `Node.js` 協助開發，使用之前需要安裝 [Node.js](https://nodejs.org/) 與 [Compass](http://compass-style.org/)，以下依據作業系統介紹做初步安裝：
+
 ## 環境
 
 * 需要有 `node`、`npm`、`compass` 指令
+* 因應需求，可以視情況關閉 `PHP` 功能，於 `cmd/cfg/Main.js` 將 `enablePHP` 改為 `null`
 
+### 安裝
+  * Window7 ─ 請參考 [WindowInstall](cmd/doc/WindowInstall.md)
+  * MacOS ─ 請參考 [PHP](https://www.ioa.tw/macOS/PHP.html)、[RubyOnRails]([RoR](https://www.ioa.tw/macOS/RubyOnRails.html))、[Compass](https://www.ioa.tw/macOS/Compass.html)、[Node](https://www.ioa.tw/macOS/Node.js.html)
 
 ## 開發
 

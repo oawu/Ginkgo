@@ -73,8 +73,16 @@ module.exports = (app, closure) => {
       .catch(e => progress.failure(null, '目錄不可讀寫，請檢查目錄權限！', e)))
     .go(next))
 
-  queue.enqueue(next => Progress.block('清空輸出目錄', Progress.cmd('執行指令', 'rm -rf ' + minDist + '*'))
-    .doing(progress => Exec('rm -rf ' + App.path('dest'), (error, stdout, stderr) => error
+   const cmdStr = process.platform === 'win32'
+    ? ('rd /s /q "' + minDist + '"')
+    : ('rm -rf ' + minDist + '*')
+
+  const cmd = process.platform === 'win32'
+    ? 'rd /s /q "' + App.path('dest') + '"'
+    : 'rm -rf ' + App.path('dest')
+ 
+  queue.enqueue(next => Progress.block('清空輸出目錄', Progress.cmd('執行指令', cmdStr))
+    .doing(progress => Exec(cmd, (error, stdout, stderr) => error
       ? progress.failure(null, '執行指令 rm -rf ' + minDist + '* 時發生錯誤！', error)
       : progress.success()))
     .go(next))
@@ -85,7 +93,8 @@ module.exports = (app, closure) => {
       .map(file => {
         const extension = Path.extname(file).toLowerCase()
         const isPHP = App.config.enablePHP && extension == '.php'
-        const dist = Path.normalize(App.path('dest') + Path.relative(App.path('entry'), Path.dirname(file)) + Sep + Path.basename(file).replace(/\.php$/gmi, '') + (extension == '.php' ? '.html' : ''))
+        const dist = Path.normalize(App.path('dest') + Path.relative(App.path('entry'), Path.dirname(file)) + Sep + Path.basename(file).replace(/\.php$/gmi, '') + (extension == '.php' ? isPHP ? '.html' : '.php' : ''))
+
         return { src: file, isPHP, dist, extension }})
       .filter(file => (!App.config.build.exts || App.config.build.exts.indexOf(file.extension) != -1))).success())
     .go((_, files) => next(files)))

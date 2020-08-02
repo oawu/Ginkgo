@@ -24,6 +24,7 @@ const checkCompass = _ => {
   if (FileSystem.existsSync(App.path('lib-scss') + 'config.rb'))
     return true
 
+  const windowPath =  str => process.platform === 'win32' ? str.replace(/\\/g, "/") : str
   const relative = Path.relative(App.path('lib-scss'), App.path('entry')) + Path.sep
   const contents = []
 
@@ -40,27 +41,27 @@ const checkCompass = _ => {
   contents.push('Encoding.default_external = "utf-8"')
   contents.push('')
   contents.push('# 網域(domain)後面的目錄')
-  contents.push('http_path = "/' + App.config.serve.compass.uri + '"')
+  contents.push('http_path = "/' + (App.config.serve.compass.uri !== null ? App.config.serve.compass.uri : '') + '"')
   contents.push('')
   contents.push('# 字體目錄與網址下的字體目錄')
-  contents.push('fonts_dir = "' + App.config.serve.dirs.icon + '"')
-  contents.push('fonts_path = "' + relative + App.config.serve.dirs.icon + '"')
+  contents.push('fonts_dir = "' + windowPath(App.config.serve.dirs.icon) + '"')
+  contents.push('fonts_path = "' + windowPath(relative + App.config.serve.dirs.icon) + '"')
   contents.push('')
   contents.push('# css 目錄與 scss 目錄')
-  contents.push('css_dir = "' + relative + App.config.serve.dirs.css + '"')
-  contents.push('sass_dir = "' + relative + App.config.serve.dirs.scss + '"')
+  contents.push('css_dir = "' + windowPath(relative + App.config.serve.dirs.css) + '"')
+  contents.push('sass_dir = "' + windowPath(relative + App.config.serve.dirs.scss) + '"')
   contents.push('')
   contents.push('# 圖片目錄與網址下的圖片目錄')
-  contents.push('images_dir = "' + App.config.serve.dirs.img + '"')
-  contents.push('images_path = "' + relative + App.config.serve.dirs.img + '"')
+  contents.push('images_dir = "' + windowPath(App.config.serve.dirs.img) + '"')
+  contents.push('images_path = "' + windowPath(relative + App.config.serve.dirs.img) + '"')
   contents.push('')
   contents.push('# js 目錄與網址下的 js 目錄，目前沒發現在哪邊用到..')
-  contents.push('javascripts_dir = "' + App.config.serve.dirs.js + '"')
-  contents.push('javascripts_path = "' + relative + App.config.serve.dirs.js + '"')
+  contents.push('javascripts_dir = "' + windowPath(App.config.serve.dirs.js) + '"')
+  contents.push('javascripts_path = "' + windowPath(relative + App.config.serve.dirs.js) + '"')
   contents.push('')
   contents.push('# 其他要匯入的資源')
   contents.push('  # add_import_path = "./libs"')
-  contents.push('additional_import_paths = [' + ['.' + Path.sep, relative + 'scss'].concat(App.config.serve.compass.imports).map(t => '"' + t + '"').join(', ') + ']')
+  contents.push('additional_import_paths = [' + [windowPath('.' + Path.sep), windowPath(relative + 'scss')].concat(App.config.serve.compass.imports).map(t => '"' + t + '"').join(', ') + ']')
   contents.push('')
   contents.push('# 選擇輸出的 css 類型，:expanded or :nested or :compact or :compressed')
   contents.push('  # nested     有縮排 沒壓縮，會有 @charset "UTF-8";')
@@ -113,9 +114,12 @@ module.exports = (app, closure) => {
     .go(next))
 
   queue.enqueue(next => Progress.block('取得設定檔', Progress.cmd('執行動作', 'get ' + Path.relative(App.path('root'), App.path('cfg-main')) + ' file'))
-    .total(12)
+    .total(13)
     .doing(progress => {
       App.config = require(App.path('cfg-main'))
+      progress.counter
+
+      App.config.argvs = {}
       progress.counter
 
       try { App.config.serve.server.ssl = App.config.serve.server.ssl.key && App.config.serve.server.ssl.cert ? { key: FileSystem.readFileSync(App.path('cfg-ssl') + App.config.serve.server.ssl.key), cert: FileSystem.readFileSync(App.path('cfg-ssl') + App.config.serve.server.ssl.cert) } : null }
@@ -172,7 +176,6 @@ module.exports = (app, closure) => {
   queue.enqueue(next => Progress.block('檢查參數', Progress.cmd('執行動作', 'check argvs'))
     .total(3)
     .doing(progress => {
-      App.config.argvs = {}
       progress.counter
 
       const env = getArgv(['-E', '--env'])

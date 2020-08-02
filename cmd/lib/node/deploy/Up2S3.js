@@ -14,6 +14,7 @@ const FileSystem  = require('fs')
 const filterGitignore = true
 
 const ScanDir = dir => FileSystem.existsSync(dir) ? FileSystem.readdirSync(dir).map(file => file !== '.' && file !== '..' ? FileSystem.statSync(dir + file).isDirectory() ? ScanDir(dir + file + Sep) : [dir + file] : null).filter(t => t !== null).reduce((a, b) => a.concat(b), []) : []
+const windowPath =  str => process.platform === 'win32' ? str.replace(/\\/g, "/") : str
 
 module.exports = (app, closure) => {
   App = app
@@ -48,7 +49,7 @@ module.exports = (app, closure) => {
       progress.total(localFiles.length + 1)
       progress.result(localFiles.map(file => {
         return progress.counter, {
-          name: App.config.deploy.s3.prefix + Path.relative(App.path('dest'), file),
+          name: windowPath(App.config.deploy.s3.prefix + Path.relative(App.path('dest'), file)),
           hash: md5File.sync(file),
           path: file
         }
